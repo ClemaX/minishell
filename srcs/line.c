@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/11/21 21:25:00 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/12 06:38:05 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/13 01:25:43 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -29,10 +29,11 @@ t_line	*line_add(t_line **line, char *content, int size)
 {
 	t_line *new;
 
-	if ((size && !content) || !(new = malloc(sizeof(*new)))
-	|| !(new->content = malloc(sizeof(*new * size))))
+	if (!size)
+		return (*line);
+	if (!content || !(new = malloc(sizeof(*new))))
 		return (NULL);
-	new->content = ft_memcpy(new->content, content, size);
+	new->content = content;
 	new->size = size;
 	new->next = *line;
 	return ((*line = new));
@@ -107,4 +108,32 @@ int		line_put(char **dest, t_line **line)
 	}
 	line_clr(line);
 	return (len);
+}
+
+char	*line_get(t_line **line)
+{
+	t_line	*curr;
+	char	*str;
+	size_t	size;
+
+	size = 1;
+	curr = *line;
+	while (curr)
+	{
+		size += curr->size;
+		curr = curr->next;
+	}
+	if (!(str = malloc(size)))
+		return (NULL);
+	str += size - 1;
+	*str = '\0';
+	curr = *line;
+	while (curr)
+	{
+		str -= curr->size;
+		ft_memcpy(str, curr->content, curr->size);
+		curr = curr->next;
+	}
+	line_clr(line);
+	return (str);
 }
