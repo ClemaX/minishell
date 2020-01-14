@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   minishell.c                                      .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
+/*   By: plamtenz <plamtenz@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/12 04:38:55 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/13 07:55:32 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/14 09:33:59 by plamtenz    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -17,14 +17,16 @@
 #include <command.h>
 #include <unistd.h>
 
-int			main(int ac, char **av)
+int			main(int ac, char **av, char **envp)
 {
 	t_cmd		command;
+	int			ret;
 	t_status	status;
 	char		*line;
 	int			fd;
 
 	status = 0;
+	ret = 0;
 	if (ac == 1)
 		fd = 0;
 	else if (ac == 2)
@@ -36,6 +38,7 @@ int			main(int ac, char **av)
 	{
 		status = parse_cmd(status, &command, line);
 		free(line);
+		ret = minish(&command, av, ret);
 	}
 	return (0);
 }
