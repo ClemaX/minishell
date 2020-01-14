@@ -3,16 +3,18 @@
 /*                                                              /             */
 /*   command.h                                        .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
+/*   By: plamtenz <plamtenz@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/12 04:43:38 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/13 07:29:40 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/14 08:50:04 by plamtenz    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #ifndef COMMAND_H
 # define COMMAND_H
+
+#include <map.h>
 
 # define S_CHAR	"\"\'\\"
 
@@ -24,8 +26,9 @@ typedef char	t_status;
 
 typedef struct	s_cmd
 {
-	char	**av;
 	int		ac;
+	char	**av;
+	t_map	*env;
 	int		op;
 }				t_cmd;
 
