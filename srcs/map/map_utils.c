@@ -1,30 +1,47 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   map_test.c                                       .::    .:/ .      .::   */
+/*   map_utils.c                                      .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2020/01/14 06:48:24 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/14 09:44:58 by chamada     ###    #+. /#+    ###.fr     */
+/*   Created: 2020/01/14 08:35:14 by chamada      #+#   ##    ##    #+#       */
+/*   Updated: 2020/01/14 09:51:22 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include <map.h>
 #include <libft.h>
+#include <map.h>
+#include <stdlib.h>
 
-int		map_test(int ac, const char **av, const char **ep)
+static void	unload_tab(char **tab)
+{
+	while (*tab)
+		free(*tab++);
+}
+
+t_map		*map_load(const char **tab)
 {
 	t_map	*map;
+	char	**split;
 
-	(void)ac;
-	(void)av;
-	map = map_load(ep);
-	map_print(map);
-	map_clr(&map);
-	map = map_load(&av[1]);
-	map_print(map);
-	map_clr(&map);
-	return (0);
+	if (!tab || !*tab)
+		return (NULL);
+	map = NULL;
+	while (*tab)
+	{
+		if (!(split = ft_split(*tab, '=')))
+			return (NULL);
+		if (!split[0] || !split[1])
+		{
+			unload_tab(split);
+			return (NULL);
+		}
+		map_set(&map, split[0], split[1]);
+		unload_tab(split);
+		free(split);
+		tab++;
+	}
+	return (map);
 }
