@@ -6,7 +6,7 @@
 /*   By: plamtenz <plamtenz@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/14 08:51:26 by plamtenz     #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/14 09:49:08 by plamtenz    ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/14 10:19:08 by plamtenz    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -37,4 +37,5 @@ int		minish(t_cmd *cmd, char **av, int ret)
 		ft_printf("%s: %s: command not found", av[0], cmd->av[0]);
 		ret = 127;
 	}
+	return (ret);
 }
