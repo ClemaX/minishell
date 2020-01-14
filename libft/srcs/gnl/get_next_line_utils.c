@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   get_next_line_utils.c                            .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
+/*   By: plamtenz <plamtenz@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/22 03:03:04 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2019/12/09 17:11:15 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/14 11:03:36 by plamtenz    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,7 +15,7 @@
 
 int		search_end(char *s, size_t size, char **end)
 {
-	while (size && *s && *s != '\n' && size--)
+	while (size && *s && *s != '\n' && *s != ';' && size--)
 		s++;
 	if (size)
 		return ((*(*end = s) == '\0') ? END : NEW_LINE);
