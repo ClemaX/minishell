@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/12 04:38:55 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/14 10:12:50 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/14 12:10:14 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -17,7 +17,7 @@
 #include <command.h>
 #include <unistd.h>
 
-int			main(int ac, char **av, char **envp)
+int			main(int ac, char **av, const char **envp)
 {
 	t_cmd		command;
 	int			ret;
@@ -25,7 +25,7 @@ int			main(int ac, char **av, char **envp)
 	char		*line;
 	int			fd;
 
-	(void)envp;
+	command.env = map_load(envp);
 	status = 0;
 	ret = 0;
 	if (ac == 1)
@@ -39,7 +39,7 @@ int			main(int ac, char **av, char **envp)
 	{
 		status = parse_cmd(status, &command, line);
 		free(line);
-		ret = minish(&command, av, ret);
+//		ret = minish(&command, av, ret);
 	}
 	return (0);
 }

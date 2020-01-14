@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/14 05:55:30 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/14 09:35:54 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/14 11:42:58 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -38,7 +38,7 @@ const char	*map_set(t_map **map, const char *key, const char *value)
 	}
 	if (!(new = malloc(sizeof(*new))))
 		return (NULL);
-	*new = (t_map){.key=ft_strdup(key), .key_size=ft_strlen(key),
+	*new = (t_map){.key=ft_strdup(key), .key_size=ft_strlen(key) + 1,
 		.value=ft_strdup(value), .next=*map};
 	if (!new->key || !new->value)
 	{

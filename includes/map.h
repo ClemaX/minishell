@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/14 05:51:26 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/14 09:51:26 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/14 11:33:15 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -30,5 +30,6 @@ void			map_delone(t_map *elem);
 t_map			*map_del(t_map *map, const char *key);
 void			map_clr(t_map **map);
 t_map			*map_load(const char **tab);
+char			**map_export(t_map *map);
 
 #endif

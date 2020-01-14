@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/12 04:45:30 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/14 10:20:20 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/14 13:28:09 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -23,30 +23,6 @@ TO DO : ESCAPABLE CHARS FCT
 #include <line.h>
 
 #include <stdlib.h>
-
-void		parse_content(t_line **arg, char **line, t_status status)
-{
-	int		len;
-	char	*content;
-	char	*end;
-
-	if (!*line)
-		return ;
-	len = 0;
-	end = NULL;
-	if (status & S_QUOTE)
-		end = ft_strchr(*line, '\'');
-	if (end)
-		len = end - *line;
-	else
-		while ((*line)[len] && ft_strpos(status & D_QUOTE ? "\"\"\\" : S_CHAR, (*line)[len]) == -1)
-			len++;
-	if (!len || !(content = malloc(sizeof(*content) * len)))
-		return ;
-	ft_memcpy(content, *line, len);
-	line_add(arg, content, len);
-	*line += len;
-}
 
 t_status	parse_status(char **line, t_line **arg, t_status status)
 {
@@ -66,6 +42,35 @@ t_status	parse_status(char **line, t_line **arg, t_status status)
 			return (status);
 	}
 	return (status);
+}
+
+void		parse_content(t_line **arg, char **line, t_status status)
+{
+	int		len;
+	char	*content;
+	char	*end;
+
+	if (!*line)
+		return ;
+	len = 0;
+	end = NULL;
+	if (status & S_QUOTE)
+		end = ft_strchr(*line, '\'');
+	if (end)
+		len = end - *line;
+	else
+		while ((*line)[len] && ((status == 0 && !ft_isspace((*line)[len])) || (!ft_isspace((*line)[len]) && ft_strpos(status & D_QUOTE ? "\"\"\\" : S_CHAR, (*line)[len]) == -1)))
+		{
+			len++;
+			if ((*line)[len] == '\"' || (*line)[len] == '\'')
+				break ;
+		}
+			/* plamtenz commande */
+	if (!len || !(content = malloc(sizeof(*content) * len)))
+		return ;
+	ft_memcpy(content, *line, len);
+	line_add(arg, content, len);
+	*line += len;
 }
 
 #include <unistd.h>
@@ -89,8 +94,6 @@ t_status		parse_cmd(t_status status, t_cmd *cmd, char *line)
 	t_line		*arg;
 	char		*start;
 
-	(void)args;
-	(void)cmd;
 	arg = NULL;
 	while (ft_isspace(*line))
 		line++;
