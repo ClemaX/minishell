@@ -7,7 +7,9 @@ INCDIR	= includes
 CFLAGS	= -Wall -Wextra -Werror
 IFLAGS	= -I$(INCDIR) -I$(LIBFT)/includes
 LFLAGS	= -L$(LIBFT) -lft
-SRCS	= $(addprefix $(SRCDIR)/, command.c line.c minishell.c)
+SRCS	= $(addprefix $(SRCDIR)/,							\
+	command.c line.c minishell.c							\
+	$(addprefix builtins/ft_, cd.c echo.c exit.c pwd.c))
 OBJS	= $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS))
 HDRS	= $(addprefix $(INCDIR)/, command.h line.h)
 
