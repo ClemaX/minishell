@@ -3,23 +3,24 @@
 /*                                                              /             */
 /*   ft_cd.c                                          .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: plamtenz <plamtenz@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/14 07:14:07 by plamtenz     #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/14 07:38:50 by plamtenz    ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/14 10:15:31 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <limits.h>
+#include <libft.h>
 
 int		cd(int ac, char **argv, char **envp)
 {
 	char	path[_POSIX_PATH_MAX];
 	char	cwd[_POSIX_PATH_MAX];
 
-	if (ac == 1 && ft_strcmp(argv[0], "cd", 3))
+	if (ac == 1 && ft_strncmp(argv[0], "cd", 3))
 	{
 		return (0);  /* have to go to home page here */
 	}

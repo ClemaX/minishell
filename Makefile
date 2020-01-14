@@ -11,7 +11,10 @@ SRCS	= $(addprefix $(SRCDIR)/,							\
 	command.c line.c minishell.c							\
 	$(addprefix builtins/ft_, cd.c echo.c exit.c pwd.c))
 OBJS	= $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS))
+OBJDS	=		$(addprefix $(OBJDIR)/,											\
+				builtins map)
 HDRS	= $(addprefix $(INCDIR)/, command.h line.h)
+
 
 all:			libft $(NAME)
 
@@ -20,7 +23,10 @@ libft:
 
 $(LIBFT)/libft.a: libft
 
-$(NAME):		$(OBJDIR) $(OBJS) $(LIBFT)/libft.a
+$(OBJDS):
+		mkdir -p $@
+
+$(NAME):		$(OBJDS) $(OBJS) $(LIBFT)/libft.a
 	$(CC) $(OBJS) $(CFLAGS) $(IFLAGS) $(LFLAGS) -o $@
 
 $(OBJDIR):

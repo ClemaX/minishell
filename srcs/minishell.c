@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   minishell.c                                      .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: plamtenz <plamtenz@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/12 04:38:55 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/14 09:33:59 by plamtenz    ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/14 10:12:50 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -25,6 +25,7 @@ int			main(int ac, char **av, char **envp)
 	char		*line;
 	int			fd;
 
+	(void)envp;
 	status = 0;
 	ret = 0;
 	if (ac == 1)

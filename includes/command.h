@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   command.h                                        .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: plamtenz <plamtenz@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/12 04:43:38 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/14 08:50:04 by plamtenz    ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/14 10:11:58 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -33,5 +33,7 @@ typedef struct	s_cmd
 }				t_cmd;
 
 t_status		parse_cmd(t_status status, t_cmd *cmd, char *line);
+int				minish(t_cmd *cmd, char **av, int ret);
+
 
 #endif
