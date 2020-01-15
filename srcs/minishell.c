@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/12 04:38:55 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/15 13:47:32 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/15 18:15:01 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -22,8 +22,24 @@ static	int	print_status(t_status status, t_cmd *cmd)
 	if (status)
 		ft_printf("> ");
 	else
-		ft_printf("%s>$ ", map_get(cmd->env, "PWD")->value);
+		ft_printf("%s>$ ", map_get(cmd->glob_env, "PWD")->value);
 	return (1);
+}
+
+
+t_map		*map_dup(t_map	*map)
+{
+	t_map	*curr;
+	t_map	*dup;
+
+	dup = NULL;
+	curr = map;
+	while (curr)
+	{
+		map_set(&dup, curr->key, curr->value);
+		curr = curr->next;
+	}
+	return (dup);
 }
 
 int			main(int ac, char **av, const char **envp)
@@ -36,7 +52,7 @@ int			main(int ac, char **av, const char **envp)
 	line = NULL;
 	cmd.ac = 0;
 	cmd.av = NULL;
-	cmd.env = map_load(envp);
+	cmd.glob_env = map_load(envp);
 	status = 0;
 	cmd.ret = 0;
 	if (ac == 1)
@@ -45,6 +61,7 @@ int			main(int ac, char **av, const char **envp)
 		fd = open(av[1], O_RDONLY);
 	else
 		return (1);
+	cmd.env = map_dup(cmd.glob_env);
 	while (print_status(status, &cmd) && get_next_line(fd, &line) > 0)
 	{
 		status = cmd_parse(&cmd, line, status);

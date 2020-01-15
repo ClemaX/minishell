@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/12 04:45:30 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/15 13:45:37 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/15 19:08:56 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -29,6 +29,7 @@ t_status		cmd_parse(t_cmd *cmd, char *line, t_status status)
 	status &= ~B_SLASH;
 	line_clr(&args);
 	free(cmd->av);
+	cmd->ac = 0;
 	cmd->av = NULL;
 	while (*line)
 	{
@@ -40,6 +41,7 @@ t_status		cmd_parse(t_cmd *cmd, char *line, t_status status)
 			arg->next = args;
 			args = arg;
 			arg = NULL;
+			cmd->ac++;
 		}
 	}
 	args_export(cmd, args);

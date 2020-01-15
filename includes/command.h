@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/12 04:43:38 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/15 14:09:17 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/15 17:50:23 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -36,6 +36,7 @@ typedef struct		s_cmd
 	int		ac;
 	char	**av;
 	t_map	*env;
+	t_map	*glob_env;
 	int		op;
 	int		ret;
 }					t_cmd;
@@ -44,6 +45,7 @@ t_status			cmd_parse(t_cmd *cmd, char *line, t_status status);
 t_status			arg_parse(t_cmd *cmd, t_line **arg, char **line, t_status status);
 int					args_export(t_cmd *cmd, t_line *args);
 void				args_print(t_line *args);
+int					arg_check(char *key);
 int					minish(t_cmd *cmd, char **av);
 
 #endif

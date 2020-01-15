@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/14 08:51:26 by plamtenz     #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/15 13:41:15 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/15 18:27:33 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -26,14 +26,11 @@ int		minish(t_cmd *cmd, char **av)
 	if (!ft_strncmp(cmd->av[0], "pwd", 4))
 		return (ft_pwd());
 	if (!ft_strncmp(cmd->av[0], "export", 7))
-	{
-		//return (ft_export(cmd->ac, cmd->av, cmd->env));
-		return (1);
-	}
+		return (ft_export(cmd->ac, cmd->av, cmd, av[0]));
 	if (!ft_strncmp(cmd->av[0], "unset", 6))
-		return (ft_unset(cmd->ac, cmd->av, &cmd->env));
+		return (ft_unset(cmd, av[0]));
 	if (!ft_strncmp(cmd->av[0], "env", 4))
-		return (ft_env(cmd->env));
+		return (ft_env(cmd->glob_env));
 	if (!ft_strncmp(cmd->av[0], "exit", 5))
 		return (ft_exit());
 	else
