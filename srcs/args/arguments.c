@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/15 10:17:55 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/15 19:08:46 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/15 19:11:27 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -126,7 +126,6 @@ int					args_export(t_cmd *cmd, t_line *args)
 		return (0);
 	curr = args;
 	i = cmd->ac;
-	ft_printf("%d\n", cmd->ac);
 	while (i--)
 	{
 		cmd->av[i] = curr->content;
