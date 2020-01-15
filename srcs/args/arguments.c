@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/15 10:17:55 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/15 19:11:27 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/15 19:27:30 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -76,8 +76,12 @@ static t_status		status_handler(t_cmd *cmd, t_line **arg, char **line, t_status 
 	else if (status == EQUAL)
 	{
 		(*line)++;
-		if ((int)(*arg)->size == 0 || !arg_check((*arg)->content))
+
+		if (cmd->ac != 0 || !*arg || (int)(*arg)->size == 0 || !arg_check((*arg)->content))
+		{
 			status &= ~EQUAL;
+			line_add(arg, ft_strdup("="), 1);
+		}
 	}
 	return (status);
 }
@@ -102,14 +106,9 @@ t_status			arg_parse(t_cmd *cmd, t_line **arg, char **line,
 		line_add(arg, ft_strdup("\n"), 1);
 	if (status & EQUAL)
 	{
-		if (cmd->ac == 0)
-		{
-			map_set(&cmd->env, (*arg)->next->content, (*arg)->content);
-			ft_printf("%s=%s\n", (*arg)->next->content, (*arg)->content);
-			line_clr(arg);
-		}
-		else
-			*arg = line_cat(arg);
+		map_set(&cmd->env, (*arg)->next->content, (*arg)->content);
+		ft_printf("%s=%s\n", (*arg)->next->content, (*arg)->content);
+		line_clr(arg);
 		status &= ~EQUAL;
 	}
 	else
