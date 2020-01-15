@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/12 04:45:30 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/15 11:46:29 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/15 13:45:37 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -34,7 +34,7 @@ t_status		cmd_parse(t_cmd *cmd, char *line, t_status status)
 	{
 		while (ft_isspace(*line))
 			line++;
-		status = arg_parse(&arg, &line, status);
+		status = arg_parse(cmd, &arg, &line, status);
 		if (arg && !status)
 		{
 			arg->next = args;

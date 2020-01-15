@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   builtins.h                                       .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: plamtenz <plamtenz@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/14 06:11:33 by plamtenz     #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/14 11:16:48 by plamtenz    ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/15 13:30:41 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -18,6 +18,7 @@
 */
 #include <libft.h>
 #include <limits.h>
+#include <map.h>
 
 /*
 **-------------------------------- PROTOTYPES ----------------------------------
@@ -25,8 +26,8 @@
 int     ft_echo(int ac, char **argv, char **envp);
 int     ft_pwd(void);
 int     ft_exit(void);
-int		ft_cd(int ac, char **argv, char **envp);
-int		ft_env(int ac, char **argv, char **envp);
-int		ft_unset(int ac, char **argv, char **envp);
+int		ft_cd(int ac, char **argv, t_map **env);
+int		ft_env(t_map *env);
+int		ft_unset(int ac, char **argv, t_map **env);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/14 05:55:30 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/14 11:42:58 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/15 13:07:01 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -67,7 +67,9 @@ t_map		*map_del(t_map *curr, const char *key)
 	if (ft_strncmp(curr->key, key, curr->key_size) == 0)
 	{
 		next = curr->next;
-		map_delone(curr);
+		free(curr->key);
+		free(curr->value);
+		free(curr);
 		return (next);
 	}
 	curr->next = map_del(curr->next, key);

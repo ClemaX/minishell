@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/14 09:44:45 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/14 12:06:59 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/15 12:52:29 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -14,12 +14,12 @@
 #include <map.h>
 #include <libft.h>
 
-int	ft_env(t_map *map)
+int	ft_env(t_map *env)
 {
-	if (map)
+	if (env)
 	{
-		ft_env(map->next);
-		ft_printf("%s=%s\n", map->key, map->value);
+		ft_env(env->next);
+		ft_printf("%s=%s\n", env->key, env->value);
 	}
 	return (0);
 }

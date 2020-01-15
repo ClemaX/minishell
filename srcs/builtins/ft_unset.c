@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/14 10:00:23 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/14 12:05:52 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/15 13:09:57 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -14,9 +14,9 @@
 #include <libft.h>
 #include <map.h>
 
-int	ft_unset(int ac, char **av, t_map *map)
+int	ft_unset(int ac, char **av, t_map **map)
 {
 	while (ac > 1)
-		map_del(map, av[ac--]);
+		*map = map_del(*map, av[--ac]);
 	return (0);
 }
