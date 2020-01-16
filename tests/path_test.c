@@ -1,24 +1,29 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   main.c                                           .::    .:/ .      .::   */
+/*   path_test.c                                      .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2020/01/14 06:46:56 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/16 22:59:52 by chamada     ###    #+. /#+    ###.fr     */
+/*   Created: 2020/01/16 22:59:05 by chamada      #+#   ##    ##    #+#       */
+/*   Updated: 2020/01/16 23:06:23 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "tests.h"
 #include <map.h>
-#include <libft.h>
+#include <stdlib.h>
 #include <env.h>
+#include <libft.h>
 
-int	main(int ac, const char **av, const char **ep)
+int	path_test(const char **ep)
 {
-	map_test(ac, av, ep);
-	path_test(ep);
+	t_map	*env;
+	char	*path;
+
+	env = map_load(ep);
+	path = path_get(env, "cd");
+	ft_printf("%s\n", path);
+	free(path);
 	return (0);
 }

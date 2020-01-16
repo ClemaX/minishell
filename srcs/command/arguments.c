@@ -6,13 +6,10 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/15 10:17:55 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/16 20:17:42 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/16 20:41:31 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
-
-
-/* not multiline with unfinished quotes */
 
 #include <command.h>
 #include <line.h>

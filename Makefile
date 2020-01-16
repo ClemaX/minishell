@@ -7,15 +7,17 @@ INCDIR	= includes
 CFLAGS	= -Wall -Wextra -Werror
 IFLAGS	= -I$(INCDIR) -I$(LIBFT)/includes
 LFLAGS	= -L$(LIBFT) -lft
+MAIN	= $(SRCDIR)/minishell.c
 SRCS	= $(addprefix $(SRCDIR)/,												\
-				line.c minishell.c minish_cmd.c									\
+				line.c minish_cmd.c												\
 	$(addprefix builtins/ft_, cd.c echo.c exit.c pwd.c env.c unset.c export.c)	\
 	$(addprefix command/, arguments.c meta.c arg_utils.c command.c)				\
+	$(addprefix env/, path.c)													\
 	$(addprefix map/, map.c map_utils.c map_sort.c))
-OBJS	= $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS))
-OBJDS	= $(addprefix $(OBJDIR)/, builtins command map)
-HDRS	= $(addprefix $(INCDIR)/, builtins.h command.h line.h map.h)
-
+OBJS	= $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS) $(MAIN))
+OBJDS	= $(addprefix $(OBJDIR)/, builtins command env map)
+HDRS	= $(addprefix $(INCDIR)/, builtins.h command.h env.h line.h map.h)
+TESTS	= $(addprefix tests/, main.c map_test.c path_test.c)
 all:			libft $(NAME)
 
 libft:
@@ -45,4 +47,12 @@ fclean: 		clean
 
 re: fclean all
 
-.PHONY: libft clean fclean
+test-dir: $(OBJDIR)
+	mkdir -p $(OBJDIR)/tests
+
+test: SRCS += $(TESTS)
+test: OBJS	= $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS))
+test: CFLAGS += -g
+test: test-dir re
+
+.PHONY: libft clean fclean test

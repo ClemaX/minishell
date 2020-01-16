@@ -6,13 +6,14 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/14 06:48:24 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/14 11:44:35 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/16 23:08:19 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include <map.h>
 #include <libft.h>
+#include <stdlib.h>
 
 int	print(t_map *map)
 {
@@ -33,7 +34,14 @@ int	print_tab(char **tab)
 	return (0);
 }
 
-int		map_test(int ac, const char **av, const char **ep)
+static void	*unload_tab(char **tab)
+{
+	while (*tab)
+		free(*tab++);
+	return (NULL);
+}
+
+int	map_test(int ac, const char **av, const char **ep)
 {
 	t_map	*map;
 	char	**strs;
@@ -42,7 +50,8 @@ int		map_test(int ac, const char **av, const char **ep)
 	map = map_load(ep);
 	strs = map_export(map);
 	print_tab(strs);
-//	print(map);
+	strs = unload_tab(strs);
+	print_tab(strs);
 	map_clr(&map);
 	map = map_load(&av[1]);
 	print(map);
