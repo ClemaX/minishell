@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/12 04:45:30 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/15 19:19:28 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/16 15:43:31 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -27,10 +27,13 @@ t_status		cmd_parse(t_cmd *cmd, char *line, t_status status)
 	static t_line	*args = NULL;
 
 	status &= ~B_SLASH;
-	line_clr(&args);
-	free(cmd->av);
-	cmd->ac = 0;
-	cmd->av = NULL;
+	if (!(status & QUOTE))
+	{
+		line_clr(&args);
+		free(cmd->av);
+		cmd->ac = 0;
+		cmd->av = NULL;
+	}
 	while (*line)
 	{
 		while (ft_isspace(*line))
