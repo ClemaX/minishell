@@ -10,7 +10,7 @@ LFLAGS	= -L$(LIBFT) -lft
 SRCS	= $(addprefix $(SRCDIR)/,												\
 				line.c minishell.c minish_cmd.c									\
 	$(addprefix builtins/ft_, cd.c echo.c exit.c pwd.c env.c unset.c export.c)	\
-	$(addprefix command/, arguments.c arg_utils.c command.c)					\
+	$(addprefix command/, arguments.c meta.c arg_utils.c command.c)				\
 	$(addprefix map/, map.c map_utils.c map_sort.c))
 OBJS	= $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS))
 OBJDS	= $(addprefix $(OBJDIR)/, builtins command map)

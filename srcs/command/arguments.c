@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/15 10:17:55 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/16 20:07:16 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/16 20:17:42 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -32,64 +32,10 @@ static int			get_len(char *line, t_status status)
 		while (line[len] && line[len] != '\'')
 			len++;
 	else if (status & D_QUOTE)
-		while (line[len] &&
-		(line[len] == '\'' || line[len] == ';' || ft_strpos(META, line[len]) == -1))
+		while (line[len] && (line[len] == '\'' || line[len] == ';'
+		|| ft_strpos(META, line[len]) == -1))
 			len++;
 	return (len);
-}
-
-static t_status		status_handler(t_cmd *cmd, t_line **arg, char **line, t_status status)
-{
-	int		len;
-	t_map	*var;
-
-	if (status & QUOTE)
-		status &= ~(EQUAL | SEMICOL);
-	else if (status & SEMICOL)
-		(*line)++;
-	if (status & B_SLASH)
-	{
-		if (*(*line)++)
-		{
-			line_add(arg, ft_substr((*line)++, 0, 1), 1);
-			status &= ~B_SLASH;
-		}
-		else
-			line_add(arg, ft_strdup("\n"), 1);
-	}
-	else if (status & DOLLAR)
-	{
-		(*line)++;
-		if (**line == '?')
-		{
-			line_add(arg, ft_itoa(cmd->ret), ft_numlen(cmd->ret, 10));
-			(*line)++;
-		}
-		else
-		{
-			len = 0;
-			while (ft_isalnum((*line)[len]) || (*line)[len] == '_')
-				len++;
-			if ((var = map_get(cmd->env, ft_substr(*line, 0, len))))
-				line_add(arg, ft_strdup(var->value), ft_strlen(var->value));
-			else
-				line_add(arg, ft_strdup(""), 0);
-			(*line) += len;
-		}
-		status &= ~DOLLAR;
-	}
-	else if (status == EQUAL)
-	{
-		(*line)++;
-
-		if (cmd->ac != 0 || !*arg || (int)(*arg)->size == 0
-		|| !arg_check((*arg)->content))
-		{
-			status &= ~EQUAL;
-			line_add(arg, ft_strdup("="), 1);
-		}
-	}
-	return (status);
 }
 
 t_status			arg_parse(t_cmd *cmd, t_line **arg, char **line,
