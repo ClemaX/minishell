@@ -6,7 +6,7 @@
 /*   By: plamtenz <plamtenz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 20:06:30 by plamtenz          #+#    #+#             */
-/*   Updated: 2020/01/16 22:14:03 by plamtenz         ###   ########.fr       */
+/*   Updated: 2020/01/16 22:42:49 by plamtenz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ static int  pipe_engine(t_cmd *process, int *pipefd, int std)
 {
     int pid;
     
-    pid = fork();
-    if ((pid < 0))
+    if ((pid = fork()) < 0)
         return (-1);
     else if (!pid)
     {
