@@ -8,12 +8,12 @@ CFLAGS	= -Wall -Wextra -Werror
 IFLAGS	= -I$(INCDIR) -I$(LIBFT)/includes
 LFLAGS	= -L$(LIBFT) -lft
 SRCS	= $(addprefix $(SRCDIR)/,												\
-	command.c line.c minishell.c minish_cmd.c									\
-	$(addprefix args/, arguments.c arg_utils.c)									\
+				line.c minishell.c minish_cmd.c									\
 	$(addprefix builtins/ft_, cd.c echo.c exit.c pwd.c env.c unset.c export.c)	\
+	$(addprefix command/, arguments.c arg_utils.c command.c)					\
 	$(addprefix map/, map.c map_utils.c map_sort.c))
 OBJS	= $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS))
-OBJDS	= $(addprefix $(OBJDIR)/, args builtins map)
+OBJDS	= $(addprefix $(OBJDIR)/, builtins command map)
 HDRS	= $(addprefix $(INCDIR)/, builtins.h command.h line.h map.h)
 
 all:			libft $(NAME)

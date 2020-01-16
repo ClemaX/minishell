@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/15 10:17:55 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/15 19:27:30 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/16 15:40:21 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -40,7 +40,7 @@ static t_status		status_handler(t_cmd *cmd, t_line **arg, char **line, t_status 
 	int		len;
 	t_map	*var;
 
-	if (status & QUOTE && status & EQUAL)
+	if (status & QUOTE)
 		status &= ~EQUAL;
 	if (status & B_SLASH)
 	{
@@ -77,7 +77,8 @@ static t_status		status_handler(t_cmd *cmd, t_line **arg, char **line, t_status 
 	{
 		(*line)++;
 
-		if (cmd->ac != 0 || !*arg || (int)(*arg)->size == 0 || !arg_check((*arg)->content))
+		if (cmd->ac != 0 || !*arg || (int)(*arg)->size == 0
+		|| !arg_check((*arg)->content))
 		{
 			status &= ~EQUAL;
 			line_add(arg, ft_strdup("="), 1);
@@ -96,7 +97,11 @@ t_status			arg_parse(t_cmd *cmd, t_line **arg, char **line,
 	&& (status & QUOTE || !ft_isspace(**line)))
 	{
 		if ((pos = ft_strpos(META, **line)) != -1)
+		{
+			if ((1 << pos) & QUOTE)
+				(*line)++;
 			status ^= (1 << pos);
+		}
 		status = status_handler(cmd, arg, line, status);
 		len = get_len(*line, status);
 		line_add(arg, ft_substr(*line, 0, len), len);
