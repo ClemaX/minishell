@@ -1,15 +1,15 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: plamtenz <plamtenz@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/22 03:02:45 by chamada           #+#    #+#             */
-/*   Updated: 2020/01/16 17:26:59 by plamtenz         ###   ########.fr       */
-/*                                                                            */
+/*                                                          LE - /            */
+/*                                                              /             */
+/*   get_next_line.c                                  .::    .:/ .      .::   */
+/*                                                 +:+:+   +:    +:  +:+:+    */
+/*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
+/*                                                 #+#   #+    #+    #+#      */
+/*   Created: 2019/10/22 03:02:45 by chamada      #+#   ##    ##    #+#       */
+/*   Updated: 2020/01/11 22:16:48 by chamada     ###    #+. /#+    ###.fr     */
+/*                                                         /                  */
+/*                                                        /                   */
 /* ************************************************************************** */
-
 
 #include <libft.h>
 #include <gnl/get_next_line.h>
@@ -85,7 +85,7 @@ static int	add_words(t_words **words, char *content, size_t size)
 	return (1);
 }
 
-static int	gnl_parse(t_fd *fd, t_words **words, size_t size, int status)
+static int	gnl_parse(t_fd *fd, t_words **words, size_t size)
 {
 	char	*buffer;
 	char	*end;
@@ -96,7 +96,7 @@ static int	gnl_parse(t_fd *fd, t_words **words, size_t size, int status)
 	buffer = fd->buffer + fd->position;
 	size -= fd->position;
 	fd->position = 0;
-	if ((state = search_end(buffer, size, &end, status)) != 1)
+	if ((state = search_end(buffer, size, &end)) != 1)
 	{
 		size = end - buffer;
 		if (size < BUFFER_SIZE - 1 && fd->buffer[size + 1] != '\0')
@@ -105,7 +105,7 @@ static int	gnl_parse(t_fd *fd, t_words **words, size_t size, int status)
 	return (add_words(words, buffer, size) != -1 ? state : -1);
 }
 
-int			get_next_line(int fd, char **line, int status)
+int			get_next_line(int fd, char **line)
 {
 	static t_fd	*fd_list;
 	t_fd		*curr_fd;
@@ -119,10 +119,10 @@ int			get_next_line(int fd, char **line, int status)
 	curr_fd = get_fd(&fd_list, fd);
 	state = (curr_fd) ? 1 : -1;
 	if (state == 1 && curr_fd->position)
-		state = gnl_parse(curr_fd, &words, BUFFER_SIZE, status);
+		state = gnl_parse(curr_fd, &words, BUFFER_SIZE);
 	size = 0;
 	while (state == 1 && (size = read(fd, curr_fd->buffer, BUFFER_SIZE)) > 0)
-		state = gnl_parse(curr_fd, &words, size, status);
+		state = gnl_parse(curr_fd, &words, size);
 	if (size == -1 || state == -1 || !(*line = get_line(words)))
 	{
 		clear_fds(&fd_list);

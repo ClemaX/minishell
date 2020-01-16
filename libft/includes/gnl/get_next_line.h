@@ -1,15 +1,15 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: plamtenz <plamtenz@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/22 02:59:12 by chamada           #+#    #+#             */
-/*   Updated: 2020/01/16 17:40:12 by plamtenz         ###   ########.fr       */
-/*                                                                            */
+/*                                                          LE - /            */
+/*                                                              /             */
+/*   get_next_line.h                                  .::    .:/ .      .::   */
+/*                                                 +:+:+   +:    +:  +:+:+    */
+/*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
+/*                                                 #+#   #+    #+    #+#      */
+/*   Created: 2019/10/22 02:59:12 by chamada      #+#   ##    ##    #+#       */
+/*   Updated: 2020/01/16 18:15:26 by chamada     ###    #+. /#+    ###.fr     */
+/*                                                         /                  */
+/*                                                        /                   */
 /* ************************************************************************** */
-
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
@@ -42,8 +42,8 @@ typedef struct	s_fd
 	struct s_fd		*next;
 }				t_fd;
 
-int				get_next_line(int fd, char **line, int status);
-int				search_end(char *s, size_t size, char **end, int status);
+int				get_next_line(int fd, char **line);
+int				search_end(char *s, size_t size, char **end);
 void			clear_fds(t_fd **fd_list);
 void			clear_words(t_words *words);
 t_fd			*del_fd(t_fd *curr, int fd);

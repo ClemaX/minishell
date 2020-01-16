@@ -1,21 +1,21 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: plamtenz <plamtenz@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/22 03:03:04 by chamada           #+#    #+#             */
-/*   Updated: 2020/01/16 17:47:44 by plamtenz         ###   ########.fr       */
-/*                                                                            */
+/*                                                          LE - /            */
+/*                                                              /             */
+/*   get_next_line_utils.c                            .::    .:/ .      .::   */
+/*                                                 +:+:+   +:    +:  +:+:+    */
+/*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
+/*                                                 #+#   #+    #+    #+#      */
+/*   Created: 2019/10/22 03:03:04 by chamada      #+#   ##    ##    #+#       */
+/*   Updated: 2020/01/16 18:15:44 by chamada     ###    #+. /#+    ###.fr     */
+/*                                                         /                  */
+/*                                                        /                   */
 /* ************************************************************************** */
-
 
 #include <gnl/get_next_line.h>
 
-int		search_end(char *s, size_t size, char **end, int status)
+int		search_end(char *s, size_t size, char **end)
 {
-	while (size && *s && *s != '\n' && !(*s == ';' && (status & 6)) && size--)
+	while (size && *s && *s != '\n' && *s != ';' && size--)
 		s++;
 	if (size)
 		return ((*(*end = s) == '\0') ? END : NEW_LINE);
