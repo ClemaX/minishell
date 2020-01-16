@@ -6,11 +6,10 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/16 20:06:30 by plamtenz     #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/16 22:23:11 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/16 23:11:17 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
-#include "command.h"
 #include "unistd.h"
 #include "stdio.h"
 #include "builtins.h"
@@ -29,7 +28,6 @@ static int	pipe_engine(t_cmd *process, int *pipefd, int std)
 		close(pipefd[0]);
 		close(pipefd[1]);
 	}
-	return (0);
 }
 
 static int	made_in_42(char *built_in)
@@ -42,7 +40,6 @@ static int	made_in_42(char *built_in)
 	ret = ret <= 0 && !ft_strmcmp("pwd", built_in, 4) ? 8 : 0;
 	ret = ret <= 0 && !ft_strmcmp("export", built_in, 7) ? 16 : 0;
 	ret = ret <= 0 && !ft_strmcmp("unset", built_in, 6) ? 32 : 0;
-	ret = ret <= 0 && !ft_strmcmp("env", built_in, 4) ? 62 : 0;
 	ret = ret <= 0 && !ft_strmcmp("exit", built_in, 5) ? 128 : 0;
 	return (ret > 0 ? 0 : 1);
 }
