@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/12 04:43:38 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/16 20:25:58 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/16 20:33:39 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -49,7 +49,9 @@ t_status			status_handler(t_cmd *cmd, t_line **arg, char **line,
 	t_status status);
 int					args_export(t_cmd *cmd, t_line *args);
 void				args_print(t_line *args);
-int					arg_check(char *key);
+void				arg_add(t_line **args, t_line **arg, t_cmd *cmd);
+void				args_clr(t_line **args, t_cmd *cmd);
+int					key_check(char *key);
 int					minish(t_cmd *cmd, char **av);
 
 #endif

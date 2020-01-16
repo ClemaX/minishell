@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/14 10:00:23 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/15 18:27:09 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/16 20:33:57 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -19,7 +19,7 @@ int	ft_unset(t_cmd *cmd, char *name)
 {
 	while (cmd->ac-- > 1)
 	{
-		if (!arg_check(cmd->av[cmd->ac]))
+		if (!key_check(cmd->av[cmd->ac]))
 		{
 			ft_printf("%s: %s `%s' : not a valid identifier\n",
 				name, cmd->av[0], cmd->av[cmd->ac]);
@@ -29,4 +29,5 @@ int	ft_unset(t_cmd *cmd, char *name)
 		cmd->glob_env = map_del(cmd->glob_env, cmd->av[cmd->ac]);
 	}
 	return (0);
+
 }

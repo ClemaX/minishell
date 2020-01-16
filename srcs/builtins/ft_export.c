@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/15 16:03:42 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/15 18:24:16 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/16 20:34:04 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -41,7 +41,7 @@ int	ft_export(int ac, char **av, t_cmd *cmd, char *name)
 	{
 		while (ac-- > 1)
 		{
-			if (!arg_check(av[ac]))
+			if (!key_check(av[ac]))
 			{
 				ft_printf("%s: %s `%s' : not a valid identifier\n",
 					name, av[0], av[ac]);

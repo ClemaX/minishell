@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/16 20:17:32 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/16 20:26:40 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/16 20:31:59 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -57,7 +57,7 @@ static t_status	handle_equal(t_cmd *cmd, t_line **arg, char **line,
 {
 	(*line)++;
 	if (cmd->ac != 0 || !*arg || (int)(*arg)->size == 0
-	|| !arg_check((*arg)->content))
+	|| !key_check((*arg)->content))
 	{
 		status &= ~EQUAL;
 		line_add(arg, ft_strdup("="), 1);
