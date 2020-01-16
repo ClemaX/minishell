@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/12 04:38:55 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/16 18:15:58 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/16 18:16:55 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -17,7 +17,7 @@
 #include <command.h>
 #include <unistd.h>
 
-static	int	print_status(t_status status, t_cmd *cmd)
+static int	print_status(t_status status, t_cmd *cmd)
 {
 	if (status)
 		ft_printf("> ");
