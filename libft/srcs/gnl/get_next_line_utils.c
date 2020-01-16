@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/22 03:03:04 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/16 18:15:44 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/16 18:20:52 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,7 +15,7 @@
 
 int		search_end(char *s, size_t size, char **end)
 {
-	while (size && *s && *s != '\n' && *s != ';' && size--)
+	while (size && *s && *s != '\n' && size--)
 		s++;
 	if (size)
 		return ((*(*end = s) == '\0') ? END : NEW_LINE);
