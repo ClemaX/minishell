@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/15 10:17:55 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/16 17:35:37 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/16 20:07:16 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -33,7 +33,7 @@ static int			get_len(char *line, t_status status)
 			len++;
 	else if (status & D_QUOTE)
 		while (line[len] &&
-		(line[len] == '\'' || ft_strpos(META, line[len]) == -1))
+		(line[len] == '\'' || line[len] == ';' || ft_strpos(META, line[len]) == -1))
 			len++;
 	return (len);
 }
@@ -44,7 +44,9 @@ static t_status		status_handler(t_cmd *cmd, t_line **arg, char **line, t_status 
 	t_map	*var;
 
 	if (status & QUOTE)
-		status &= ~EQUAL;
+		status &= ~(EQUAL | SEMICOL);
+	else if (status & SEMICOL)
+		(*line)++;
 	if (status & B_SLASH)
 	{
 		if (*(*line)++)
@@ -106,6 +108,8 @@ t_status			arg_parse(t_cmd *cmd, t_line **arg, char **line,
 			status ^= (1 << pos);
 		}
 		status = status_handler(cmd, arg, line, status);
+		if (status & SEMICOL)
+			return (status);
 		len = get_len(*line, status);
 		line_add(arg, ft_substr(*line, 0, len), len);
 		(*line) += len;

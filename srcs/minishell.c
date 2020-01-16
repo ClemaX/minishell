@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/12 04:38:55 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/16 18:16:55 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/16 19:34:48 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -47,6 +47,7 @@ int			main(int ac, char **av, const char **envp)
 	t_cmd			cmd;
 	t_status		status;
 	char			*line;
+	char			*start;
 	int				fd;
 
 	line = NULL;
@@ -64,10 +65,14 @@ int			main(int ac, char **av, const char **envp)
 	cmd.env = map_dup(cmd.glob_env);
 	while (print_status(status, &cmd) && get_next_line(fd, &line) > 0)
 	{
-		status = cmd_parse(&cmd, line, status);
-		if (!(status & (QUOTE | B_SLASH)))
-			cmd.ret = minish(&cmd, av);
-		free(line);
+		start = line;
+		while (*line)
+		{
+			status = cmd_parse(&cmd, &line, status);
+			if (!(status & (QUOTE | B_SLASH)))
+				cmd.ret = minish(&cmd, av);
+		}
+		free(start);
 	}
 	free(line);
 	free(cmd.av);

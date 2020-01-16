@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/12 04:45:30 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/16 18:20:28 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/16 19:35:40 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -21,10 +21,18 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-t_status		cmd_parse(t_cmd *cmd, char *line, t_status status)
+void			arg_add(t_line **args, t_line **arg, t_cmd *cmd)
 {
-	static t_line	*arg = NULL;
-	static t_line	*args = NULL;
+	(*arg)->next = *args;
+	*args = *arg;
+	*arg = NULL;
+	cmd->ac++;
+}
+
+t_status		cmd_parse(t_cmd *cmd, char **line, t_status status)
+{
+	static t_line	*arg;
+	static t_line	*args;
 
 	if (!(status & (QUOTE | B_SLASH)))
 	{
@@ -34,19 +42,15 @@ t_status		cmd_parse(t_cmd *cmd, char *line, t_status status)
 		cmd->av = NULL;
 	}
 	status &= ~B_SLASH;
-	while (*line)
+	while (**line && !(status & SEMICOL))
 	{
-		while (ft_isspace(*line))
-			line++;
-		status = arg_parse(cmd, &arg, &line, status);
+		while (ft_isspace(**line))
+			(*line)++;
+		status = arg_parse(cmd, &arg, line, status);
 		if (arg && !status)
-		{
-			arg->next = args;
-			args = arg;
-			arg = NULL;
-			cmd->ac++;
-		}
+			arg_add(&args, &arg, cmd);
 	}
+	status &= ~SEMICOL;
 	if (!(status & (QUOTE | B_SLASH)))
 		args_export(cmd, args);
 	return (status);
