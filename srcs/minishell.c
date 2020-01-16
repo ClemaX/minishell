@@ -1,15 +1,15 @@
 /* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   minishell.c                                      .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2020/01/12 04:38:55 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/15 18:15:01 by chamada     ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: plamtenz <plamtenz@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/12 04:38:55 by chamada           #+#    #+#             */
+/*   Updated: 2020/01/16 17:29:10 by plamtenz         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
+
 
 #include <libft.h>
 #include <stdlib.h>
@@ -62,7 +62,7 @@ int			main(int ac, char **av, const char **envp)
 	else
 		return (1);
 	cmd.env = map_dup(cmd.glob_env);
-	while (print_status(status, &cmd) && get_next_line(fd, &line) > 0)
+	while (print_status(status, &cmd) && get_next_line(fd, &line, status) > 0)
 	{
 		status = cmd_parse(&cmd, line, status);
 		cmd.ret = minish(&cmd, av);

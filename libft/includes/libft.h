@@ -1,15 +1,15 @@
 /* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   libft.h                                          .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/08/14 23:24:01 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/09 05:53:57 by chamada     ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   libft.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: plamtenz <plamtenz@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/08/14 23:24:01 by chamada           #+#    #+#             */
+/*   Updated: 2020/01/16 17:28:05 by plamtenz         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef LIBFT_H
 # define LIBFT_H
@@ -80,7 +80,7 @@ void					ft_lstclear(t_list **lst, void (*del)(void*));
 t_list					*ft_lstmap
 	(t_list *lst, void *(*f)(void*), void (*del)(void*));
 void					ft_lstsort(t_list **lst, int (*cmp)(void*, void*));
-int						get_next_line(int fd, char **line);
+int						get_next_line(int fd, char **line, int status);
 int						ft_printf
 	(const char *fmt, ...) __attribute__((format(printf,1,2)));
 int						ft_sscanf
