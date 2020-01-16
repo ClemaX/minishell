@@ -6,7 +6,7 @@
 /*   By: plamtenz <plamtenz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 03:03:04 by chamada           #+#    #+#             */
-/*   Updated: 2020/01/16 17:26:59 by plamtenz         ###   ########.fr       */
+/*   Updated: 2020/01/16 17:47:44 by plamtenz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 int		search_end(char *s, size_t size, char **end, int status)
 {
-	while (size && *s && *s != '\n' && *s != ';' && !(status & 6) && size--)
+	while (size && *s && *s != '\n' && !(*s == ';' && (status & 6)) && size--)
 		s++;
 	if (size)
 		return ((*(*end = s) == '\0') ? END : NEW_LINE);
