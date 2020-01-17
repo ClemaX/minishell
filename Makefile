@@ -18,6 +18,7 @@ OBJS	= $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS) $(MAIN))
 OBJDS	= $(addprefix $(OBJDIR)/, builtins command env map)
 HDRS	= $(addprefix $(INCDIR)/, builtins.h command.h env.h line.h map.h)
 TESTS	= $(addprefix tests/, main.c map_test.c path_test.c)
+
 all:			libft $(NAME)
 
 libft:
@@ -26,7 +27,7 @@ libft:
 $(LIBFT)/libft.a: libft
 
 $(OBJDS):
-		mkdir -p $@
+	mkdir -p $@
 
 $(NAME):		$(OBJDS) $(OBJS) $(LIBFT)/libft.a
 	$(CC) $(OBJS) $(CFLAGS) $(IFLAGS) $(LFLAGS) -o $@
@@ -34,7 +35,7 @@ $(NAME):		$(OBJDS) $(OBJS) $(LIBFT)/libft.a
 $(OBJDIR):
 	mkdir -p $@
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.c $(HDRS) Makefile
+$(OBJDIR)/%.o:	$(SRCDIR)/%.c $(HDRS) Makefile
 	$(CC) $(CFLAGS) $(IFLAGS) -c -o $@ $<
 
 clean:
@@ -45,14 +46,14 @@ fclean: 		clean
 	make -C $(LIBFT) $@
 	/bin/rm -f $(NAME)
 
-re: fclean all
+re:				fclean all
 
-test-dir: $(OBJDIR)
+test-dir:		$(OBJDIR)
 	mkdir -p $(OBJDIR)/tests
 
-test: SRCS += $(TESTS)
-test: OBJS	= $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS))
-test: CFLAGS += -g
-test: test-dir re
+test:			SRCS	+=	$(TESTS)
+test:			OBJS	=	$(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS))
+test:			CFLAGS	+=	-g
+test:			test-dir re
 
-.PHONY: libft clean fclean test
+.PHONY: libft clean fclean
