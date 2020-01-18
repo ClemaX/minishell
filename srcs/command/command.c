@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/12 04:45:30 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/16 20:33:01 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/18 01:39:15 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,16 +16,17 @@
 #include <line.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <parser.h>
 
 t_status		cmd_parse(t_cmd *cmd, char **line, t_status status)
 {
-	static t_line	*arg;
-	static t_line	*args;
+	static t_token	*arg;
+	static t_token	*args;
 
 	if (!(status & (QUOTE | B_SLASH)))
 		args_clr(&args, cmd);
 	status &= ~B_SLASH;
-	while (**line && !(status & SEMICOL))
+	while (**line)
 	{
 		while (ft_isspace(**line))
 			(*line)++;
@@ -33,7 +34,7 @@ t_status		cmd_parse(t_cmd *cmd, char **line, t_status status)
 		if (arg && !status)
 			arg_add(&args, &arg, cmd);
 	}
-	status &= ~SEMICOL;
+	parse(args);
 	if (!(status & (QUOTE | B_SLASH)))
 		args_export(cmd, args);
 	return (status);

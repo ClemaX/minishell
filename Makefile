@@ -13,9 +13,10 @@ SRCS	= $(addprefix $(SRCDIR)/,												\
 	$(addprefix builtins/ft_, cd.c echo.c exit.c pwd.c env.c unset.c export.c)	\
 	$(addprefix command/, arguments.c meta.c arg_utils.c command.c)				\
 	$(addprefix env/, path.c)													\
-	$(addprefix map/, map.c map_utils.c map_sort.c))
+	$(addprefix map/, map.c map_utils.c map_sort.c)								\
+	$(addprefix parser/, parser.c job.c command.c cmd_line.c arg_list.c node.c))
 OBJS	= $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS) $(MAIN))
-OBJDS	= $(addprefix $(OBJDIR)/, builtins command env map)
+OBJDS	= $(addprefix $(OBJDIR)/, builtins command env map parser)
 HDRS	= $(addprefix $(INCDIR)/, builtins.h command.h env.h line.h map.h)
 TESTS	= $(addprefix tests/, main.c map_test.c path_test.c)
 

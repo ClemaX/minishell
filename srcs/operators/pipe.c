@@ -6,13 +6,14 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/16 20:06:30 by plamtenz     #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/16 23:11:17 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/18 02:03:44 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 #include "unistd.h"
 #include "stdio.h"
 #include "builtins.h"
+#include <env.h>
 
 static int	pipe_engine(t_cmd *process, int *pipefd, int std)
 {
@@ -41,7 +42,7 @@ static int	made_in_42(char *built_in)
 	ret = ret <= 0 && !ft_strmcmp("export", built_in, 7) ? 16 : 0;
 	ret = ret <= 0 && !ft_strmcmp("unset", built_in, 6) ? 32 : 0;
 	ret = ret <= 0 && !ft_strmcmp("exit", built_in, 5) ? 128 : 0;
-	return (ret > 0 ? 0 : 1);
+	return (ret);
 }
 
 static int	find_built_in(char *built_in, t_cmd *cmd, char **av)
@@ -75,12 +76,12 @@ int			ft_pipe(t_cmd *prcss1, t_cmd *prcss2, char **av)
 	if (pipe(pipe_fd) < 0)
 		return (-1);
 	pipe_engine(prcss1, pipe_fd, STDIN_FILENO);
-	made_in_42(prcss1->av[0])
+	!made_in_42(prcss1->av[0])
 		? execve(path_get(prcss1->glob_env, prcss1->av[0]),
 		prcss1->av, map_export(prcss1->glob_env))
 		: find_built_in(prcss1->av[0], prcss1, av);
 	pipe_engine(prcss1, pipe_fd, STDOUT_FILENO);
-	made_in_42(prcss2->av[0])
+	!made_in_42(prcss2->av[0])
 		? execve(path_get(prcss2->glob_env, prcss2->av[0]),
 		prcss2->av, map_export(prcss2->glob_env))
 		: find_built_in(prcss2->av[0], prcss2, av);

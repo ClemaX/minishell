@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/17 22:29:42 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/17 23:08:40 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/18 01:46:36 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -29,7 +29,7 @@ static t_node	*cmd_line_get(t_token **token, t_token_t type, char recur)
 		node_del(job_node);
 		return (NULL);
 	}
-	result->type = type;
+	result->type = (t_node_t)type;
 	result->ch1 = job_node;
 	result->ch2 = (recur) ? cmd_line_node : NULL;
 	return (result);
@@ -37,9 +37,10 @@ static t_node	*cmd_line_get(t_token **token, t_token_t type, char recur)
 
 t_node			*cmd_line(t_token **token)
 {
-	const t_token	*save = *token;
+	t_token			*save;
 	t_node			*node;
 
+	save = *token;
 	if ((((*token) = save)
 		&& (node = cmd_line_get(token, OP_SEMICOLON, 1)))
 	|| (((*token) = save)

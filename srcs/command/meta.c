@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/16 20:17:32 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/16 20:31:59 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/18 01:28:07 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -69,9 +69,7 @@ t_status		status_handler(t_cmd *cmd, t_line **arg, char **line,
 	t_status status)
 {
 	if (status & QUOTE)
-		status &= ~(EQUAL | SEMICOL);
-	else if (status & SEMICOL)
-		(*line)++;
+		status &= ~EQUAL;
 	if (status & B_SLASH)
 		status = handle_b_slash(arg, line, status);
 	else if (status & DOLLAR)
