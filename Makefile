@@ -6,18 +6,19 @@ OBJDIR	= objs
 INCDIR	= includes
 CFLAGS	= -Wall -Wextra -Werror
 IFLAGS	= -I$(INCDIR) -I$(LIBFT)/includes
-LFLAGS	= -L$(LIBFT) -lft
+LFLAGS	= -L$(LIBFT) -lft -ltermcap
 MAIN	= $(SRCDIR)/minishell.c
 SRCS	= $(addprefix $(SRCDIR)/,												\
 				line.c minish_cmd.c												\
 	$(addprefix builtins/ft_, cd.c echo.c exit.c pwd.c env.c unset.c export.c)	\
 	$(addprefix command/, arguments.c meta.c arg_utils.c command.c)				\
 	$(addprefix env/, path.c)													\
+	$(addprefix lexer/, lexer.c)												\
 	$(addprefix map/, map.c map_utils.c map_sort.c)								\
 	$(addprefix parser/, parser.c job.c command.c cmd_line.c arg_list.c node.c))
 OBJS	= $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS) $(MAIN))
-OBJDS	= $(addprefix $(OBJDIR)/, builtins command env map parser)
-HDRS	= $(addprefix $(INCDIR)/, builtins.h command.h env.h line.h map.h)
+OBJDS	= $(addprefix $(OBJDIR)/, builtins command env lexer map parser)
+HDRS	= $(addprefix $(INCDIR)/, builtins.h command.h env.h lexer.h line.h map.h)
 TESTS	= $(addprefix tests/, main.c map_test.c path_test.c)
 
 all:			libft $(NAME)
@@ -54,7 +55,7 @@ test-dir:		$(OBJDIR)
 
 test:			SRCS	+=	$(TESTS)
 test:			OBJS	=	$(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS))
-test:			CFLAGS	+=	-g
+test:			CFLAGS	=	-Wall -Wextra
 test:			test-dir re
 
 .PHONY: libft clean fclean
