@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/17 22:39:55 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/18 01:47:01 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/20 07:05:53 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -14,7 +14,7 @@
 #include <parser.h>
 #include <stdlib.h>
 
-t_node	*arg_list(t_token **token)
+static t_node	*arg_list_get(t_token **token)
 {
 	t_node	*arg_list_node;
 	t_node	*result;
@@ -33,4 +33,17 @@ t_node	*arg_list(t_token **token)
 	result->ch1 = arg_list_node;
 	result->ch2 = NULL;
 	return (result);
+}
+
+t_node	*arg_list(t_token **token)
+{
+	t_token	*save;
+	t_node	*node;
+
+	save = *token;
+	if ((*token = save)
+	&& (node = arg_list_get(token)))
+		return (node);
+	*token = save;
+	return (NULL);
 }

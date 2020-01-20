@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/18 22:57:54 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/20 02:27:33 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/20 05:17:51 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -26,8 +26,10 @@
 
 # define WAITING		15
 
-char	*line_read(char *line);
+char	*line_parse(char *str);
 t_token	*line_tokenize(char *line);
 int		var_expand(t_token *token, void *env);
+int		var_assign(t_token *token, void *env);
+int		set_token_type_op(t_token *token, void *param);
 
 #endif

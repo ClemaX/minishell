@@ -9,11 +9,11 @@ IFLAGS	= -I$(INCDIR) -I$(LIBFT)/includes
 LFLAGS	= -L$(LIBFT) -lft -ltermcap
 MAIN	= $(SRCDIR)/minishell.c
 SRCS	= $(addprefix $(SRCDIR)/,												\
-				line.c minish_cmd.c												\
+				line.c minish_cmd.c	token.c										\
 	$(addprefix builtins/ft_, cd.c echo.c exit.c pwd.c env.c unset.c export.c)	\
 	$(addprefix command/, arg_utils.c)				\
 	$(addprefix env/, path.c)													\
-	$(addprefix lexer/, lexer.c)												\
+	$(addprefix lexer/, lexer.c variables.c)												\
 	$(addprefix map/, map.c map_utils.c map_sort.c)								\
 	$(addprefix parser/, parser.c job.c command.c cmd_line.c arg_list.c node.c) \
 	$(addprefix prompt/, history.c prompt.c))

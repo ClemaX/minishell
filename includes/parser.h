@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/17 21:17:36 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/18 01:43:37 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/20 07:14:04 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -19,10 +19,11 @@
 typedef enum	e_node_t
 {
 	NODE_SEQ = OP_SEMICOLON,
-	NODE_BG = OP_AMPERSAND,
+	NODE_AND = OP_AND,
 	NODE_PIPE = OP_PIPE,
 	NODE_R_IN = OP_LESSER,
 	NODE_R_OUT = OP_GREATER,
+	NODE_OR = OP_OR,
 	NODE_ARG,
 	NODE_CMD
 }				t_node_t;

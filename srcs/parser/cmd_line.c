@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/17 22:29:42 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/18 01:46:36 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/20 07:11:33 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -41,16 +41,21 @@ t_node			*cmd_line(t_token **token)
 	t_node			*node;
 
 	save = *token;
-	if ((((*token) = save)
+	if (((*token = save)
 		&& (node = cmd_line_get(token, OP_SEMICOLON, 1)))
-	|| (((*token) = save)
+	|| ((*token = save)
 		&& (node = cmd_line_get(token, OP_SEMICOLON, 0)))
-	|| (((*token) = save)
-		&& (node = cmd_line_get(token, OP_AMPERSAND, 1)))
-	|| (((*token) = save)
-		&& (node = cmd_line_get(token, OP_AMPERSAND, 0)))
-	|| (((*token) = save)
+	|| ((*token = save)
+		&& (node = cmd_line_get(token, OP_AND, 1)))
+	|| ((*token = save)
+		&& (node = cmd_line_get(token, OP_AND, 0)))
+	|| ((*token = save)
+		&& (node = cmd_line_get(token, OP_OR, 1)))
+	|| ((*token = save)
+		&& (node = cmd_line_get(token, OP_OR, 0)))
+	|| ((*token = save)
 		&& (node = job(token))))
 		return (node);
+	*token = save;
 	return (NULL);
 }

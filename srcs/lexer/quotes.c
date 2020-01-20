@@ -1,39 +1,13 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   arg_utils.c                                      .::    .:/ .      .::   */
+/*   quotes.c                                         .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2020/01/15 17:40:37 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/20 03:12:46 by chamada     ###    #+. /#+    ###.fr     */
+/*   Created: 2020/01/20 03:39:49 by chamada      #+#   ##    ##    #+#       */
+/*   Updated: 2020/01/20 03:39:50 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include <libft.h>
-#include <stdlib.h>
-#include <command.h>
-
-void	arg_add(t_token **args, t_token **arg, t_cmd *cmd)
-{
-	(*arg)->next = *args;
-	*args = *arg;
-	*arg = NULL;
-	cmd->ac++;
-}
-
-void	args_clr(t_token **args, t_cmd *cmd)
-{
-	t_token	*curr;
-
-	while ((curr = *args))
-	{
-		*args = (*args)->next;
-		free(curr->data);
-		free(curr);
-	}
-	free(cmd->av);
-	cmd->ac = 0;
-	cmd->av = NULL;
-}

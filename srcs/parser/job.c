@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/17 22:33:02 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/18 01:44:21 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/20 07:12:53 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -37,13 +37,15 @@ static t_node	*job_get(t_token **token)
 
 t_node			*job(t_token **token)
 {
-	t_token			*save = *token;
+	t_token			*save;
 	t_node			*job_node;
 
+	save = *token;
 	if (((*token = save)
 		&& (job_node = job_get(token)))
 	|| ((*token = save)
 		&& (job_node = command(token))))
 		return (job_node);
+	*token = save;
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/17 21:12:29 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/18 01:56:55 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/20 07:09:30 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -41,7 +41,12 @@ void	print_tree(t_node *btree)
 {
 	if (btree)
 	{
-		ft_printf("[%d]%s: %s\n", btree->type, btree->type == NODE_CMD ? "CMD" : "?", btree->data);
+		if (btree->type == NODE_CMD)
+			ft_printf("[CMD]: %s\n", btree->data);
+		else if (btree->type == NODE_ARG)
+			ft_printf("[ARG]: %s\n", btree->data);
+		else
+			ft_printf("[%d]\n", btree->type);
 		print_tree(btree->ch1);
 		print_tree(btree->ch2);
 	}

@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/14 06:46:56 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/20 01:23:44 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/20 03:43:16 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -19,7 +19,6 @@ int	main(int ac, const char **av, const char **ep)
 	(void)av;
 	(void)ep;
 	lexer_test();
-	prompt_test();
 	return (0);
 }
 
@@ -29,5 +28,6 @@ int	main(int ac, const char **av, const char **ep)
 ** ft_asprintf(&str, "TEST: %s", "WOW");
 ** ft_printf("%s\n", str);
 ** free(str);
+**	prompt_test();
 ** tc_test(ep);
 */
