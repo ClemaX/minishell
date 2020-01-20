@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/16 20:17:32 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/18 01:28:07 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/20 02:21:02 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -19,7 +19,7 @@ static t_status	handle_b_slash(t_line **arg, char **line, t_status status)
 	if (*(*line)++)
 	{
 		line_add(arg, ft_substr((*line)++, 0, 1), 1);
-		status &= ~B_SLASH;
+		status &= ~SLASH;
 	}
 	else
 		line_add(arg, ft_strdup("\n"), 1);
@@ -70,7 +70,7 @@ t_status		status_handler(t_cmd *cmd, t_line **arg, char **line,
 {
 	if (status & QUOTE)
 		status &= ~EQUAL;
-	if (status & B_SLASH)
+	if (status & SLASH)
 		status = handle_b_slash(arg, line, status);
 	else if (status & DOLLAR)
 		status = handle_dollar(cmd, arg, line, status);

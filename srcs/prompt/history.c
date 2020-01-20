@@ -1,33 +1,41 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   lexer.h                                          .::    .:/ .      .::   */
+/*   history.c                                        .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2020/01/18 22:57:54 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/20 02:27:33 by chamada     ###    #+. /#+    ###.fr     */
+/*   Created: 2020/01/19 21:31:26 by chamada      #+#   ##    ##    #+#       */
+/*   Updated: 2020/01/19 22:31:22 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef LEXER_H
-# define LEXER_H
+#include <prompt.h>
+#include <stdlib.h>
 
-# include <token.h>
+t_history	*history_add(t_history **history, char *line)
+{
+	t_history	*new;
 
-# define META			"\"\'\\()"
+	if (!line || !(new = malloc(sizeof(*new))))
+		return (NULL);
+	new->line = line;
+	new->prev = *history;
+	if (new->prev)
+		new->prev->next = new;
+	new->next = NULL;
+	return (*history = new);
+}
 
-# define D_QUOTES		1
-# define S_QUOTES		2
-# define B_SLASH		4
-# define PARENTH_IN		8
-# define PARENTH_OUT	16
+void		history_clr(t_history **history)
+{
+	t_history	*curr;
 
-# define WAITING		15
-
-char	*line_read(char *line);
-t_token	*line_tokenize(char *line);
-int		var_expand(t_token *token, void *env);
-
-#endif
+	while ((curr = *history))
+	{
+		*history = curr->prev;
+		free(curr->line);
+		free(curr);
+	}
+}

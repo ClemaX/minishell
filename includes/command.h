@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/12 04:43:38 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/18 01:28:31 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/20 02:20:42 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -18,9 +18,10 @@
 # include <line.h>
 # include <map.h>
 
+
 # define META		"\\\'\"$=()"
 
-# define B_SLASH	1
+# define SLASH		1
 # define S_QUOTE	2
 # define D_QUOTE	4
 # define QUOTE		6

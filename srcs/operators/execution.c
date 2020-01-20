@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/18 03:41:36 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/18 06:35:34 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/18 22:15:13 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -19,7 +19,7 @@ static void		cmd_execution(t_node *node)
 	if (!node)
 		return ;
 	if (node->type == "redirect in") /* see t_node_t */
-		redirection(node->ch2, node->data, node->STDIN_FILENO);
+		redirection(node->ch2, node->data, STDIN_FILENO);
 	else if (node->type == "redirect off")
 		redirection(node->ch2, node->data, STDOUT_FILENO);
 	else if (node->type == "cmd_path")

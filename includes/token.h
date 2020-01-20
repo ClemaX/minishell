@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/17 21:18:30 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/18 01:53:55 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/20 02:18:07 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -32,5 +32,7 @@ typedef enum	e_token_t
 	OP_GREATER,
 	TOKEN
 }				t_token_t;
+
+int	token_foreach(t_token *tokens, void *param, int (f)(t_token*, void*));
 
 #endif

@@ -11,15 +11,18 @@ MAIN	= $(SRCDIR)/minishell.c
 SRCS	= $(addprefix $(SRCDIR)/,												\
 				line.c minish_cmd.c												\
 	$(addprefix builtins/ft_, cd.c echo.c exit.c pwd.c env.c unset.c export.c)	\
-	$(addprefix command/, arguments.c meta.c arg_utils.c command.c)				\
+	$(addprefix command/, arg_utils.c)				\
 	$(addprefix env/, path.c)													\
 	$(addprefix lexer/, lexer.c)												\
 	$(addprefix map/, map.c map_utils.c map_sort.c)								\
-	$(addprefix parser/, parser.c job.c command.c cmd_line.c arg_list.c node.c))
+	$(addprefix parser/, parser.c job.c command.c cmd_line.c arg_list.c node.c) \
+	$(addprefix prompt/, history.c prompt.c))
 OBJS	= $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS) $(MAIN))
-OBJDS	= $(addprefix $(OBJDIR)/, builtins command env lexer map parser)
+OBJDS	= $(addprefix $(OBJDIR)/, builtins command env lexer map parser prompt)
 HDRS	= $(addprefix $(INCDIR)/, builtins.h command.h env.h lexer.h line.h map.h)
-TESTS	= $(addprefix tests/, main.c map_test.c path_test.c)
+TESTSD	= tests/srcs/
+TESTID	= tests/includes/
+TESTS	= $(addprefix $(TESTSD), main.c map_test.c path_test.c prompt_test.c lexer_test.c)
 
 all:			libft $(NAME)
 
@@ -53,9 +56,11 @@ re:				fclean all
 test-dir:		$(OBJDIR)
 	mkdir -p $(OBJDIR)/tests
 
+test:			IFLAGS	+=	-I$(TESTID)
+test: 			HDRS	+=	$(addprefix $(TESTID), test.h)
 test:			SRCS	+=	$(TESTS)
 test:			OBJS	=	$(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS))
-test:			CFLAGS	=	-Wall -Wextra
+test:			CFLAGS	=	-Wall -Wextra -g
 test:			test-dir re
 
 .PHONY: libft clean fclean
