@@ -1,15 +1,15 @@
 /* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   new_pipe.c                                       .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2020/01/18 05:05:50 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/18 05:06:26 by chamada     ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   new_pipe.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: plamtenz <plamtenz@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/18 05:05:50 by chamada           #+#    #+#             */
+/*   Updated: 2020/01/19 01:05:31 by plamtenz         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
+
 
 #include "parser.h"
 #include "unistd.h"
@@ -29,6 +29,15 @@ static void		ft_pipe_fill(char in, char out, int fd_read, int fd_write)
 		if (out)
 			dup2(fd_write, STDOUT_FILENO);
 		// use of execvp
+		/*
+		!made_in_42(prcss1->av[0])
+		? execve(path_get(prcss1->glob_env, prcss1->av[0]),
+		prcss1->av, map_export(prcss1->glob_env))
+		: find_built_in(prcss1->av[0], prcss1, av);
+
+		---> traduction of this code with our new struct <---
+		*/ 
+
 	}
 	else if (pid < 0)
 		return ;
