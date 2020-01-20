@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/17 21:17:36 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/20 07:14:04 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/20 08:47:58 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -41,7 +41,7 @@ t_node			*arg_list(t_token **token);
 t_node			*command(t_token **token);
 t_node			*job(t_token **token);
 t_node			*cmd_line(t_token **token);
-int				parse(t_token *tokens);
+t_node			*parse(t_token *tokens);
 void			node_del(t_node *node);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/17 21:12:29 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/20 07:09:30 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/20 08:26:23 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -52,11 +52,11 @@ void	print_tree(t_node *btree)
 	}
 }
 
-int		parse(t_token *tokens)
+t_node	*parse(t_token *tokens)
 {
-	t_node	*btree;
+	t_node	*tree;
 
-	btree = cmd_line(&tokens);
-	print_tree(btree);
-	return (1);
+	tree = cmd_line(&tokens);
+	print_tree(tree);
+	return (tree);
 }

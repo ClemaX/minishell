@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/16 21:16:09 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/16 22:55:50 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/20 09:26:52 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -29,11 +29,18 @@ static void	*unload_strs(char **strs)
 
 char		**path_export(t_map *env)
 {
-	const char	*path = map_get(env, "PATH")->value;
+	const t_map	*var = map_get(env, "PATH");
+	char		*path;
+	char		**split;
 
-	if (!path)
+	if (!(path = var->value)
+	|| !(split = ft_split(path, ':')))
+	{
+		free(path);
 		return (NULL);
-	return (ft_split(path, ':'));
+	}
+	free(path);
+	return (split);
 }
 
 char		*path_cat(const char *a, const char *b)

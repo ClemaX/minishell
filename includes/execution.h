@@ -1,30 +1,25 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   main.c                                           .::    .:/ .      .::   */
+/*   execution.h                                      .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2020/01/14 06:46:56 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/20 09:28:20 by chamada     ###    #+. /#+    ###.fr     */
+/*   Created: 2020/01/20 08:40:28 by chamada      #+#   ##    ##    #+#       */
+/*   Updated: 2020/01/20 09:17:50 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include <tests.h>
+#ifndef EXECUTION_H
+# define EXECUTION_H
 
-int	main(int ac, const char **av, const char **ep)
-{
-	lexer_test(av[0], ep);
-	return (0);
-}
+#include <map.h>
+#include <parser.h>
 
-/*
-** map_test(ac, av, ep);
-** path_test(ep);
-** ft_asprintf(&str, "TEST: %s", "WOW");
-** ft_printf("%s\n", str);
-** free(str);
-**	prompt_test();
-** tc_test(ep);
-*/
+void	simple_cmd(t_node *node, t_map *env, char *name);
+void	cmd_line_execution(t_node *node, t_map *env, char *name);
+void	redirection(t_node *node, char *data, char std);
+void	ft_pipe(t_node *node, t_map *env, char *name);
+
+#endif

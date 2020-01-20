@@ -5,87 +5,75 @@
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2020/01/16 20:06:30 by plamtenz     #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/18 02:03:44 by chamada     ###    #+. /#+    ###.fr     */
+/*   Created: 2020/01/18 05:05:50 by chamada      #+#   ##    ##    #+#       */
+/*   Updated: 2020/01/20 09:23:20 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
+
+#include "parser.h"
 #include "unistd.h"
-#include "stdio.h"
-#include "builtins.h"
-#include <env.h>
+#include <sys/wait.h>
+#include <map.h>
 
-static int	pipe_engine(t_cmd *process, int *pipefd, int std)
+static void		ft_pipe_fill(char in, char out, int fd_read, int fd_write)
 {
-	int pid;
+	// execute our and systhem built-ins
+	int		pid;
+	int		stdout;
 
-	pid = fork();
-	if ((pid < 0))
-		return (-1);
-	else if (!pid)
+	if (!(pid = fork()))
 	{
-		if (dup2(pipefd[0], std) < 0)
-			return (-1);
-		close(pipefd[0]);
-		close(pipefd[1]);
-	}
-}
-
-static int	made_in_42(char *built_in)
-{
-	int ret;
-
-	ret = 0;
-	ret = ret <= 0 && !ft_strmcmp("echo", built_in, 5) ? 2 : 0;
-	ret = ret <= 0 && !ft_strmcmp("cd", built_in, 3) ? 4 : 0;
-	ret = ret <= 0 && !ft_strmcmp("pwd", built_in, 4) ? 8 : 0;
-	ret = ret <= 0 && !ft_strmcmp("export", built_in, 7) ? 16 : 0;
-	ret = ret <= 0 && !ft_strmcmp("unset", built_in, 6) ? 32 : 0;
-	ret = ret <= 0 && !ft_strmcmp("exit", built_in, 5) ? 128 : 0;
-	return (ret);
-}
-
-static int	find_built_in(char *built_in, t_cmd *cmd, char **av)
-{
-	int	code;
-
-	code = made_in_42(built_in);
-	if (code & BT_ECHO)
-		return (ft_echo(cmd->ac, cmd->av, map_export(cmd->env)));
-	if (code & BT_CD)
-		return (ft_cd(cmd->ac, cmd->av, cmd));
-	if (code & BT_PWD)
-		return (ft_pwd());
-	if (code & BT_EXPORT)
-		return (ft_export(cmd->ac, cmd->av, cmd, av[0]));
-	if (code & BT_UNSET)
-		return (ft_unset(cmd, av[0]));
-	if (code & BT_ENV)
-		return (ft_env(cmd->glob_env));
-	if (code & BT_EXIT)
-		return (ft_exit());
-	return (-1);
-}
-
-int			ft_pipe(t_cmd *prcss1, t_cmd *prcss2, char **av)
-{
-	int	pipe_fd[2];
-
-	if (!((unsigned long)prcss1 & (unsigned long)prcss2))
-		return (-1);
-	if (pipe(pipe_fd) < 0)
-		return (-1);
-	pipe_engine(prcss1, pipe_fd, STDIN_FILENO);
-	!made_in_42(prcss1->av[0])
+		// restore_sigin_child() see if i have to do
+		stdout = dup(STDOUT_FILENO); /*see if i need this too */
+		if (in)
+			dup2(fd_read, STDIN_FILENO);
+		if (out)
+			dup2(fd_write, STDOUT_FILENO);
+		// use of execvp
+		/*
+		!made_in_42(prcss1->av[0])
 		? execve(path_get(prcss1->glob_env, prcss1->av[0]),
 		prcss1->av, map_export(prcss1->glob_env))
 		: find_built_in(prcss1->av[0], prcss1, av);
-	pipe_engine(prcss1, pipe_fd, STDOUT_FILENO);
-	!made_in_42(prcss2->av[0])
-		? execve(path_get(prcss2->glob_env, prcss2->av[0]),
-		prcss2->av, map_export(prcss2->glob_env))
-		: find_built_in(prcss2->av[0], prcss2, av);
-	while (wait(NULL) > 0)
+
+		---> traduction of this code with our new struct <---
+		*/
+
+	}
+	else if (pid < 0)
+		return ;
+	while (waitpid(pid, NULL, 0) < 0)
 		;
-	return (0);
+	return ;
+}
+
+void		ft_pipe(t_node *node, t_map *env, char *name)
+{
+	int		fd_write;
+	int		fd_read;
+	int		pipe_fd[2];
+	t_node	*job;
+
+	if (!node)
+		return ;
+	pipe(pipe_fd);
+	fd_write = pipe_fd[1];
+	fd_read = pipe_fd[0];
+	ft_pipe_fill(0, 1, 0, fd_write);
+	job = node->ch2;
+	while (job && job->type == NODE_PIPE)
+	{
+		close(fd_write);
+		pipe(pipe_fd);
+		fd_write = pipe_fd[1];
+		ft_pipe_fill(1, 1, fd_read, fd_write);
+		close(fd_read);
+		fd_read = pipe_fd[0];
+		job = job->ch2;
+	}
+	fd_read = pipe_fd[0];
+	close(fd_write);
+	ft_pipe_fill(1, 0, fd_read, fd_write);
+	close(fd_read);
 }

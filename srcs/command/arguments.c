@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/15 10:17:55 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/18 01:27:54 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/20 09:57:33 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -76,7 +76,6 @@ t_status			arg_parse(t_cmd *cmd, t_token **arg, char **line,
 	if (status & EQUAL)
 	{
 		map_set(&cmd->env, tmp->next->content, tmp->content);
-		ft_printf("%s=%s\n", tmp->next->content, tmp->content);
 		line_clr(&tmp);
 		status &= ~EQUAL;
 	}

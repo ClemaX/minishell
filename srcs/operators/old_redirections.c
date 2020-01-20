@@ -1,15 +1,15 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   redirections.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: plamtenz <plamtenz@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/16 22:36:56 by plamtenz          #+#    #+#             */
-/*   Updated: 2020/01/16 23:07:06 by plamtenz         ###   ########.fr       */
-/*                                                                            */
+/*                                                          LE - /            */
+/*                                                              /             */
+/*   redirections.c                                   .::    .:/ .      .::   */
+/*                                                 +:+:+   +:    +:  +:+:+    */
+/*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
+/*                                                 #+#   #+    #+    #+#      */
+/*   Created: 2020/01/16 22:36:56 by plamtenz     #+#   ##    ##    #+#       */
+/*   Updated: 2020/01/20 08:49:33 by chamada     ###    #+. /#+    ###.fr     */
+/*                                                         /                  */
+/*                                                        /                   */
 /* ************************************************************************** */
-
 int     redirections(t_cmd *prcss1, char *fn, int status)
 {
     int     pid;
@@ -37,9 +37,9 @@ int     redirections(t_cmd *prcss1, char *fn, int status)
     //here i excute command using stdin or out
     while (!(wait(NULL) > 0))
         ;
-    
-    
-    
-    
-    
+
+
+
+
+
 }
