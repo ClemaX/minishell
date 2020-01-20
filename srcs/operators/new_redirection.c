@@ -1,15 +1,15 @@
 /* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   new_redirection.c                                .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2020/01/18 05:42:36 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/18 06:37:07 by chamada     ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   new_redirection.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: plamtenz <plamtenz@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/18 05:42:36 by chamada           #+#    #+#             */
+/*   Updated: 2020/01/19 01:05:31 by plamtenz         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
+
 
 #include "parser.h"
 #include <unistd.h>
@@ -25,7 +25,7 @@ void		redirection(t_node *node, char *data, char std)
 	if ((pid = fork()) == 0)
 	{
 		// restore_sigin_in_child() ???
-		stdout = dup(STDOUT_FILENO); // need this ?
+		stdout = dup(STDOUT_FILENO); // need this , think is 4 error check?
 		if (!std)
 		{
 			if ((fd = open(data, O_RDONLY)) < 0)
@@ -51,4 +51,14 @@ void		simple_cmd(t_node *node)
 	/* call minish()
 	not founded ? search in /bin
 	not founded ? printf("comand not found") */
+	
+	/*
+	/*
+		!made_in_42(prcss1->av[0])
+		? execve(path_get(prcss1->glob_env, prcss1->av[0]),
+		prcss1->av, map_export(prcss1->glob_env))
+		: find_built_in(prcss1->av[0], prcss1, av);
+
+		---> traduction of this code with our new struct <---
+		*/ 
 }
