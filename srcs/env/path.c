@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/16 21:16:09 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/20 09:26:52 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/21 07:53:18 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -36,10 +36,10 @@ char		**path_export(t_map *env)
 	if (!(path = var->value)
 	|| !(split = ft_split(path, ':')))
 	{
-		free(path);
+//		free(path);
 		return (NULL);
 	}
-	free(path);
+	//free(path);
 	return (split);
 }
 
@@ -67,7 +67,7 @@ char		*path_get(t_map *env, const char *exec)
 	struct stat	s;
 	int			i;
 
-	if (!(path = path_export(env)))
+	if (!exec || !*exec || !(path = path_export(env)))
 		return (NULL);
 	i = 0;
 	while (path[i])

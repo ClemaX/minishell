@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/19 22:01:22 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/20 09:31:19 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/21 07:47:25 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -46,7 +46,6 @@ char	*lexer_test(char *name, const char **ep)
 		token_foreach(tokens, &env, &var_assign);
 		tree = cmd_line(&tokens);
 		cmd_line_execution(tree, env, name);
-		ft_printf("\n");
 	}
 	return (NULL);
 }

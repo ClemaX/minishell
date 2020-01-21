@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/17 22:33:25 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/20 07:11:53 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/21 08:56:44 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -63,9 +63,12 @@ t_node			*command(t_token **token)
 	t_node			*node;
 
 	save = *token;
-	if (((*token = save) && (node = cmd_get(token, OP_GREATER, 1)))
-	|| ((*token = save) && (node = cmd_get(token, OP_LESSER, 1)))
-	|| ((*token = save) && (node = simple_cmd(token))))
+	if (((*token = save)
+		&& (node = cmd_get(token, OP_GREATER, 1)))
+	|| ((*token = save)
+		&& (node = cmd_get(token, OP_LESSER, 1)))
+	|| ((*token = save)
+		&& (node = simple_cmd(token))))
 		return (node);
 	*token = save;
 	return (NULL);

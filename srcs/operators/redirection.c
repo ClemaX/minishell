@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/18 05:42:36 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/20 08:54:36 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/21 12:00:46 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,17 +15,18 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/wait.h>
+#include <execution.h>
 
-void		redirection(t_node *node, char *data, char std)
+void	redirection(t_node *node, char *data, char std, t_map *env, char *name)
 {
-	// check if we have content (if something is NULL idk)
 	int		pid;
 	int		stdout;
 	int		fd;
 
+	if (!node || !data)
+		return ;
 	if ((pid = fork()) == 0)
 	{
-		// restore_sigin_in_child() ???
 		stdout = dup(STDOUT_FILENO); // need this , think is 4 error check?
 		if (!std)
 		{
@@ -40,6 +41,7 @@ void		redirection(t_node *node, char *data, char std)
 				return ;
 			dup2(fd, STDOUT_FILENO);
 		}
+		simple_cmd(node, env, name, &ft_execve);
 	}
 	else if (pid < 0)
 		return ;

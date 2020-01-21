@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/18 01:41:50 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/18 01:48:27 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/21 08:26:38 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,6 +16,6 @@
 
 void	node_del(t_node *node)
 {
-	free(node->data);
+//	free(node->data);
 	free(node);
 }

@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/18 03:41:36 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/20 10:01:19 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/21 11:46:45 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -23,11 +23,11 @@ static void		cmd_execution(t_node *node, t_map *env, char *name)
 	if (!node)
 		return ;
 	if (node->type == NODE_R_IN)
-		redirection(node->ch2, node->data, STDIN_FILENO);
+		redirection(node->ch1, node->data, STDIN_FILENO, env, name);
 	else if (node->type == NODE_R_OUT)
-		redirection(node->ch2, node->data, STDOUT_FILENO);
+		redirection(node->ch1, node->data, STDOUT_FILENO, env, name);
 	else if (node->type == NODE_CMD)
-		simple_cmd(node, env, name);
+		simple_cmd(node, env, name, ft_execve_f);
 }
 
 static void		job_execution(t_node *node, t_map *env, char *name)
@@ -36,7 +36,7 @@ static void		job_execution(t_node *node, t_map *env, char *name)
 		return ;
 	if (node->type == NODE_PIPE)
 		ft_pipe(node, env, name);
-	else if (node->type == NODE_CMD)
+	else
 		cmd_execution(node, env, name);
 }
 
@@ -58,8 +58,10 @@ int			init_cmd(t_node *node, t_cmd *cmd)
 	t_node	*curr;
 	int		i;
 
-	cmd->ac = 1;
-	curr = node->ch1;
+	if (!node->data || !*node->data)
+		return (0);
+	cmd->ac = 0;
+	curr = node;
 	while (curr)
 	{
 		cmd->ac++;
@@ -79,14 +81,15 @@ int			init_cmd(t_node *node, t_cmd *cmd)
 	return (1);
 }
 
-void		simple_cmd(t_node *node, t_map *env, char *name)
+void		simple_cmd(t_node *node, t_map *env, char *name, int (exec)(char *, t_cmd *))
 {
 	t_cmd	cmd;
 
-	if (node && node->ch1)
+	if (node)
 	{
+		cmd.glob_env = env;
 		cmd.env = env;
-		init_cmd(node, &cmd);
-		cmd_exec(&cmd, name);
+		if (init_cmd(node, &cmd))
+			cmd_exec(&cmd, name, exec);
 	}
 }
