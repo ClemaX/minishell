@@ -6,7 +6,7 @@
 /*   By: plamtenz <plamtenz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/19 22:01:22 by chamada           #+#    #+#             */
-/*   Updated: 2020/01/22 12:04:35 by plamtenz         ###   ########.fr       */
+/*   Updated: 2020/01/22 13:59:55 by plamtenz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <map.h>
 #include <parser.h>
 #include <execution.h>
+#include <signal.h>
 
 void	print_tokens(t_token *tokens)
 {
@@ -44,6 +45,15 @@ static void	print_tree(t_node *btree)
 	}
 }
 
+
+static void	sig_handler(int sig)
+{
+	if (sig == SIGINT)
+		ft_printf("\nminish>$ ");
+	else if (sig == SIGQUIT)
+		ft_printf("TODO: quit\nminish>$ ");
+}
+
 char	*lexer_test(char *name, const char **ep)
 {
 	char		*line;
@@ -52,6 +62,8 @@ char	*lexer_test(char *name, const char **ep)
 	t_map		*env;
 	t_node		*tree;
 
+	signal(SIGINT, &sig_handler);
+	signal(SIGQUIT, &sig_handler);
 	history = NULL;
 	env = map_load(ep);
 	while ((line = prompt(&history)))
