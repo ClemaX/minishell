@@ -6,13 +6,13 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/18 05:05:50 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/22 11:10:38 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/22 12:08:35 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "parser.h"
-#include "unistd.h"
+#include <parser.h>
+#include <unistd.h>
 #include <sys/wait.h>
 #include <map.h>
 #include <execution.h>
@@ -71,11 +71,10 @@ void		ft_pipe(t_node *node, t_map *env, char *name)
 	pipe(pipe_fd);
 	fd_write = pipe_fd[1];
 	fd_read = pipe_fd[0];
-	pid = ft_pipe_fill(0, 1, 0, fd_write, node->ch1, env , name);
+	pid = ft_pipe_fill(0, 1, 0, fd_write, node->ch1, env, name);
 	job = node->ch2;
 	while (job->ch2 && job->type == NODE_PIPE)
 	{
-//		ft_printf("%s, %s\n", job->data, job->ch1->data);
 		close(fd_write);
 		pipe(pipe_fd);
 		fd_write = pipe_fd[1];
@@ -84,13 +83,13 @@ void		ft_pipe(t_node *node, t_map *env, char *name)
 		fd_read = pipe_fd[0];
 		job = job->ch2;
 	}
-//	ft_printf("%s, ", job->data);
 	fd_read = pipe_fd[0];
 	close(fd_write);
 	pid = ft_pipe_fill(1, 0, fd_read, fd_write, job, env, name);
 	close(fd_write);
 	close(fd_read);
 }
+
 /*
 #define READ 0
 #define WRITE 1

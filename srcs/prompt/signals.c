@@ -1,31 +1,30 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   main.c                                           .::    .:/ .      .::   */
+/*   signals.c                                        .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2020/01/14 06:46:56 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/22 12:14:00 by chamada     ###    #+. /#+    ###.fr     */
+/*   Created: 2020/01/22 12:11:46 by chamada      #+#   ##    ##    #+#       */
+/*   Updated: 2020/01/22 14:01:19 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include <tests.h>
+#include <signal.h>
+#include <global_var.h>
 
-int	main(int ac, const char **av, const char **ep)
+void	sig_handler(int sig)
 {
-	(void)ac;
-	lexer_test(av[0], ep);
-	return (0);
+	if (sig == SIGINT)
+		ft_printf("\nminish>$ ");
+	else if (sig == SIGQUIT)
+	{
+		ft_printf("TODO: quit\nminish>$ ");
 }
 
-/*
-** map_test(ac, av, ep);
-** path_test(ep);
-** ft_asprintf(&str, "TEST: %s", "WOW");
-** ft_printf("%s\n", str);
-** free(str);
-**	prompt_test();
-** tc_test(ep);
-*/
+void	sig_init(void)
+{
+	signal(SIGINT, &sig_handler);
+	signal(SIGQUIT, &sig_handler);
+}

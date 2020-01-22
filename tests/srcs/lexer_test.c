@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/19 22:01:22 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/22 11:36:56 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/22 12:14:39 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -45,28 +45,19 @@ static void	print_tree(t_node *btree)
 	}
 }
 
-
-static void	sig_handler(int sig)
-{
-	if (sig == SIGINT)
-		ft_printf("\nminish>$ ");
-	else if (sig == SIGQUIT)
-		ft_printf("TODO: quit\nminish>$ ");
-}
-
 char	*lexer_test(char *name, const char **ep)
 {
 	char		*line;
 	t_token		*tokens;
-	t_history	*history;
 	t_map		*env;
 	t_node		*tree;
+	t_term		term;
 
-	signal(SIGINT, &sig_handler);
-	signal(SIGQUIT, &sig_handler);
-	history = NULL;
+	sig_init();
+	term.history = NULL;
 	env = map_load(ep);
-	while ((line = prompt(&history)))
+	term_init(&term, map_get(env, "TERM")->value);
+	while ((line = prompt(&term.history)))
 	{
 		line = line_parse(line);
 		tokens = line_tokenize(line);
@@ -74,7 +65,6 @@ char	*lexer_test(char *name, const char **ep)
 		token_foreach(tokens, &env, &var_expand);
 		token_foreach(tokens, &env, &var_assign);
 		tree = cmd_line(&tokens);
-//		print_tree(tree);
 		cmd_line_execution(tree, env, name);
 	}
 	return (NULL);
