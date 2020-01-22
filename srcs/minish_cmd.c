@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/14 08:51:26 by plamtenz     #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/21 08:12:59 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/21 14:44:26 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -55,7 +55,7 @@ int			ft_execve_f(char *exec, t_cmd *cmd)
 
 	if (!(pid = fork()))
 	{
-		execve(exec, cmd->av, map_export(cmd->env));
+		execve(exec, cmd->av, map_export(cmd->glob_env));
 		ft_printf("execve returned! errno is [%d]\n", errno);
 	}
 	else if (pid < 0)

@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/18 05:05:50 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/21 14:21:08 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/22 10:52:23 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -33,6 +33,8 @@ static int		ft_pipe_fill(char in, char out, int fd_read, int fd_write, t_node *n
 			dup2(fd_write, STDOUT_FILENO);
 		simple_cmd(node, env, name, ft_execve);
 	}
+	while (wait(NULL) > 0)
+		;
 	return (pid);
 }
 
@@ -53,19 +55,20 @@ void		ft_pipe(t_node *node, t_map *env, char *name)
 	job = node->ch2;
 	while (job->ch2 && job->type == NODE_PIPE)
 	{
+//		ft_printf("%s, %s\n", job->data, job->ch1->data);
 		close(fd_write);
 		pipe(pipe_fd);
 		fd_write = pipe_fd[1];
-		pid = ft_pipe_fill(1, 1, fd_read, fd_write, job->ch2, env ,name);
+		pid = ft_pipe_fill(1, 1, fd_read, fd_write, job->ch1, env, name);
 		close(fd_read);
 		fd_read = pipe_fd[0];
 		job = job->ch2;
 	}
+//	ft_printf("%s, ", job->data);
 	fd_read = pipe_fd[0];
 	close(fd_write);
 	pid = ft_pipe_fill(1, 0, fd_read, fd_write, job, env, name);
-	while (wait(NULL) > 0)
-		;
+	close(fd_write);
 	close(fd_read);
 }
 /*
