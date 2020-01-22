@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/14 08:51:26 by plamtenz     #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/21 14:44:26 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/22 18:38:31 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -19,6 +19,7 @@
 #include <errno.h>
 #include <libft.h>
 #include <stdlib.h>
+#include <global_var.h>
 
 int		cmd_exec(t_cmd *cmd, char *name, int (x)(char *, t_cmd *))
 {
@@ -51,17 +52,16 @@ int		cmd_exec(t_cmd *cmd, char *name, int (x)(char *, t_cmd *))
 
 int			ft_execve_f(char *exec, t_cmd *cmd)
 {
-	int		pid;
-
-	if (!(pid = fork()))
+	if (!(g_pid = fork()))
 	{
-		execve(exec, cmd->av, map_export(cmd->glob_env));
+		execve(exec, cmd->av, map_export(cmd->env));
 		ft_printf("execve returned! errno is [%d]\n", errno);
 	}
-	else if (pid < 0)
+	else if (g_pid < 0)
 		return (127);
-	while (waitpid(pid, NULL, 0) < 0)
+	while (waitpid(g_pid, NULL, 0) < 0)
 		;
+	g_pid = 0;
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/19 21:31:00 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/22 11:14:16 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/22 18:31:47 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -28,40 +28,67 @@ static char	*char_dup(char c)
 	return (res);
 }
 
-char		*read_line(void)
+static int	handle_special(t_term *term, char c)
+{
+	if (c == '\004')
+	{
+		ft_printf("exit\n");
+		exit(0);
+	}
+	else if (c == '\n')
+	{
+		ft_printf("> ");
+		term->cursor.y++;
+		term->cursor.x = 0;
+	}
+	else if (c == 27)
+		caps_handler(term);
+	else
+		return (0);
+	return (1);
+}
+
+char		*read_line(t_term *term)
 {
 	char	c;
 	int		pos;
 	int		ret;
-	t_line	*line;
 	int		status;
 
-	line = NULL;
+	term->buff = NULL;
 	status = 0;
 	ft_printf("minish>$ ");
 	while ((ret = read(STDIN_FILENO, &c, 1)) == 1
 	&& (c != '\n' || status & WAITING))
 	{
-		line_add(&line, char_dup(c), 1);
-		if (!((status & S_QUOTES && c != '\'')
-		|| (status & D_QUOTES && (c == '\'' || ft_strpos(META, c) == -1))))
+		if (!(handle_special(term, c)))
 		{
-			if (status & B_SLASH)
-				status &= ~B_SLASH;
-			else if ((pos = ft_strpos(META, c)) != -1)
-				status ^= (1 << pos);
+			write(1, &c, 1);
+			line_add(&term->buff, char_dup(c), 1);
+			term->cursor.x++;
+			if (!((status & S_QUOTES && c != '\'')
+			|| (status & D_QUOTES && (c == '\'' || ft_strpos(META, c) == -1))))
+			{
+				if (status & B_SLASH)
+					status &= ~B_SLASH;
+				else if ((pos = ft_strpos(META, c)) != -1)
+					status ^= (1 << pos);
+			}
 		}
 	}
 	if (ret != 1)
-		return ((char*)line_clr(&line));
-	return (line_cat(&line));
+		return ((char*)line_clr(&term->buff));
+	return (line_cat(&term->buff));
 }
 
-char		*prompt(t_history **history)
+char		*prompt(t_term *term)
 {
 	char	*line;
 
-	if (!(line = read_line()))
+	if (tcsetattr(0, 0, &term->s_termios) == -1
+	|| !(line = read_line(term))
+	|| tcsetattr(0, 0, &term->s_termios_bkp) == -1)
 		return (NULL);
-	return (history_add(history, line)->line);
+	term->cursor = (t_cursor){.x=0, .y=0};
+	return (history_add(&term->history, line)->line);
 }

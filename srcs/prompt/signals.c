@@ -6,26 +6,50 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/22 12:11:46 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/22 14:05:28 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/22 18:40:04 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include <signal.h>
 #include <global_var.h>
+#include <libft.h>
+#include <prompt.h>
+#include <line.h>
 
-void	sig_handler(int sig)
+void	sig_handler(int sig, void *param)
 {
-	if (sig == SIGINT)
-		ft_printf("\nminish>$ ");
-	else if (sig == SIGQUIT)
+	static t_term	*term;
+
+	if (!term)
+		term = param;
+	else
 	{
-		ft_printf("TODO: quit\nminish>$ ");
+		if (sig == SIGINT)
+		{
+			if (g_pid)
+			{
+				kill(g_pid, sig);
+				g_pid = 0;
+			}
+			ft_printf("\nminish>$ ");
+			term->cursor = (t_cursor){.x=0, .y=0};
+			line_clr(&term->buff);
+			return ;
+		}
+		else if (g_pid && sig == SIGQUIT)
+		{
+			kill(g_pid, sig);
+			ft_printf("quit: %d\n", g_pid);
+			g_pid = 0;
+			return ;
+		}
 	}
 }
 
-void	sig_init(void)
+void	sig_init(t_term *term)
 {
-	signal(SIGINT, &sig_handler);
-	signal(SIGQUIT, &sig_handler);
+	sig_handler(0, term);
+	signal(SIGINT, (void (*)(int))&sig_handler);
+	signal(SIGQUIT, (void (*)(int))&sig_handler);
 }

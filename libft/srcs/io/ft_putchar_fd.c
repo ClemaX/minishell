@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/08 21:46:46 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2019/10/18 17:31:12 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/22 17:45:05 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,4 +16,9 @@
 void	ft_putchar_fd(char c, int fd)
 {
 	write(fd, &c, 1);
+}
+
+int		ft_putchar(int c)
+{
+	return (write(1, &c, 1));
 }

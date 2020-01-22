@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/18 05:05:50 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/22 14:02:38 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/22 18:37:48 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -18,15 +18,14 @@
 #include <execution.h>
 #include <global_var.h>
 
-static int		ft_pipe_fill(char in, char out, int fd_read, int fd_write, t_node *node, t_map *env, char *name)
+static void	ft_pipe_fill(char in, char out, int fd_read, int fd_write, t_node *node, t_map *env, char *name)
 {
-	// execute our and systhem built-ins
 	int		stdout;
 
 	if (!(g_pid = fork()))
 	{
 		// restore_sigin_child() see if i have to do
-		stdout = dup(STDOUT_FILENO); /*see if i need this too */
+		stdout = dup(STDOUT_FILENO);
 		if (in)
 			dup2(fd_read, STDIN_FILENO);
 		if (out)
@@ -39,26 +38,10 @@ static int		ft_pipe_fill(char in, char out, int fd_read, int fd_write, t_node *n
 			simple_cmd(node, env, name, ft_execve);
 	}
 	else if (g_pid < 0)
-		return (-1);
+		return ;
 	while (wait(NULL) > 0)
 		;
-	return (g_pid);
-}
-
-
-static void	print_tree(t_node *btree)
-{
-	if (btree)
-	{
-		if (btree->type == NODE_CMD)
-			ft_printf("[CMD]: %s\n", btree->data);
-		else if (btree->type == NODE_ARG)
-			ft_printf("[ARG]: %s\n", btree->data);
-		else
-			ft_printf("[%d]\n", btree->type);
-		print_tree(btree->ch1);
-		print_tree(btree->ch2);
-	}
+	g_pid = 0;
 }
 
 void		ft_pipe(t_node *node, t_map *env, char *name)
@@ -66,7 +49,6 @@ void		ft_pipe(t_node *node, t_map *env, char *name)
 	int		fd_write;
 	int		fd_read;
 	int		pipe_fd[2];
-	int		pid;
 	t_node	*job;
 
 	if (!node)
@@ -74,21 +56,21 @@ void		ft_pipe(t_node *node, t_map *env, char *name)
 	pipe(pipe_fd);
 	fd_write = pipe_fd[1];
 	fd_read = pipe_fd[0];
-	pid = ft_pipe_fill(0, 1, 0, fd_write, node->ch1, env, name);
+	ft_pipe_fill(0, 1, 0, fd_write, node->ch1, env, name);
 	job = node->ch2;
 	while (job->ch2 && job->type == NODE_PIPE)
 	{
 		close(fd_write);
 		pipe(pipe_fd);
 		fd_write = pipe_fd[1];
-		pid = ft_pipe_fill(1, 1, fd_read, fd_write, job->ch1, env, name);
+		ft_pipe_fill(1, 1, fd_read, fd_write, job->ch1, env, name);
 		close(fd_read);
 		fd_read = pipe_fd[0];
 		job = job->ch2;
 	}
 	fd_read = pipe_fd[0];
 	close(fd_write);
-	pid = ft_pipe_fill(1, 0, fd_read, fd_write, job, env, name);
+	ft_pipe_fill(1, 0, fd_read, fd_write, job, env, name);
 	close(fd_write);
 	close(fd_read);
 }

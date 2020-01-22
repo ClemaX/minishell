@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/19 22:01:22 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/22 14:02:45 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/22 18:29:56 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -28,23 +28,6 @@ void	print_tokens(t_token *tokens)
 	}
 }
 
-static void	print_tree(t_node *btree)
-{
-	if (btree)
-	{
-		if (btree->type == NODE_CMD)
-			ft_printf("[CMD]: %s\n", btree->data);
-		else if (btree->type == NODE_ARG)
-			ft_printf("[ARG]: %s\n", btree->data);
-		else if (btree->type == NODE_R_IN)
-			ft_printf("[RIN]: %s\n", btree->data);
-		else
-			ft_printf("[%d]: %s\n", btree->type, btree->data);
-		print_tree(btree->ch1);
-		print_tree(btree->ch2);
-	}
-}
-
 char	*lexer_test(char *name, const char **ep)
 {
 	char		*line;
@@ -53,12 +36,13 @@ char	*lexer_test(char *name, const char **ep)
 	t_node		*tree;
 	t_term		term;
 
-	sig_init();
+	sig_init(&term);
 	term.history = NULL;
 	env = map_load(ep);
 	term_init(&term, map_get(env, "TERM")->value);
-	while ((line = prompt(&term.history)))
+	while ((line = prompt(&term)))
 	{
+		ft_printf("\n");
 		line = line_parse(line);
 		tokens = line_tokenize(line);
 		token_foreach(tokens, &env, &set_token_type_op);
@@ -67,5 +51,6 @@ char	*lexer_test(char *name, const char **ep)
 		tree = cmd_line(&tokens);
 		cmd_line_execution(tree, env, name);
 	}
+	ft_printf("exit\n");
 	return (NULL);
 }

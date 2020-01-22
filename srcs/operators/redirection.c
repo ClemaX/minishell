@@ -1,15 +1,15 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   redirection.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: plamtenz <plamtenz@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/18 05:42:36 by chamada           #+#    #+#             */
-/*   Updated: 2020/01/22 13:56:20 by plamtenz         ###   ########.fr       */
-/*                                                                            */
+/*                                                          LE - /            */
+/*                                                              /             */
+/*   redirection.c                                    .::    .:/ .      .::   */
+/*                                                 +:+:+   +:    +:  +:+:+    */
+/*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
+/*                                                 #+#   #+    #+    #+#      */
+/*   Created: 2020/01/18 05:42:36 by chamada      #+#   ##    ##    #+#       */
+/*   Updated: 2020/01/22 18:38:10 by chamada     ###    #+. /#+    ###.fr     */
+/*                                                         /                  */
+/*                                                        /                   */
 /* ************************************************************************** */
-
 
 #include "parser.h"
 #include <unistd.h>
@@ -48,4 +48,5 @@ void	redirection(t_node *node, char *data, char std, t_map *env, char *name)
 		return ;
 	while (waitpid(g_pid, NULL, 0) <= 0)
 		;
+	g_pid = 0;
 }
