@@ -6,12 +6,15 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/14 06:46:56 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/22 12:14:00 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/22 14:03:03 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include <tests.h>
+#include "global_var.h"
+
+g_pid = 0;
 
 int	main(int ac, const char **av, const char **ep)
 {

@@ -6,24 +6,24 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/18 05:05:50 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/22 12:08:35 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/22 14:02:38 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include <parser.h>
-#include <unistd.h>
+#include "parser.h"
+#include "unistd.h"
 #include <sys/wait.h>
 #include <map.h>
 #include <execution.h>
+#include <global_var.h>
 
 static int		ft_pipe_fill(char in, char out, int fd_read, int fd_write, t_node *node, t_map *env, char *name)
 {
 	// execute our and systhem built-ins
-	int		pid;
 	int		stdout;
 
-	if (!(pid = fork()))
+	if (!(g_pid = fork()))
 	{
 		// restore_sigin_child() see if i have to do
 		stdout = dup(STDOUT_FILENO); /*see if i need this too */
@@ -38,10 +38,13 @@ static int		ft_pipe_fill(char in, char out, int fd_read, int fd_write, t_node *n
 		else if (node->type == NODE_CMD)
 			simple_cmd(node, env, name, ft_execve);
 	}
+	else if (g_pid < 0)
+		return (-1);
 	while (wait(NULL) > 0)
 		;
-	return (pid);
+	return (g_pid);
 }
+
 
 static void	print_tree(t_node *btree)
 {

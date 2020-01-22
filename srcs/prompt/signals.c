@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/22 12:11:46 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/22 14:01:19 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/22 14:05:28 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -21,6 +21,7 @@ void	sig_handler(int sig)
 	else if (sig == SIGQUIT)
 	{
 		ft_printf("TODO: quit\nminish>$ ");
+	}
 }
 
 void	sig_init(void)

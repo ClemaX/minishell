@@ -1,15 +1,15 @@
 /* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   execution.c                                      .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2020/01/18 03:41:36 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/21 11:46:45 by chamada     ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execution.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: plamtenz <plamtenz@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/18 03:41:36 by chamada           #+#    #+#             */
+/*   Updated: 2020/01/22 11:43:14 by plamtenz         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
+
 
 #include <execution.h>
 #include <command.h>
@@ -17,6 +17,7 @@
 #include "unistd.h"
 #include <libft.h>
 #include <stdlib.h>
+
 
 static void		cmd_execution(t_node *node, t_map *env, char *name)
 {
