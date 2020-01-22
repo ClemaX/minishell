@@ -1,31 +1,32 @@
 /* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   redirection.c                                    .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2020/01/18 05:42:36 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/22 11:12:24 by chamada     ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redirection.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: plamtenz <plamtenz@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/18 05:42:36 by chamada           #+#    #+#             */
+/*   Updated: 2020/01/22 13:56:20 by plamtenz         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
+
 
 #include "parser.h"
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/wait.h>
 #include <execution.h>
+#include "global_var.h"
 
 void	redirection(t_node *node, char *data, char std, t_map *env, char *name)
 {
-	int		pid;
+
 	int		stdout;
 	int		fd;
 
 	if (!node || !data)
 		return ;
-	if ((pid = fork()) == 0)
+	if ((g_pid = fork()) == 0)
 	{
 		stdout = dup(STDOUT_FILENO); // need this , think is 4 error check?
 		if (!std)
@@ -43,8 +44,8 @@ void	redirection(t_node *node, char *data, char std, t_map *env, char *name)
 		}
 		simple_cmd(node, env, name, &ft_execve);
 	}
-	else if (pid < 0)
+	else if (g_pid < 0)
 		return ;
-	while (waitpid(pid, NULL, 0) <= 0)
+	while (waitpid(g_pid, NULL, 0) <= 0)
 		;
 }

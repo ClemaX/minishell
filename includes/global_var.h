@@ -1,33 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   global_var.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: plamtenz <plamtenz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/14 06:46:56 by chamada           #+#    #+#             */
-/*   Updated: 2020/01/22 12:13:09 by plamtenz         ###   ########.fr       */
+/*   Created: 2020/01/22 12:11:52 by plamtenz          #+#    #+#             */
+/*   Updated: 2020/01/22 12:12:30 by plamtenz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef GLOBAL_VAR_H
+# define GLOBAL_VAR_H
 
-#include <tests.h>
-#include "global_var.h"
+extern int g_pid;
 
-g_pid = 0;
-
-int	main(int ac, const char **av, const char **ep)
-{
-	lexer_test(av[0], ep);
-	return (0);
-}
-
-/*
-** map_test(ac, av, ep);
-** path_test(ep);
-** ft_asprintf(&str, "TEST: %s", "WOW");
-** ft_printf("%s\n", str);
-** free(str);
-**	prompt_test();
-** tc_test(ep);
-*/
+#endif
