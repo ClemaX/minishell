@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/19 22:01:22 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/21 07:47:25 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/22 11:12:18 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -24,6 +24,23 @@ void	print_tokens(t_token *tokens)
 	{
 		ft_printf("%s;", tokens->data);
 		tokens = tokens->next;
+	}
+}
+
+static void	print_tree(t_node *btree)
+{
+	if (btree)
+	{
+		if (btree->type == NODE_CMD)
+			ft_printf("[CMD]: %s\n", btree->data);
+		else if (btree->type == NODE_ARG)
+			ft_printf("[ARG]: %s\n", btree->data);
+		else if (btree->type == NODE_R_IN)
+			ft_printf("[RIN]: %s\n", btree->data);
+		else
+			ft_printf("[%d]: %s\n", btree->type, btree->data);
+		print_tree(btree->ch1);
+		print_tree(btree->ch2);
 	}
 }
 
@@ -45,6 +62,7 @@ char	*lexer_test(char *name, const char **ep)
 		token_foreach(tokens, &env, &var_expand);
 		token_foreach(tokens, &env, &var_assign);
 		tree = cmd_line(&tokens);
+//		print_tree(tree);
 		cmd_line_execution(tree, env, name);
 	}
 	return (NULL);

@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/19 21:31:00 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/20 04:08:47 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/22 11:14:16 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -38,6 +38,7 @@ char		*read_line(void)
 
 	line = NULL;
 	status = 0;
+	ft_printf("minish>$ ");
 	while ((ret = read(STDIN_FILENO, &c, 1)) == 1
 	&& (c != '\n' || status & WAITING))
 	{

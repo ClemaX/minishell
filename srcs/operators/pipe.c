@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/18 05:05:50 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/22 10:52:23 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/22 11:10:38 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -31,11 +31,31 @@ static int		ft_pipe_fill(char in, char out, int fd_read, int fd_write, t_node *n
 			dup2(fd_read, STDIN_FILENO);
 		if (out)
 			dup2(fd_write, STDOUT_FILENO);
-		simple_cmd(node, env, name, ft_execve);
+		if (node->type == NODE_R_IN)
+			redirection(node->ch1, node->data, STDIN_FILENO, env, name);
+		else if (node->type == NODE_R_OUT)
+			redirection(node->ch1, node->data, STDOUT_FILENO, env, name);
+		else if (node->type == NODE_CMD)
+			simple_cmd(node, env, name, ft_execve);
 	}
 	while (wait(NULL) > 0)
 		;
 	return (pid);
+}
+
+static void	print_tree(t_node *btree)
+{
+	if (btree)
+	{
+		if (btree->type == NODE_CMD)
+			ft_printf("[CMD]: %s\n", btree->data);
+		else if (btree->type == NODE_ARG)
+			ft_printf("[ARG]: %s\n", btree->data);
+		else
+			ft_printf("[%d]\n", btree->type);
+		print_tree(btree->ch1);
+		print_tree(btree->ch2);
+	}
 }
 
 void		ft_pipe(t_node *node, t_map *env, char *name)
