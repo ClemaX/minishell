@@ -1,15 +1,15 @@
 /* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   term.c                                           .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2020/01/19 22:32:43 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/22 18:06:24 by chamada     ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   term.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: plamtenz <plamtenz@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/19 22:32:43 by chamada           #+#    #+#             */
+/*   Updated: 2020/01/23 14:49:27 by plamtenz         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
+
 
 #include <prompt.h>
 #include <stdlib.h>
@@ -39,7 +39,11 @@ int		caps_handler(t_term *term)
 	else if (buff[1] == 'B')
 		ft_printf("DOWN");
 	else if (buff[1] == 'C')
-		ft_printf("RIGHT");
+	{
+		//ft_printf("RIGHT");
+		tputs(term->caps.nd, 1, &ft_putchar);
+		term->cursor.x++;
+	}
 	else if (buff[1] == 'D' && term->cursor.x)
 	{
 		tputs(term->caps.le, 1, &ft_putchar);
