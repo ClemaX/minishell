@@ -1,15 +1,15 @@
 /* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   pipe.c                                           .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2020/01/18 05:05:50 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/22 18:37:48 by chamada     ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipe.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: plamtenz <plamtenz@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/18 05:05:50 by chamada           #+#    #+#             */
+/*   Updated: 2020/01/23 19:31:24 by plamtenz         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
+
 
 #include "parser.h"
 #include "unistd.h"
@@ -18,9 +18,10 @@
 #include <execution.h>
 #include <global_var.h>
 
-static void	ft_pipe_fill(char in, char out, int fd_read, int fd_write, t_node *node, t_map *env, char *name)
+static int	ft_pipe_fill(char in, char out, int fd_read, int fd_write, t_node *node, t_map *env, char *name)
 {
 	int		stdout;
+	int		ret;
 
 	if (!(g_pid = fork()))
 	{
@@ -31,48 +32,51 @@ static void	ft_pipe_fill(char in, char out, int fd_read, int fd_write, t_node *n
 		if (out)
 			dup2(fd_write, STDOUT_FILENO);
 		if (node->type == NODE_R_IN)
-			redirection(node->ch1, node->data, STDIN_FILENO, env, name);
+			ret = redirection(node->ch1, node->data, STDIN_FILENO, env, name);
 		else if (node->type == NODE_R_OUT)
-			redirection(node->ch1, node->data, STDOUT_FILENO, env, name);
+			ret = redirection(node->ch1, node->data, STDOUT_FILENO, env, name);
 		else if (node->type == NODE_CMD)
-			simple_cmd(node, env, name, ft_execve);
+			ret = simple_cmd(node, env, name, ft_execve);
 	}
 	else if (g_pid < 0)
-		return ;
+		return (-1);
 	while (wait(NULL) > 0)
 		;
 	g_pid = 0;
+	return (ret);
 }
 
-void		ft_pipe(t_node *node, t_map *env, char *name)
+int		ft_pipe(t_node *node, t_map *env, char *name)
 {
 	int		fd_write;
 	int		fd_read;
 	int		pipe_fd[2];
 	t_node	*job;
+	int		ret;
 
 	if (!node)
-		return ;
+		return (-1);
 	pipe(pipe_fd);
 	fd_write = pipe_fd[1];
 	fd_read = pipe_fd[0];
-	ft_pipe_fill(0, 1, 0, fd_write, node->ch1, env, name);
+	ret = ft_pipe_fill(0, 1, 0, fd_write, node->ch1, env, name);
 	job = node->ch2;
 	while (job->ch2 && job->type == NODE_PIPE)
 	{
 		close(fd_write);
 		pipe(pipe_fd);
 		fd_write = pipe_fd[1];
-		ft_pipe_fill(1, 1, fd_read, fd_write, job->ch1, env, name);
+		ret += ft_pipe_fill(1, 1, fd_read, fd_write, job->ch1, env, name);
 		close(fd_read);
 		fd_read = pipe_fd[0];
 		job = job->ch2;
 	}
 	fd_read = pipe_fd[0];
 	close(fd_write);
-	ft_pipe_fill(1, 0, fd_read, fd_write, job, env, name);
+	ret += ft_pipe_fill(1, 0, fd_read, fd_write, job, env, name);
 	close(fd_write);
 	close(fd_read);
+	return (ret > 0 && ret < 42 ? 1 : ret); /* dont already know if a builtin can return 127 */
 }
 
 /*

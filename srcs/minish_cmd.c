@@ -1,15 +1,15 @@
 /* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   minish_cmd.c                                     .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2020/01/14 08:51:26 by plamtenz     #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/22 18:38:31 by chamada     ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minish_cmd.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: plamtenz <plamtenz@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/14 08:51:26 by plamtenz          #+#    #+#             */
+/*   Updated: 2020/01/23 19:08:38 by plamtenz         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
+
 
 #include "command.h"
 #include "builtins.h"
@@ -56,6 +56,7 @@ int			ft_execve_f(char *exec, t_cmd *cmd)
 	{
 		execve(exec, cmd->av, map_export(cmd->env));
 		ft_printf("execve returned! errno is [%d]\n", errno);
+		return (1);
 	}
 	else if (g_pid < 0)
 		return (127);
@@ -67,7 +68,12 @@ int			ft_execve_f(char *exec, t_cmd *cmd)
 
 int			ft_execve(char *exec, t_cmd *cmd)
 {
-	execve(exec, cmd->av, map_export(cmd->env));
-	ft_printf("execve returned! errno is [%d]\n", errno);
+	if (42) /* try to do a scope to skip execve error gestion, ll see what happend */
+	{
+		execve(exec, cmd->av, map_export(cmd->env));
+		ft_printf("execve returned! errno is [%d]\n", errno);
+		return (1);
+	}
 	return (0);
+	
 }

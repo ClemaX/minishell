@@ -6,7 +6,7 @@
 /*   By: plamtenz <plamtenz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 03:41:36 by chamada           #+#    #+#             */
-/*   Updated: 2020/01/22 11:43:14 by plamtenz         ###   ########.fr       */
+/*   Updated: 2020/01/23 19:33:37 by plamtenz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,39 +19,43 @@
 #include <stdlib.h>
 
 
-static void		cmd_execution(t_node *node, t_map *env, char *name)
+static int		cmd_execution(t_node *node, t_map *env, char *name)
 {
 	if (!node)
-		return ;
+		return (-1); /* that has to change to perror */
 	if (node->type == NODE_R_IN)
-		redirection(node->ch1, node->data, STDIN_FILENO, env, name);
+		return (redirection(node->ch1, node->data, STDIN_FILENO, env, name));
 	else if (node->type == NODE_R_OUT)
-		redirection(node->ch1, node->data, STDOUT_FILENO, env, name);
+		return (redirection(node->ch1, node->data, STDOUT_FILENO, env, name));
 	else if (node->type == NODE_CMD)
-		simple_cmd(node, env, name, ft_execve_f);
+		return (simple_cmd(node, env, name, ft_execve_f));
 }
 
-static void		job_execution(t_node *node, t_map *env, char *name)
+static int		job_execution(t_node *node, t_map *env, char *name)
 {
 	if (!node)
-		return ;
+		return (-1);
 	if (node->type == NODE_PIPE)
-		ft_pipe(node, env, name);
+		return (ft_pipe(node, env, name));
 	else
-		cmd_execution(node, env, name);
+		return (cmd_execution(node, env, name));
 }
 
 void			cmd_line_execution(t_node *node, t_map *env, char *name)
 {
+	int ret;
+
+	ret = 0; /* ret is 0 by default does not need initiaisation but i $? with no execution it have to be 0 */
 	if (!node)
 		return ;
 	if (node->type == NODE_SEQ)
 	{
-		job_execution(node->ch1, env, name);
+		ret = job_execution(node->ch1, env, name);
 		cmd_line_execution(node->ch2, env, name);
 	}
 	else
-		job_execution(node, env, name);
+		ret = job_execution(node, env, name);
+	ft_printf("%d\n" , ret);
 }
 
 int			init_cmd(t_node *node, t_cmd *cmd)
@@ -82,15 +86,18 @@ int			init_cmd(t_node *node, t_cmd *cmd)
 	return (1);
 }
 
-void		simple_cmd(t_node *node, t_map *env, char *name, int (exec)(char *, t_cmd *))
+int		simple_cmd(t_node *node, t_map *env, char *name, int (exec)(char *, t_cmd *))
 {
 	t_cmd	cmd;
+	int		ret;
 
+	ret = -1;
 	if (node)
 	{
 		cmd.glob_env = env;
 		cmd.env = env;
 		if (init_cmd(node, &cmd))
-			cmd_exec(&cmd, name, exec);
+			ret = cmd_exec(&cmd, name, exec);
 	}
+	return (ret);
 }

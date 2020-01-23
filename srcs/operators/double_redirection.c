@@ -6,7 +6,7 @@
 /*   By: plamtenz <plamtenz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 18:51:41 by plamtenz          #+#    #+#             */
-/*   Updated: 2020/01/23 19:01:46 by plamtenz         ###   ########.fr       */
+/*   Updated: 2020/01/23 19:09:42 by plamtenz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int     double_redirection(t_node *node, char *data, char std, t_map *env, char 
                 data between the 2 delim words will be buiting input
             */
         }
-		else
+		else /* >> */
 		{
 			if ((fd = open(data, O_WRONLY | O_APPEND | O_CREAT | O_TRUNC,
 			S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)) < 0)
