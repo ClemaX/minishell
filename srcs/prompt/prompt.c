@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/19 21:31:00 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/22 18:31:47 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/23 15:44:52 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -66,6 +66,7 @@ char		*read_line(t_term *term)
 			write(1, &c, 1);
 			line_add(&term->buff, char_dup(c), 1);
 			term->cursor.x++;
+			term->cursor.max.x++;
 			if (!((status & S_QUOTES && c != '\'')
 			|| (status & D_QUOTES && (c == '\'' || ft_strpos(META, c) == -1))))
 			{
@@ -89,6 +90,6 @@ char		*prompt(t_term *term)
 	|| !(line = read_line(term))
 	|| tcsetattr(0, 0, &term->s_termios_bkp) == -1)
 		return (NULL);
-	term->cursor = (t_cursor){.x=0, .y=0};
+	term->cursor = (t_cursor){.x=0, .y=0, .max={.x=0, .y=0}};
 	return (history_add(&term->history, line)->line);
 }

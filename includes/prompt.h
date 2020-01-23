@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/19 21:32:10 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/22 18:30:58 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/23 16:11:32 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -19,13 +19,18 @@
 
 typedef struct	s_cursor
 {
-	int	x;
-	int	y;
+	int		x;
+	int		y;
+	struct
+	{
+		int x;
+		int y;
+	}		max;
 }				t_cursor;
 
 typedef struct	s_history
 {
-	char				*line;
+	t_line				*line;
 	struct s_history	*next;
 	struct s_history	*prev;
 }				t_history;

@@ -1,15 +1,15 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   term.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: plamtenz <plamtenz@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/19 22:32:43 by chamada           #+#    #+#             */
-/*   Updated: 2020/01/23 14:49:27 by plamtenz         ###   ########.fr       */
-/*                                                                            */
+/*                                                          LE - /            */
+/*                                                              /             */
+/*   term.c                                           .::    .:/ .      .::   */
+/*                                                 +:+:+   +:    +:  +:+:+    */
+/*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
+/*                                                 #+#   #+    #+    #+#      */
+/*   Created: 2020/01/19 22:32:43 by chamada      #+#   ##    ##    #+#       */
+/*   Updated: 2020/01/23 16:31:41 by chamada     ###    #+. /#+    ###.fr     */
+/*                                                         /                  */
+/*                                                        /                   */
 /* ************************************************************************** */
-
 
 #include <prompt.h>
 #include <stdlib.h>
@@ -35,12 +35,20 @@ int		caps_handler(t_term *term)
 
 	read(0, buff, 2);
 	if (buff[1] == 'A')
-		ft_printf("UP");
-	else if (buff[1] == 'B')
-		ft_printf("DOWN");
-	else if (buff[1] == 'C')
 	{
-		//ft_printf("RIGHT");
+		if (term->buff)
+		{
+			history_add(&term->history, term->buff);
+			term->buff = NULL;
+		}
+	}
+	else if (buff[1] == 'B')
+	{
+		
+		term->history = term->history->next;
+	}
+	else if (buff[1] == 'C' && term->cursor.x < term->cursor.max.x)
+	{
 		tputs(term->caps.nd, 1, &ft_putchar);
 		term->cursor.x++;
 	}
@@ -49,8 +57,7 @@ int		caps_handler(t_term *term)
 		tputs(term->caps.le, 1, &ft_putchar);
 		term->cursor.x--;
 	}
-	else
-		ft_printf("%d", buff[1]);
+//	ft_printf("%d", buff[1]);
 	return (0);
 }
 
