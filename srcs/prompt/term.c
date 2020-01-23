@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/19 22:32:43 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/23 16:31:41 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/23 19:18:38 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -36,13 +36,13 @@ int		caps_handler(t_term *term)
 	read(0, buff, 2);
 	if (buff[1] == 'A')
 	{
-		if (term->buff)
+		/*if (term->buff)
 		{
-			history_add(&term->history, term->buff);
+			history_add(&term->history);
 			term->buff = NULL;
-		}
+		}*/
 	}
-	else if (buff[1] == 'B')
+	else if (buff[1] == 'B' && term->history->next)
 	{
 		
 		term->history = term->history->next;
