@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/19 21:31:00 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/23 15:44:52 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/23 19:38:13 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -55,7 +55,7 @@ char		*read_line(t_term *term)
 	int		ret;
 	int		status;
 
-	term->buff = NULL;
+	term->line = history_add(&term->history);
 	status = 0;
 	ft_printf("minish>$ ");
 	while ((ret = read(STDIN_FILENO, &c, 1)) == 1
@@ -64,7 +64,7 @@ char		*read_line(t_term *term)
 		if (!(handle_special(term, c)))
 		{
 			write(1, &c, 1);
-			line_add(&term->buff, char_dup(c), 1);
+			line_add(&term->line->line, char_dup(c), 1);
 			term->cursor.x++;
 			term->cursor.max.x++;
 			if (!((status & S_QUOTES && c != '\'')
@@ -78,18 +78,18 @@ char		*read_line(t_term *term)
 		}
 	}
 	if (ret != 1)
-		return ((char*)line_clr(&term->buff));
-	return (line_cat(&term->buff));
+		return ((char*)line_clr(&term->line->line));
+	return (line_cat(&term->line->line));
 }
 
 char		*prompt(t_term *term)
 {
-	char	*line;
+	t_line	*line;
 
 	if (tcsetattr(0, 0, &term->s_termios) == -1
 	|| !(line = read_line(term))
 	|| tcsetattr(0, 0, &term->s_termios_bkp) == -1)
 		return (NULL);
 	term->cursor = (t_cursor){.x=0, .y=0, .max={.x=0, .y=0}};
-	return (history_add(&term->history, line)->line);
+	return (line);
 }
