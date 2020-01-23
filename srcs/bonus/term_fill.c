@@ -6,7 +6,7 @@
 /*   By: plamtenz <plamtenz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:56:34 by plamtenz          #+#    #+#             */
-/*   Updated: 2020/01/23 16:31:24 by plamtenz         ###   ########.fr       */
+/*   Updated: 2020/01/23 16:38:28 by plamtenz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,7 @@ int         copy_cut_call(char signal, int *status, t_list *imput_list, int pos,
             len--;
         *status |= signal == "minus signal" && !(*status & 2) && !selected ? 2 : 0;
         if (signal == "digit keys")
-            key_sign_to_int(&selected, signal);
-    }
+            key_sign_to_int(&selected, signal);  }
     return (0);
 }
 
