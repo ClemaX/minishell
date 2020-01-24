@@ -1,20 +1,20 @@
 /* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   arguments.c                                      .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2020/01/15 10:17:55 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/20 09:57:33 by chamada     ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   arguments.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: plamtenz <plamtenz@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/24 15:22:38 by plamtenz          #+#    #+#             */
+/*   Updated: 2020/01/24 15:23:20 by plamtenz         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include <command.h>
 #include <line.h>
 #include <libft.h>
 #include <stdlib.h>
+#include <token.h>
 
 static int			get_len(char *line, t_status status)
 {
@@ -34,8 +34,6 @@ static int			get_len(char *line, t_status status)
 			len++;
 	return (len);
 }
-
-#include <token.h>
 
 t_token				*token_new(char *str, t_token_t type)
 {
