@@ -6,11 +6,10 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/18 03:41:36 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/24 16:35:53 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/24 19:45:52 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
-
 #include <execution.h>
 #include <command.h>
 #include "parser.h"
@@ -18,15 +17,14 @@
 #include <libft.h>
 #include <stdlib.h>
 
-
 static int		cmd_execution(t_node *node, t_map *env, char *name)
 {
 	if (!node)
-		return (-1); /* that has to change to perror */
+		return (-1);
 	if (node->type == NODE_R_IN)
-		return (redirection(node->ch1, node->data, STDIN_FILENO, env, name));
+		return (redirection(node, STDIN_FILENO, env, name));
 	else if (node->type == NODE_R_OUT)
-		return (redirection(node->ch1, node->data, STDOUT_FILENO, env, name));
+		return (redirection(node, STDOUT_FILENO, env, name));
 	else if (node->type == NODE_CMD)
 		return (simple_cmd(node, env, name, ft_execve_f));
 	else
@@ -57,7 +55,7 @@ void			cmd_line_execution(t_node *node, t_map *env, char *name)
 	}
 	else
 		ret = job_execution(node, env, name);
-	ft_printf("%d\n" , ret);
+	ft_printf("%d\n", ret);
 }
 
 int			init_cmd(t_node *node, t_cmd *cmd)
@@ -88,7 +86,8 @@ int			init_cmd(t_node *node, t_cmd *cmd)
 	return (1);
 }
 
-int		simple_cmd(t_node *node, t_map *env, char *name, int (exec)(char *, t_cmd *))
+int		simple_cmd(t_node *node, t_map *env, char *name,
+	int (exec)(char *, t_cmd *))
 {
 	t_cmd	cmd;
 	int		ret;
