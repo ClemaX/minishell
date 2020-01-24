@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/14 08:35:14 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/22 14:02:30 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/24 18:29:30 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -21,6 +21,24 @@ static void	*unload_strs(char **strs)
 	while (*strs)
 		free(*strs++);
 	return (NULL);
+}
+
+const char	*map_add(t_map **map, const char *key, const char *value)
+{
+	t_map		*new;
+
+	if (!map || !key || !value)
+		return (NULL);
+	if (!(new = malloc(sizeof(*new))))
+		return (NULL);
+	*new = (t_map){.key=ft_strdup(key), .key_size=ft_strlen(key),
+		.value=ft_strdup(value), .next=*map};
+	if (!new->key || !new->value)
+	{
+		map_delone(new);
+		return (NULL);
+	}
+	return ((*map = new)->value);
 }
 
 t_map		*map_load(const char **strs)
@@ -40,7 +58,7 @@ t_map		*map_load(const char **strs)
 			unload_strs(split);
 			return (NULL);
 		}
-		map_set(&map, split[0], split[1]);
+		map_add(&map, split[0], split[1]);
 		unload_strs(split);
 		free(split);
 		strs++;

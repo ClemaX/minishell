@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/11/21 21:25:00 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/18 01:08:35 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/24 19:42:38 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -87,14 +87,15 @@ int		line_len(t_line *line)
 **	Note: Returns -1 in case of error
 */
 
-int		line_put(char **dest, t_line **line)
+int		line_put(char **dest, t_line **line, char clr)
 {
 	const int	len = line_len(*line);
 	t_line		*curr;
 
 	if (!(*dest = malloc(sizeof(*dest) * (len + 1))))
 	{
-		line_clr(line);
+		if (clr)
+			line_clr(line);
 		return (-1);
 	}
 	*dest += len;
@@ -106,18 +107,19 @@ int		line_put(char **dest, t_line **line)
 		ft_memcpy(*dest, curr->content, curr->size);
 		curr = curr->next;
 	}
-	line_clr(line);
+	if (clr)
+		line_clr(line);
 	return (len);
 }
 
-char	*line_cat(t_line **line)
+char	*line_cat(t_line **line, char clr)
 {
 	t_line	*new;
 	char	*str;
 	int		len;
 
 	new = NULL;
-	if ((len = line_put(&str, line)) == -1)
+	if ((len = line_put(&str, line, clr)) == -1)
 		return (NULL);
 	return (str);
 }

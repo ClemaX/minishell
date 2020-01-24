@@ -1,15 +1,15 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   execution.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: plamtenz <plamtenz@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/18 03:41:36 by chamada           #+#    #+#             */
-/*   Updated: 2020/01/23 19:33:37 by plamtenz         ###   ########.fr       */
-/*                                                                            */
+/*                                                          LE - /            */
+/*                                                              /             */
+/*   execution.c                                      .::    .:/ .      .::   */
+/*                                                 +:+:+   +:    +:  +:+:+    */
+/*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
+/*                                                 #+#   #+    #+    #+#      */
+/*   Created: 2020/01/18 03:41:36 by chamada      #+#   ##    ##    #+#       */
+/*   Updated: 2020/01/24 16:35:53 by chamada     ###    #+. /#+    ###.fr     */
+/*                                                         /                  */
+/*                                                        /                   */
 /* ************************************************************************** */
-
 
 #include <execution.h>
 #include <command.h>
@@ -29,6 +29,8 @@ static int		cmd_execution(t_node *node, t_map *env, char *name)
 		return (redirection(node->ch1, node->data, STDOUT_FILENO, env, name));
 	else if (node->type == NODE_CMD)
 		return (simple_cmd(node, env, name, ft_execve_f));
+	else
+		return (-1); /* Not implemented */
 }
 
 static int		job_execution(t_node *node, t_map *env, char *name)

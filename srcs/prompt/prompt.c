@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/19 21:31:00 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/23 19:38:13 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/24 18:54:25 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -48,10 +48,24 @@ static int	handle_special(t_term *term, char c)
 	return (1);
 }
 
-char		*read_line(t_term *term)
+int			get_status(int status, char c)
+{
+	int pos;
+
+	if (!((status & S_QUOTES && c != '\'')
+	|| (status & D_QUOTES && (c == '\'' || ft_strpos(META, c) == -1))))
+	{
+		if (status & B_SLASH)
+			status &= ~B_SLASH;
+		else if ((pos = ft_strpos(META, c)) != -1)
+			status ^= (1 << pos);
+	}
+	return (status);
+}
+
+t_line		*read_line(t_term *term)
 {
 	char	c;
-	int		pos;
 	int		ret;
 	int		status;
 
@@ -67,22 +81,15 @@ char		*read_line(t_term *term)
 			line_add(&term->line->line, char_dup(c), 1);
 			term->cursor.x++;
 			term->cursor.max.x++;
-			if (!((status & S_QUOTES && c != '\'')
-			|| (status & D_QUOTES && (c == '\'' || ft_strpos(META, c) == -1))))
-			{
-				if (status & B_SLASH)
-					status &= ~B_SLASH;
-				else if ((pos = ft_strpos(META, c)) != -1)
-					status ^= (1 << pos);
-			}
+			status = get_status(status, c);
 		}
 	}
 	if (ret != 1)
-		return ((char*)line_clr(&term->line->line));
-	return (line_cat(&term->line->line));
+		return (line_clr(&term->line->line));
+	return (term->line->line); // here: term->line->line address is NULL
 }
 
-char		*prompt(t_term *term)
+t_line		*prompt(t_term *term)
 {
 	t_line	*line;
 

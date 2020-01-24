@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/19 21:32:10 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/23 19:20:07 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/24 17:13:04 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -64,7 +64,7 @@ typedef struct	s_term
 	struct termios	s_termios_bkp;
 }				t_term;
 
-char			*prompt(t_term *term);
+t_line			*prompt(t_term *term);
 
 t_history		*history_add(t_history **history);
 void			history_clr(t_history **history);

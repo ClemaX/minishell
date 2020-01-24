@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/18 22:17:00 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/23 19:33:19 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/24 19:43:43 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -59,35 +59,35 @@ t_token		*line_tokenize(char *line)
 	return (tokens);
 }
 
-char		*line_parse(t_line *line)
+char		*line_parse(char *str)
 {
-	t_line	*parsed;
+	t_line	*line;
 	int		status;
 	int		pos;
+	char	c;
 
-	parsed = NULL;
+	line = NULL;
 	status = 0;
-	while (line)
+	while ((c = *str++))
 	{
-		if ((status & S_QUOTES && *line->content != '\'')
-		|| (status & D_QUOTES && (*line->content == '\''
-		|| ft_strpos(META, *line->content) == -1)))
-			line_add(&parsed, char_dup(*line->content), 1);
-		else if (status & B_SLASH)
+		if ((status & S_QUOTES && c != '\'')
+		|| (status & D_QUOTES && (c == '\'' || ft_strpos(META, c) == -1)))
 		{
-			line_add(&parsed, char_dup(*line->content), 1);
+			line_add(&line, char_dup(c), 1);
+			continue ;
+		}
+		if (status & B_SLASH)
+		{
+			line_add(&line, char_dup(c), 1);
 			status &= ~B_SLASH;
+			continue ;
 		}
-		else
-		{
-			if ((pos = ft_strpos(META, *line->content)) != -1)
-				status ^= (1 << pos);
-			if (!(status & B_SLASH))
-				line_add(&parsed, char_dup(*line->content), 1);
-		}
-		line = line->next;
+		if ((pos = ft_strpos(META, c)) != -1)
+			status ^= (1 << pos);
+		if (!(status & B_SLASH))
+			line_add(&line, char_dup(c), 1);
 	}
-	return (line_cat(&parsed));
+	return (line_cat(&line, 1));
 }
 
 int		set_token_type_op(t_token *token, void *param)
