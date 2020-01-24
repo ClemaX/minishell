@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   pipe.c                                           .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: plamtenz <plamtenz@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/18 05:05:50 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/24 18:25:07 by plamtenz    ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/24 19:56:34 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -17,6 +17,7 @@
 #include <map.h>
 #include <execution.h>
 #include <global_var.h>
+#include <libft.h>
 
 /*
 static int	ft_pipe_fill(char in, char out, int fd_read, int fd_write, t_node *node, t_map *env, char *name)
@@ -89,7 +90,7 @@ int				ft_pipe_fill2(t_pipe *p, t_node *job, t_map *env, char *name)
 	close(p->fd_write);
 	pipe(p->pipe_fd);
 	p->fd_write = p->pipe_fd[1];
-	ret += ft_pipe_fill(put_bool(&p, 1, 1), job->ch1, env, name);
+	ret = ft_pipe_fill(put_bool(p, 1, 1), job->ch1, env, name);
 	close(p->fd_read);
 	p->fd_read = p->pipe_fd[0];
 	return (ret);
@@ -110,7 +111,7 @@ int				ft_pipe(t_node *node, t_map *env, char *name)
 	job = node->ch2;
 	while (job->ch2 && job->type == NODE_PIPE)
 	{
-		ft_pipe_fill2(&p, job, env, name);
+		ret += ft_pipe_fill2(&p, job, env, name);
 		job = job->ch2;
 	}
 	p.fd_read = p.pipe_fd[0];

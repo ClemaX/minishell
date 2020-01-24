@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/19 21:32:10 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/24 17:13:04 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/24 20:14:24 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -52,6 +52,7 @@ typedef struct	s_caps
 	char	*kr;
 	char	*le;
 	char	*nd;
+	char	*ce;
 }				t_caps;
 
 typedef struct	s_term

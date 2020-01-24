@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/19 22:32:43 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/23 19:18:38 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/24 20:20:59 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -27,6 +27,14 @@ void	caps_load(t_term *term)
 	term->caps.kr = tgetstr("kr", NULL);
 	term->caps.le = tgetstr("le", NULL);
 	term->caps.nd = tgetstr("nd", NULL);
+	term->caps.ce = tgetstr("ce", NULL);
+}
+
+void	clear_line(t_term *term)
+{
+	tputs(term->caps.le, term->cursor.x + 1, &ft_putchar);
+	tputs(term->caps.ce, 1, &ft_putchar);
+	term->cursor.x = 0;
 }
 
 int		caps_handler(t_term *term)
@@ -34,18 +42,17 @@ int		caps_handler(t_term *term)
 	char			buff[2];
 
 	read(0, buff, 2);
-	if (buff[1] == 'A')
+	if (buff[1] == 'A' && term->line && term->line->prev)
 	{
-		/*if (term->buff)
-		{
-			history_add(&term->history);
-			term->buff = NULL;
-		}*/
+		term->line = term->line->prev;
+		clear_line(term);
+		ft_printf("%s", line_cat(&term->line->line, 0));
 	}
-	else if (buff[1] == 'B' && term->history->next)
+	else if (buff[1] == 'B' && term->line && term->line->next)
 	{
-		
-		term->history = term->history->next;
+		term->line = term->line->next;
+		clear_line(term);
+		ft_printf("%s", line_cat(&term->line->line, 0));
 	}
 	else if (buff[1] == 'C' && term->cursor.x < term->cursor.max.x)
 	{
