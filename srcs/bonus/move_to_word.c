@@ -6,7 +6,7 @@
 /*   By: plamtenz <plamtenz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 18:22:26 by plamtenz          #+#    #+#             */
-/*   Updated: 2020/01/23 18:48:19 by plamtenz         ###   ########.fr       */
+/*   Updated: 2020/01/24 14:57:44 by plamtenz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,20 @@
 int         next_wd_right(char *line, int *pos)
 {
     int     cont;
+    int     i;
 
     cont = 0;
-    if (*line &&ft_isspace(*line))
+    i = pos;
+    if (line[i] &&ft_isspace(line[i]))
     {
-        while (*line && ft_isspace(*line++))
+        while (line[i] && ft_isspace(line[i++]))
             cont++;
     }
     else
     {
-        while (*line && !ft_isspace(*line++))
+        while (line[i] && !ft_isspace(line[i++]))
             cont++;
-        while (*line && ft_isspace(*line++))
+        while (line[i] && ft_isspace(line[i++]))
             cont++;
     }
     *pos += cont + 1;
