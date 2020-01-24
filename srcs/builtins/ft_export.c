@@ -1,15 +1,15 @@
 /* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   ft_export.c                                      .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2020/01/15 16:03:42 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/16 20:34:04 by chamada     ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_export.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: plamtenz <plamtenz@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/15 16:03:42 by chamada           #+#    #+#             */
+/*   Updated: 2020/01/24 15:18:26 by plamtenz         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
+
 
 #include <map.h>
 #include <command.h>
@@ -47,11 +47,9 @@ int	ft_export(int ac, char **av, t_cmd *cmd, char *name)
 					name, av[0], av[ac]);
 				return (1);
 			}
-			if ((var = map_get(cmd->env, av[ac])))
-			{
-				if (!map_set(&cmd->glob_env, var->key, var->value))
-					return (1);
-			}
+			if ((var = map_get(cmd->env, av[ac])) &&
+				!map_set(&cmd->glob_env, var->key, var->value))
+				return (1);
 			else if (!map_set(&cmd->glob_env, av[ac], ""))
 				return (1);
 		}
