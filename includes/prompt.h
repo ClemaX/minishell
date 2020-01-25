@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/19 21:32:10 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/24 20:14:24 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/25 21:17:45 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -53,6 +53,10 @@ typedef struct	s_caps
 	char	*le;
 	char	*nd;
 	char	*ce;
+	char	*cr;
+	char	*ch;
+	char	*ec;
+	char	*dc_n;
 }				t_caps;
 
 typedef struct	s_term
@@ -75,5 +79,7 @@ int				caps_handler(t_term *term);
 
 void			sig_handler(int sig, void *param);
 void			sig_init(t_term *term);
+
+void			cursor_del_range(t_term *term, int min, int max);
 
 #endif

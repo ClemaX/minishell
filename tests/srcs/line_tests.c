@@ -1,41 +1,29 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   history.c                                        .::    .:/ .      .::   */
+/*   line_tests.c                                     .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2020/01/19 21:31:26 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/25 17:50:37 by chamada     ###    #+. /#+    ###.fr     */
+/*   Created: 2020/01/25 21:13:22 by chamada      #+#   ##    ##    #+#       */
+/*   Updated: 2020/01/25 21:51:13 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include <prompt.h>
-#include <stdlib.h>
+#include <line.h>
 
-t_history	*history_add(t_history **history)
+int	test_line_insert_at(void)
 {
-	t_history	*new;
+	t_line	*line;
+	char	*str;
 
-	if (!(new = malloc(sizeof(*new))))
-		return (NULL);
-	new->line = NULL;
-	new->prev = *history;
-	if (new->prev)
-		new->prev->next = new;
-	new->next = NULL;
-	return (*history = new);
-}
-
-void		history_clr(t_history **history)
-{
-	t_history	*curr;
-
-	while ((curr = *history))
-	{
-		*history = curr->prev;
-		free(curr->line);
-		free(curr);
-	}
+	line = NULL;
+	line_insert_at(&line, 0, "TEST");
+	ft_printf("%s\n", str = line_cat(&line, 0));
+	free(str);
+	line_insert_at(&line, 1, "AB");
+	ft_printf("%s\n", str = line_cat(&line, 0));
+	free(str);
+	return (0);
 }

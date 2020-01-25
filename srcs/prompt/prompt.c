@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/19 21:31:00 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/24 18:54:25 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/25 18:42:53 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -41,8 +41,15 @@ static int	handle_special(t_term *term, char c)
 		term->cursor.y++;
 		term->cursor.x = 0;
 	}
-	else if (c == 27)
+	else if (c == '\e')
 		caps_handler(term);
+	else if (c == 127)
+		cursor_del_range(term, term->cursor.x - 1, term->cursor.x);
+	else if (c == '\f')
+	{
+		tputs(term->caps.cl, 1, &ft_putchar);
+		ft_printf("minish>$ ");
+	}
 	else
 		return (0);
 	return (1);
@@ -50,7 +57,7 @@ static int	handle_special(t_term *term, char c)
 
 int			get_status(int status, char c)
 {
-	int pos;
+	int	pos;
 
 	if (!((status & S_QUOTES && c != '\'')
 	|| (status & D_QUOTES && (c == '\'' || ft_strpos(META, c) == -1))))
@@ -72,10 +79,16 @@ t_line		*read_line(t_term *term)
 	term->line = history_add(&term->history);
 	status = 0;
 	ft_printf("minish>$ ");
-	while ((ret = read(STDIN_FILENO, &c, 1)) == 1
-	&& (c != '\n' || status & WAITING))
+	while ((ret = read(STDIN_FILENO, &c, 1)) == 1)
 	{
-		if (!(handle_special(term, c)))
+		if (c == '\n' && !(status & WAITING))
+		{
+			if (!term->line->line)
+				ft_printf("\nminish>$ ");
+			else
+				break ;
+		}
+		else if (!(handle_special(term, c)))
 		{
 			write(1, &c, 1);
 			line_add(&term->line->line, char_dup(c), 1);
@@ -86,7 +99,7 @@ t_line		*read_line(t_term *term)
 	}
 	if (ret != 1)
 		return (line_clr(&term->line->line));
-	return (term->line->line); // here: term->line->line address is NULL
+	return (term->line->line);
 }
 
 t_line		*prompt(t_term *term)

@@ -9,21 +9,21 @@ IFLAGS	= -I$(INCDIR) -I$(LIBFT)/includes
 LFLAGS	= -L$(LIBFT) -lft -ltermcap
 MAIN	= $(SRCDIR)/minishell.c
 SRCS	= $(addprefix $(SRCDIR)/,												\
-				line.c minish_cmd.c	token.c										\
+				minish_cmd.c	token.c											\
 	$(addprefix builtins/ft_, cd.c echo.c exit.c pwd.c env.c unset.c export.c)	\
 	$(addprefix command/, arg_utils.c)											\
 	$(addprefix env/, path.c)													\
 	$(addprefix lexer/, lexer.c variables.c)									\
 	$(addprefix map/, map.c map_utils.c map_sort.c)								\
-	$(addprefix operators/, execution.c pipe.c redirection.c)										\
+	$(addprefix operators/, execution.c pipe.c redirection.c)					\
 	$(addprefix parser/, parser.c job.c command.c cmd_line.c arg_list.c node.c) \
-	$(addprefix prompt/, history.c prompt.c signals.c term.c))
+	$(addprefix prompt/, cursor.c history.c line.c line_utils.c prompt.c signals.c term.c))
 OBJS	= $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS) $(MAIN))
 OBJDS	= $(addprefix $(OBJDIR)/, builtins command env lexer map operators parser prompt)
 HDRS	= $(addprefix $(INCDIR)/, builtins.h command.h env.h lexer.h line.h map.h)
 TESTSD	= tests/srcs/
 TESTID	= tests/includes/
-TESTS	= $(addprefix $(TESTSD), main.c map_test.c path_test.c prompt_test.c lexer_test.c)
+TESTS	= $(addprefix $(TESTSD), main.c map_test.c path_test.c prompt_test.c lexer_test.c line_tests.c)
 
 all:			libft $(NAME)
 
