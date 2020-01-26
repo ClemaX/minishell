@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/25 15:33:02 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/25 21:17:01 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/26 20:46:54 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -24,7 +24,6 @@ t_line	*del_line(t_line *curr, int min, int max, int i)
 	if (i >= min && i <= max)
 	{
 		next = curr->next;
-		free(curr->content);
 		free(curr);
 		return (next);
 	}
@@ -36,9 +35,6 @@ void	cursor_del_range(t_term *term, int min, int max)
 {
 	int		new_x;
 	int		len;
-	t_line	*bkp;
-	t_line	*curr;
-	t_line	*del_next;
 
 	if (!term->line || !term->line->line || min > max)
 		return ;

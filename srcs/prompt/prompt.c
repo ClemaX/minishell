@@ -6,7 +6,7 @@
 /*   By: plamtenz <plamtenz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/19 21:31:00 by chamada           #+#    #+#             */
-/*   Updated: 2020/01/26 21:50:00 by plamtenz         ###   ########.fr       */
+/*   Updated: 2020/01/26 21:53:25 by plamtenz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,6 @@
 #include <unistd.h>
 #include <libft.h>
 #include <stdlib.h>
-
-static char	*char_dup(char c)
-{
-	char	*res;
-
-	if (!(res = malloc(sizeof(char))))
-		return (NULL);
-	*res = c;
-	return (res);
-}
 
 static int	handle_special(t_term *term, char c)
 {
@@ -92,7 +82,7 @@ t_line		*read_line(t_term *term)
 		else if (!(handle_special(term, c)))
 		{
 			write(1, &c, 1);
-			line_add(&term->line->line, char_dup(c), 1);
+			line_add(&term->line->line, c);
 			term->cursor.x++;
 			term->cursor.max.x++;
 			status = get_status(status, c);

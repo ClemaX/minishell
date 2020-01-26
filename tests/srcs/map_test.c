@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/14 06:48:24 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/26 18:53:15 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/26 21:01:42 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -77,12 +77,14 @@ int	map_get_test(void)
 
 int	map_export_test(void)
 {
-	const char	**orig = rand_tab_map(25, 20);
-	t_map		*map;
-	char		**strs;
-	int			diff;
+	char	**orig;
+	t_map	*map;
+	char	**strs;
+	int		diff;
 
-	if (!(map = map_load(orig))
+	strs = NULL;
+	if (!(orig = rand_tab_map(25, 20))
+	|| !(map = map_load((const char **)orig))
 	|| !(strs = map_export(map)))
 		error();
 	diff = tab_cmp(strs, orig);
@@ -107,11 +109,10 @@ int	map_clr_test(void)
 	return (!diff_p(map, NULL));
 }
 
-int	map_test(int ac, const char **av, const char **ep)
+int	map_test(void)
 {
 	static const int	fw = -10;
 
-	(void)ac;
 	ft_printf(TITLE"Map\n"RESET);
 	run_test("map_set", fw, &map_set_test);
 	run_test("map_get", fw, &map_get_test);

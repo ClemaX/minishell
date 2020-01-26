@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/26 16:04:24 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/26 16:46:00 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/26 21:01:57 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,7 +15,7 @@
 #include <stdlib.h>
 #include <libft.h>
 
-int		tab_print(const char **tab)
+int		tab_print(char **tab)
 {
 	if (!tab)
 		return (0);
@@ -31,7 +31,7 @@ void	*tab_unload(char **tab)
 	return (NULL);
 }
 
-int		tab_cmp(char **tab, const char **expected)
+int		tab_cmp(char **tab, char **expected)
 {
 	if (!tab && expected)
 	{
