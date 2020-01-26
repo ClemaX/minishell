@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/18 22:17:00 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/26 19:08:29 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/26 20:46:03 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,16 +16,6 @@
 #include <token.h>
 #include <stdlib.h>
 #include <libft.h>
-
-static char	*char_dup(char c)
-{
-	char	*res;
-
-	if (!(res = malloc(sizeof(char))))
-		return (NULL);
-	*res = c;
-	return (res);
-}
 
 t_token		*line_tokenize(char *line)
 {

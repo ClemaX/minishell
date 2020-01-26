@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/19 21:31:00 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/26 19:11:52 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/26 20:55:59 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -17,16 +17,6 @@
 #include <unistd.h>
 #include <libft.h>
 #include <stdlib.h>
-
-static char	*char_dup(char c)
-{
-	char	*res;
-
-	if (!(res = malloc(sizeof(char))))
-		return (NULL);
-	*res = c;
-	return (res);
-}
 
 static int	handle_special(t_term *term, char c)
 {

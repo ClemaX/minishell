@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/26 19:29:51 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/26 20:32:33 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/26 21:00:34 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include <libft.h>
 
-const char	*rand_key(int len)
+char	*rand_key(int len)
 {
 	char	*key;
 	char	c;
@@ -30,7 +30,7 @@ const char	*rand_key(int len)
 	return (key);
 }
 
-const char	*rand_val(int len)
+char	*rand_val(int len)
 {
 	char	*val;
 	char	c;
@@ -46,7 +46,7 @@ const char	*rand_val(int len)
 	return (val);
 }
 
-const char	**rand_tab_map(int count, int len)
+char	**rand_tab_map(int count, int len)
 {
 	char	**tab;
 	char	*key;
@@ -63,5 +63,5 @@ const char	**rand_tab_map(int count, int len)
 		free(key);
 		free(val);
 	}
-	return ((const char **)tab);
+	return (tab);
 }

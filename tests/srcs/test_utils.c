@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/26 16:34:23 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/26 19:33:04 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/26 20:59:51 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,7 +15,7 @@
 #include <libft.h>
 #include <stdlib.h>
 
-int		diff_s(const char *got, const char *expected)
+int		diff_s(char *got, char *expected)
 {
 	int	diff;
 
@@ -25,7 +25,7 @@ int		diff_s(const char *got, const char *expected)
 	return (diff);
 }
 
-int		diff_p(const void *got, const void *expected)
+int		diff_p(void *got, void *expected)
 {
 	if (got != expected)
 	{
@@ -36,7 +36,7 @@ int		diff_p(const void *got, const void *expected)
 	return (0);
 }
 
-int		run_test(const char *label, int fw, int (*test)())
+int		run_test(char *label, int fw, int (*test)())
 {
 	int	ret;
 

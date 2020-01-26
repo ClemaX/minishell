@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/25 20:55:47 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/26 19:22:15 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/26 20:53:47 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,21 +15,10 @@
 #include <libft.h>
 #include <stdlib.h>
 
-static char	*char_dup(char c)
-{
-	char	*res;
-
-	if (!(res = malloc(sizeof(char))))
-		return (NULL);
-	*res = c;
-	return (res);
-}
-
 void	line_insert_at(t_line **line, int pos, char *str)
 {
 	t_line	*curr;
 	t_line	*start;
-	t_line	*ret;
 	int		len;
 	int		i;
 
