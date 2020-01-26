@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/14 06:46:56 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/25 21:16:42 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/26 15:57:33 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -18,16 +18,14 @@ int g_pid = 0;
 
 int	main(int ac, const char **av, const char **ep)
 {
-	(void)ep;
-	(void)av;
-	(void)ac;
-	test_line_insert_at();
-//	lexer_test(av[0], ep);
+	map_test(ac, av, ep);
+	line_test(ac, av, ep);
+//	lexer_test(ac, av, ep);
 	return (0);
 }
 
 /*
-** map_test(ac, av, ep);
+** 
 ** path_test(ep);
 ** ft_asprintf(&str, "TEST: %s", "WOW");
 ** ft_printf("%s\n", str);

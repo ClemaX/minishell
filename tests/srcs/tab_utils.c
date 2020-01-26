@@ -1,40 +1,48 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   line_tests.c                                     .::    .:/ .      .::   */
+/*   tab_utils.c                                      .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2020/01/25 21:13:22 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/26 15:59:22 by chamada     ###    #+. /#+    ###.fr     */
+/*   Created: 2020/01/26 16:04:24 by chamada      #+#   ##    ##    #+#       */
+/*   Updated: 2020/01/26 16:46:00 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include <line.h>
+#include <tests.h>
 #include <stdlib.h>
 #include <libft.h>
 
-static int	test_line_insert_at(void)
+int		tab_print(const char **tab)
 {
-	t_line	*line;
-	char	*str;
-
-	line = NULL;
-	line_insert_at(&line, 0, "TEST");
-	ft_printf("%s\n", str = line_cat(&line, 0));
-	free(str);
-	line_insert_at(&line, 1, "AB");
-	ft_printf("%s\n", str = line_cat(&line, 0));
-	free(str);
+	if (!tab)
+		return (0);
+	while (*tab)
+		ft_printf("%s\n", *tab++);
 	return (0);
 }
 
-int			line_test(int ac, const char **av, const char **ep)
+void	*tab_unload(char **tab)
 {
-	(void)ac;
-	(void)av;
-	(void)ep;
-	test_line_insert_at();
-	return (0);
+	while (*tab)
+		free(*tab++);
+	return (NULL);
+}
+
+int		tab_cmp(char **tab, const char **expected)
+{
+	if (!tab && expected)
+	{
+		ft_printf("%s: tab is NULL\n",
+			RED"ERROR"RESET);
+		return (1);
+	}
+	while (*tab && *expected && !diff_s(*tab, *expected))
+	{
+		tab++;
+		expected++;
+	}
+	return (*tab || *expected);
 }

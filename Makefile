@@ -23,7 +23,8 @@ OBJDS	= $(addprefix $(OBJDIR)/, builtins command env lexer map operators parser 
 HDRS	= $(addprefix $(INCDIR)/, builtins.h command.h env.h lexer.h line.h map.h)
 TESTSD	= tests/srcs/
 TESTID	= tests/includes/
-TESTS	= $(addprefix $(TESTSD), main.c map_test.c path_test.c prompt_test.c lexer_test.c line_tests.c)
+TESTS	= $(addprefix $(TESTSD), main.c error.c test_utils.c					\
+	map_test.c path_test.c prompt_test.c lexer_test.c line_tests.c tab_utils.c)
 
 all:			libft $(NAME)
 

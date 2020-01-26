@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/19 22:01:22 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/24 19:44:22 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/26 15:59:07 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -28,7 +28,7 @@ void	print_tokens(t_token *tokens)
 	}
 }
 
-char	*lexer_test(char *name, const char **ep)
+char	*lexer_test(int ac, const char **av, const char **ep)
 {
 	t_token		*tokens;
 	t_map		*env;
@@ -38,6 +38,7 @@ char	*lexer_test(char *name, const char **ep)
 	char		*line;
 	t_line		*parsed;
 
+	(void)ac;
 	parsed = NULL;
 	sig_init(&term);
 	term.history = NULL;
@@ -53,8 +54,8 @@ char	*lexer_test(char *name, const char **ep)
 		token_foreach(tokens, &env, &var_expand);
 		token_foreach(tokens, &env, &var_assign);
 		tree = cmd_line(&tokens);
-		cmd_line_execution(tree, env, name);
+		cmd_line_execution(tree, env, (char*)av[0]);
 	}
 	ft_printf("exit\n");
-	return (NULL);
+	return (0);
 }
