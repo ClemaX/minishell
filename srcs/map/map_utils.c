@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/14 08:35:14 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/24 18:29:30 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/26 15:25:05 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,9 +16,9 @@
 #include <map.h>
 #include <stdlib.h>
 
-static void	*unload_strs(char **strs)
+static void	*unload_strs(char **strs, int count)
 {
-	while (*strs)
+	while (count-- > 0 || *strs)
 		free(*strs++);
 	return (NULL);
 }
@@ -44,23 +44,23 @@ const char	*map_add(t_map **map, const char *key, const char *value)
 t_map		*map_load(const char **strs)
 {
 	t_map	*map;
-	char	**split;
+	char	*key;
+	char	*val;
 
 	if (!strs || !*strs)
 		return (NULL);
 	map = NULL;
 	while (*strs)
 	{
-		if (!(split = ft_split(*strs, '=')))
-			return (NULL);
-		if (!split[0] || !split[1])
+		if (!(key = ft_strdup(*strs))
+		|| !(val = ft_strchr(key, '=')))
 		{
-			unload_strs(split);
+			free(key);
 			return (NULL);
 		}
-		map_add(&map, split[0], split[1]);
-		unload_strs(split);
-		free(split);
+		*val++ = '\0';
+		map_add(&map, key, val);
+		free(key);
 		strs++;
 	}
 	return (map);
@@ -86,19 +86,20 @@ char		**map_export(t_map *map)
 	char		**strs;
 	char		**s;
 
-	if (!count || !(strs = ft_calloc(count + 1, sizeof(*strs))))
+	if (!count || !(strs = malloc(sizeof(*strs) * (count + 1))))
 		return (NULL);
-	s = strs;
+	s = strs + count;
+	*s-- = NULL;
 	while (map)
 	{
-		len = map->key_size + ft_strlen(map->value);
+		len = map->key_size + 1 + ft_strlen(map->value);
 		if (!(*s = malloc((sizeof(**s) * len) + 1)))
-			return (unload_strs(strs));
-		ft_memcpy(*s, map->key, map->key_size - 1);
-		(*s)[map->key_size - 1] = '=';
-		ft_memcpy(&(*s)[map->key_size], map->value, len - map->key_size);
+			return (unload_strs(strs, count + 1));
+		ft_memcpy(*s, map->key, map->key_size);
+		(*s)[map->key_size] = '=';
+		ft_memcpy(&(*s)[map->key_size + 1], map->value, len - map->key_size);
 		(*s)[len] = '\0';
-		s++;
+		s--;
 		map = map->next;
 	}
 	return (strs);
