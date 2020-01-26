@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/11/21 21:47:21 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2019/12/09 16:51:50 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/26 18:38:15 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -30,7 +30,7 @@ static int	fmt_char(t_line **line, t_spec spec, va_list ap)
 		return (0);
 	ft_memset(content, (spec.flags & ZERO) ? '0' : ' ', len);
 	content[spec.flags & MINUS ? 0 : len - 1] = c;
-	return (line_add(line, content, len) != NULL);
+	return (pf_line_add(line, content, len) != NULL);
 }
 
 static int	fmt_str(t_line **line, t_spec spec, va_list ap)
@@ -42,7 +42,7 @@ static int	fmt_str(t_line **line, t_spec spec, va_list ap)
 	char		*content;
 
 	if (spec.precision == 0 && spec.width == 0)
-		return (line_add(line, NULL, 0) != NULL);
+		return (pf_line_add(line, NULL, 0) != NULL);
 	srclen = ft_strlen(src);
 	if (spec.precision >= 0 && spec.precision < srclen)
 		srclen = spec.precision;
@@ -52,7 +52,7 @@ static int	fmt_str(t_line **line, t_spec spec, va_list ap)
 		return (0);
 	ft_memset(content, (spec.flags & ZERO) ? '0' : ' ', len);
 	ft_memcpy(content + (len - srclen) * !(spec.flags & MINUS), src, srclen);
-	return (line_add(line, content, len) != NULL);
+	return (pf_line_add(line, content, len) != NULL);
 }
 
 static void	write_num(char *dest, t_number number)
@@ -84,7 +84,7 @@ static int	fmt_num(t_line **line, t_spec s, va_list ap)
 		return (0);
 	ft_memset(&content[(s.flags & MINUS) ? len - n.padding : 0], p, n.padding);
 	write_num(&content[(s.flags & MINUS) ? 0 : n.padding], n);
-	return (line_add(line, content, len) != NULL);
+	return (pf_line_add(line, content, len) != NULL);
 }
 
 /*

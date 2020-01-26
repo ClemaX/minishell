@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/14 06:49:04 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/26 17:00:02 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/26 18:52:04 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -23,21 +23,23 @@
 # define FAIL	RED"✗"RESET
 # define BULLET	CYAN"▶"RESET
 
-int		diff_s(const char *got, const char *expected);
-int		diff_p(const void *got, const void *expected);
-int		run_test(const char *label, int fw, int (*test)());
+int			diff_s(const char *got, const char *expected);
+int			diff_p(const void *got, const void *expected);
+int			run_test(const char *label, int fw, int (*test)());
 
-int		tab_print(const char **tab);
-void	*tab_unload(char **tab);
-int		tab_cmp(char **tab, const char **expected);
+const char	**rand_tab_map(int count, int len);
+
+int			tab_print(const char **tab);
+void		*tab_unload(char **tab);
+int			tab_cmp(char **tab, const char **expected);
 
 
-int		map_test(int ac, const char **av, const char **ep);
-int		line_test(int ac, const char **av, const char **ep);
-int		path_test(int ac, const char **av, const char **ep);
-int		lexer_test(int ac, const char **av, const char **ep);
-int		prompt_test(int ac, const char **av, const char **ep);
+int			map_test(int ac, const char **av, const char **ep);
+int			line_test(int ac, const char **av, const char **ep);
+int			path_test(int ac, const char **av, const char **ep);
+int			lexer_test(int ac, const char **av, const char **ep);
+int			prompt_test(int ac, const char **av, const char **ep);
 
-void	error(void);
+void		error(void);
 
 #endif

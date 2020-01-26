@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/14 06:48:24 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/26 17:21:53 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/26 18:53:15 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -46,7 +46,9 @@ int	map_set_test(void)
 
 int	map_get_test(void)
 {
-	static const t_map	orig[2] = {(t_map){.key="A", .value="B"}, (t_map){.key="C", .value="D"}};
+	static const t_map	orig[2] = {\
+		(t_map){.key="A", .value="B"},\
+		(t_map){.key="C", .value="D"}};
 	t_map				*map;
 	t_map				*got[2];
 	int					diff;
@@ -75,7 +77,7 @@ int	map_get_test(void)
 
 int	map_export_test(void)
 {
-	const char	*orig[] = {"A=B", "B=C", "_=UnD", "t=a=b=c", "W=", NULL};
+	const char	**orig = rand_tab_map(25, 20);
 	t_map		*map;
 	char		**strs;
 	int			diff;
@@ -85,6 +87,7 @@ int	map_export_test(void)
 		error();
 	diff = tab_cmp(strs, orig);
 	strs = tab_unload(strs);
+	orig = tab_unload((char **)orig);
 	map_clr(&map);
 	return (!diff);
 }

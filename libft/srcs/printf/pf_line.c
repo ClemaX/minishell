@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/11/21 21:25:00 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2019/12/09 16:52:03 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/26 18:36:23 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -24,7 +24,7 @@
 **	Note: This function has no effect when size == 0
 */
 
-t_line	*line_add(t_line **line, char *content, int size)
+t_line	*pf_line_add(t_line **line, char *content, int size)
 {
 	t_line *new;
 
@@ -42,7 +42,7 @@ t_line	*line_add(t_line **line, char *content, int size)
 **	Free every list element of the line and set its pointer to NULL
 */
 
-t_line	*line_clr(t_line **line)
+t_line	*pf_line_clr(t_line **line)
 {
 	t_line	*curr;
 
@@ -61,7 +61,7 @@ t_line	*line_clr(t_line **line)
 **	Get the total length of a line
 */
 
-int		line_len(t_line *line)
+int		pf_line_len(t_line *line)
 {
 	t_line	*curr;
 	int		len;
@@ -85,14 +85,14 @@ int		line_len(t_line *line)
 **	Note: Returns -1 in case of error
 */
 
-int		line_put(char **dest, t_line **line, char alloc)
+int		pf_line_put(char **dest, t_line **line, char alloc)
 {
-	const int	len = line_len(*line);
+	const int	len = pf_line_len(*line);
 	t_line		*curr;
 
 	if (alloc && !(*dest = malloc(sizeof(*dest) * (len + 1))))
 	{
-		line_clr(line);
+		pf_line_clr(line);
 		return (-1);
 	}
 	*dest += len;
@@ -104,6 +104,6 @@ int		line_put(char **dest, t_line **line, char alloc)
 		ft_memcpy(*dest, curr->content, curr->size);
 		curr = curr->next;
 	}
-	line_clr(line);
+	pf_line_clr(line);
 	return (len);
 }

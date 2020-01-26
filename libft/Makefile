@@ -21,7 +21,7 @@ SRCS	=		$(addprefix $(SRCDIR)/,											\
 				bzero.c calloc.c memccpy.c memchr.c memcmp.c memcpy.c			\
 				memmove.c memset.c)												\
 				$(addprefix numbers/ft_,										\
-				atoi.c itoa.c numlen.c pow.c)									\
+				atoi.c itoa.c numlen.c pow.c rand.c)							\
 				$(addprefix strings/ft_,										\
 				split.c strchr.c strdup.c strjoin.c strlcat.c strlcpy.c			\
 				strlen.c strmapi.c strncmp.c strnstr.c strpos.c strrchr.c		\

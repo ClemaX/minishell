@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/11/21 18:22:46 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2019/12/09 17:18:24 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/26 18:38:01 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -33,16 +33,16 @@ static int		parse_txt(const char **fmt, t_line **line)
 	if ((next = ft_strchr(*fmt, '%')))
 	{
 		if (next != *fmt)
-			if (!line_add(line, ft_substr(*fmt, 0, next - *fmt), next - *fmt))
+			if (!pf_line_add(line, ft_substr(*fmt, 0, next - *fmt), next - *fmt))
 			{
-				line_clr(line);
+				pf_line_clr(line);
 				return (0);
 			}
 		*fmt = next + 1;
 		return (1);
 	}
-	if (!line_add(line, ft_strdup(*fmt), ft_strlen(*fmt)))
-		line_clr(line);
+	if (!pf_line_add(line, ft_strdup(*fmt), ft_strlen(*fmt)))
+		pf_line_clr(line);
 	return (0);
 }
 
@@ -63,14 +63,14 @@ static t_line	*parse_fmt(const char *fmt, va_list ap)
 	while (parse_txt(&fmt, &line) && *fmt)
 	{
 		if ((spec = pf_parse_spec(&fmt, ap)).type == ERR)
-			return (line_clr(&line));
+			return (pf_line_clr(&line));
 		else if (spec.type == CNT)
 		{
 			if ((cnt = va_arg(ap, int*)))
-				*cnt = line_len(line);
+				*cnt = pf_line_len(line);
 		}
 		else if (!g_format[spec.type](&line, spec, ap))
-			return (line_clr(&line));
+			return (pf_line_clr(&line));
 	}
 	return (line);
 }
@@ -85,7 +85,7 @@ int				ft_printf(const char *fmt, ...)
 	va_start(ap, fmt);
 	line = parse_fmt(fmt, ap);
 	va_end(ap);
-	if ((!line || (len = line_put(&str, &line, 1)) < 0))
+	if ((!line || (len = pf_line_put(&str, &line, 1)) < 0))
 		return (-1);
 	write(1, str, len);
 	free(str);
@@ -101,7 +101,7 @@ int				ft_asprintf(char **ret, char *fmt, ...)
 	va_start(ap, fmt);
 	line = parse_fmt(fmt, ap);
 	va_end(ap);
-	if ((!line || (len = line_put(ret, &line, 1)) < 0))
+	if ((!line || (len = pf_line_put(ret, &line, 1)) < 0))
 	{
 		*ret = NULL;
 		return (-1);
@@ -118,7 +118,7 @@ int				ft_sprintf(char *str, char *fmt, ...)
 	va_start(ap, fmt);
 	line = parse_fmt(fmt, ap);
 	va_end(ap);
-	if ((!line || (len = line_put(&str, &line, 0)) < 0))
+	if ((!line || (len = pf_line_put(&str, &line, 0)) < 0))
 		return (-1);
 	return (len);
 }

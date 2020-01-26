@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/25 21:13:22 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/26 15:59:22 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/26 18:58:28 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -22,7 +22,7 @@ static int	test_line_insert_at(void)
 
 	line = NULL;
 	line_insert_at(&line, 0, "TEST");
-	ft_printf("%s\n", str = line_cat(&line, 0));
+	ft_printf("%s\n", str = line_cat(&line, 1));
 	free(str);
 	line_insert_at(&line, 1, "AB");
 	ft_printf("%s\n", str = line_cat(&line, 0));
