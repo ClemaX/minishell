@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/11/20 17:07:54 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/25 21:14:37 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/26 19:09:58 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -18,12 +18,11 @@
 
 typedef struct	s_line
 {
-	char			*content;
-	size_t			size;
+	char			c;
 	struct s_line	*next;
 }				t_line;
 
-t_line			*line_add(t_line **line, char *content, int size);
+t_line			*line_add(t_line **line, char c);
 t_line			*line_clr(t_line **line);
 int				line_len(t_line *line);
 int				line_put(char **dest, t_line **line, char clr);

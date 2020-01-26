@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/19 21:31:00 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/25 18:42:53 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/26 19:11:52 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -91,7 +91,7 @@ t_line		*read_line(t_term *term)
 		else if (!(handle_special(term, c)))
 		{
 			write(1, &c, 1);
-			line_add(&term->line->line, char_dup(c), 1);
+			line_add(&term->line->line, c);
 			term->cursor.x++;
 			term->cursor.max.x++;
 			status = get_status(status, c);

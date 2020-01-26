@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/18 22:17:00 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/24 19:43:43 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/26 19:08:29 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -73,19 +73,19 @@ char		*line_parse(char *str)
 		if ((status & S_QUOTES && c != '\'')
 		|| (status & D_QUOTES && (c == '\'' || ft_strpos(META, c) == -1)))
 		{
-			line_add(&line, char_dup(c), 1);
+			line_add(&line, c);
 			continue ;
 		}
 		if (status & B_SLASH)
 		{
-			line_add(&line, char_dup(c), 1);
+			line_add(&line, c);
 			status &= ~B_SLASH;
 			continue ;
 		}
 		if ((pos = ft_strpos(META, c)) != -1)
 			status ^= (1 << pos);
 		if (!(status & B_SLASH))
-			line_add(&line, char_dup(c), 1);
+			line_add(&line, c);
 	}
 	return (line_cat(&line, 1));
 }

@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/25 20:55:47 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/26 19:01:59 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/26 19:22:15 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -36,7 +36,7 @@ void	line_insert_at(t_line **line, int pos, char *str)
 	if (!*line || !(len = line_len(*line))
 	|| (i = len - pos) == 0)
 		while (*str)
-			line_add(line, char_dup(str++), 1);
+			line_add(line, *str++);
 	else
 	{
 		start = *line;
@@ -44,7 +44,7 @@ void	line_insert_at(t_line **line, int pos, char *str)
 			start = start->next;
 		curr = start->next;
 		while (*str)
-			line_add(&curr, char_dup(str++), 1);
+			line_add(&curr, *str++);
 		start->next = curr;
 	}
 }
@@ -63,8 +63,7 @@ char	*line_get_range(t_line *line, int min, int max)
 	*str = 0;
 	while (curr)
 	{
-		str -= curr->size;
-		ft_memcpy(str, curr->content, curr->size);
+		*--str = curr->c;
 		curr = curr->next;
 	}
 	return (str);

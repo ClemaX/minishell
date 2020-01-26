@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/25 15:33:02 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/25 21:17:01 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/26 19:10:23 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -24,7 +24,6 @@ t_line	*del_line(t_line *curr, int min, int max, int i)
 	if (i >= min && i <= max)
 	{
 		next = curr->next;
-		free(curr->content);
 		free(curr);
 		return (next);
 	}

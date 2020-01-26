@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/11/21 21:25:00 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/25 21:26:28 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/26 19:22:59 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -18,23 +18,18 @@
 
 /*
 **	line:		The line to add content on
-**	content:	The content to add
-**	size:		The size of the content
+**	c:			The character to add
 **
-**	Add content to the line elements list
-**	Note: This function has no effect when size == 0
+**	Add a character to the line elements list
 */
 
-t_line	*line_add(t_line **line, char *content, int size)
+t_line	*line_add(t_line **line, char c)
 {
 	t_line *new;
 
-	if (!size)
-		return (*line);
-	if (!content || !(new = malloc(sizeof(*new))))
+	if (!(new = malloc(sizeof(*new))))
 		return (NULL);
-	new->content = content;
-	new->size = size;
+	new->c = c;
 	new->next = *line;
 	return ((*line = new));
 }
@@ -52,7 +47,6 @@ t_line	*line_clr(t_line **line)
 	while ((curr = *line))
 	{
 		*line = (*line)->next;
-		free(curr->content);
 		free(curr);
 	}
 	return (NULL);
@@ -73,7 +67,7 @@ int		line_len(t_line *line)
 	curr = line;
 	while (curr)
 	{
-		len += curr->size;
+		len++;
 		curr = curr->next;
 	}
 	return (len);
@@ -83,7 +77,7 @@ int		line_len(t_line *line)
 **	dest:		The destination string
 **	line:		The line to copy
 **
-**	Copy a line into a string, clearing it's content and returning it's length
+**	Copy a line into a string and return it's length
 **	Note: Returns -1 in case of error
 */
 
@@ -103,8 +97,7 @@ int		line_put(char **dest, t_line **line, char clr)
 	curr = *line;
 	while (curr)
 	{
-		*dest -= curr->size;
-		ft_memcpy(*dest, curr->content, curr->size);
+		*--(*dest) = curr->c;
 		curr = curr->next;
 	}
 	if (clr)
