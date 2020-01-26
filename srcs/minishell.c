@@ -6,17 +6,22 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/12 04:38:55 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/20 08:24:33 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/26 23:06:26 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
+#include <global_var.h>
 #include <libft.h>
 #include <stdlib.h>
-#include <fcntl.h>
-#include <command.h>
 #include <unistd.h>
+#include <lexer.h>
+#include <parser.h>
+#include <map.h>
+#include <prompt.h>
+#include <execution.h>
 
+int g_pid = 0;
 /*static int	print_status(t_status status, t_cmd *cmd)
 {
 	if (status)
@@ -44,26 +49,32 @@ t_map		*map_dup(t_map	*map)
 
 int			main(int ac, char **av, const char **envp)
 {
-	t_cmd			cmd;
-	t_status		status;
-	char			*line;
-	int				fd;
+	t_token		*tokens;
+	t_node		*tree;
+	static t_term	term;
+	char		*term_type;
+	char		*line;
+	t_line		*parsed;
 
-	line = NULL;
-	cmd.ac = 0;
-	cmd.av = NULL;
-	cmd.glob_env = map_load(envp);
-	status = 0;
-	cmd.ret = 0;
-	if (ac == 1)
-		fd = 0;
-	else if (ac == 2)
-		fd = open(av[1], O_RDONLY);
-	else
-		return (1);
-	cmd.env = map_dup(cmd.glob_env);
-	free(line);
-	free(cmd.av);
+	(void)ac;
+	term.name = av[0];
+	parsed = NULL;
+	sig_init(&term);
+	term.history = NULL;
+	term.env = map_load(envp);
+	term_type = map_get(term.env, "TERM")->value;
+	term_init(&term, term_type);
+	while ((prompt(&term)))
+	{
+		ft_printf("\n");
+		line = line_parse(line_cat(&term.line->line, 0));
+		tokens = line_tokenize(line);
+		token_foreach(tokens, &term.env, &set_token_type_op);
+		token_foreach(tokens, &term.env, &var_expand);
+		token_foreach(tokens, &term.env, &var_assign);
+		tree = cmd_line(&tokens);
+		cmd_line_execution(tree, &term);
+	}
 	ft_printf("exit\n");
-	return (cmd.ret);
+	return (1);
 }

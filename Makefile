@@ -63,6 +63,6 @@ test: 			HDRS	+=	$(addprefix $(TESTID), test.h)
 test:			SRCS	+=	$(TESTS)
 test:			OBJS	=	$(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS))
 test:			CFLAGS	=	-Wall -Wextra -g
-test:			test-dir re
+test:			test-dir all
 
 .PHONY: libft clean fclean

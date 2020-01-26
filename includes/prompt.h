@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/19 21:32:10 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/25 21:17:45 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/26 22:34:53 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,6 +16,7 @@
 
 # include <term.h>
 # include <line.h>
+# include <map.h>
 
 typedef struct	s_cursor
 {
@@ -34,12 +35,6 @@ typedef struct	s_history
 	struct s_history	*next;
 	struct s_history	*prev;
 }				t_history;
-
-/*
-**	cursor move
-**	home
-**	clear screen
-*/
 
 typedef struct	s_caps
 {
@@ -65,6 +60,8 @@ typedef struct	s_term
 	t_caps			caps;
 	t_history		*history;
 	t_history		*line;
+	t_map			*env;
+	char			*name;
 	struct termios	s_termios;
 	struct termios	s_termios_bkp;
 }				t_term;

@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/18 05:42:36 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/24 19:57:56 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/26 22:35:52 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -17,6 +17,7 @@
 #include <sys/wait.h>
 #include <execution.h>
 #include "global_var.h"
+#include <prompt.h>
 
 int		redirection_fill(char *data, char bool)
 {
@@ -39,7 +40,7 @@ int		redirection_fill(char *data, char bool)
 	return (0);
 }
 
-int		redirection(t_node *node, char std, t_map *env, char *name)
+int		redirection(t_node *node, char std, t_term *term)
 {
 	int		stdout;
 	int		ret;
@@ -51,7 +52,7 @@ int		redirection(t_node *node, char std, t_map *env, char *name)
 		stdout = dup(STDOUT_FILENO); // need this , think is 4 error check?
 		if ((redirection_fill(node->data, std) < 0))
 			return (-1);
-		ret = simple_cmd(node->ch1, env, name, &ft_execve);
+		ret = simple_cmd(node->ch1, term, &ft_execve);
 	}
 	else if (g_pid < 0)
 		return (-1);
@@ -63,7 +64,7 @@ int		redirection(t_node *node, char std, t_map *env, char *name)
 
 /*
 
-int		redirection(t_node *node, char *data, char std, t_map *env, char *name)
+int		redirection(t_node *node, char *data, char std,t_term *term)
 {
 	int		stdout;
 	int		fd;

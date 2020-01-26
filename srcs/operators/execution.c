@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/18 03:41:36 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/26 15:59:01 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/26 22:49:32 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -18,31 +18,31 @@
 #include <libft.h>
 #include <stdlib.h>
 
-static int		cmd_execution(t_node *node, t_map *env, char *name)
+static int		cmd_execution(t_node *node, t_term *term)
 {
 	if (!node)
 		return (-1);
 	if (node->type == NODE_R_IN)
-		return (redirection(node, STDIN_FILENO, env, name));
+		return (redirection(node, STDIN_FILENO, term));
 	else if (node->type == NODE_R_OUT)
-		return (redirection(node, STDOUT_FILENO, env, name));
+		return (redirection(node, STDOUT_FILENO, term));
 	else if (node->type == NODE_CMD)
-		return (simple_cmd(node, env, name, ft_execve_f));
+		return (simple_cmd(node, term, ft_execve_f));
 	else
 		return (-1); /* Not implemented */
 }
 
-static int		job_execution(t_node *node, t_map *env, char *name)
+static int		job_execution(t_node *node, t_term *term)
 {
 	if (!node)
 		return (-1);
 	if (node->type == NODE_PIPE)
-		return (ft_pipe(node, env, name));
+		return (ft_pipe(node, term));
 	else
-		return (cmd_execution(node, env, name));
+		return (cmd_execution(node, term));
 }
 
-void			cmd_line_execution(t_node *node, t_map *env, char *name)
+void			cmd_line_execution(t_node *node, t_term *term)
 {
 	int ret;
 
@@ -51,11 +51,11 @@ void			cmd_line_execution(t_node *node, t_map *env, char *name)
 		return ;
 	if (node->type == NODE_SEQ)
 	{
-		ret = job_execution(node->ch1, env, name);
-		cmd_line_execution(node->ch2, env, name);
+		ret = job_execution(node->ch1, term);
+		cmd_line_execution(node->ch2, term);
 	}
 	else
-		ret = job_execution(node, env, name);
+		ret = job_execution(node, term);
 	ft_printf("%d\n", ret);
 }
 
@@ -87,7 +87,7 @@ int			init_cmd(t_node *node, t_cmd *cmd)
 	return (1);
 }
 
-int		simple_cmd(t_node *node, t_map *env, char *name,
+int		simple_cmd(t_node *node, t_term *term,
 	int (exec)(char *, t_cmd *))
 {
 	t_cmd	cmd;
@@ -96,10 +96,10 @@ int		simple_cmd(t_node *node, t_map *env, char *name,
 	ret = -1;
 	if (node)
 	{
-		cmd.glob_env = env;
-		cmd.env = env;
+		cmd.glob_env = term->env;
+		cmd.env = term->env;
 		if (init_cmd(node, &cmd))
-			ret = cmd_exec(&cmd, name, exec);
+			ret = cmd_exec(&cmd, term->name, exec);
 	}
 	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/25 20:55:47 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/26 20:53:47 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/26 23:11:57 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -44,6 +44,8 @@ char	*line_get_range(t_line *line, int min, int max)
 	int		len;
 	t_line	*curr;
 
+	(void)min;
+	(void)max;
 	len = line_len(line);
 	if (!(str = malloc(sizeof(*str) * (len + 1))))
 		return (NULL);
