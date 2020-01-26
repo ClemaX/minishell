@@ -1,104 +1,106 @@
 /* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   term_fill.c                                      .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: plamtenz <plamtenz@student.le-101.fr>      +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2020/01/23 11:56:34 by plamtenz     #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/24 17:05:27 by plamtenz    ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   term_fill.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: plamtenz <plamtenz@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/23 11:56:34 by plamtenz          #+#    #+#             */
+/*   Updated: 2020/01/26 21:17:29 by plamtenz         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
-static void key_sign_to_int(int *selected, char signal)
-{
-    *selected = *selected * 10 + (int)signal;
-}
 
-int         ft_copy(int status, int *selected, char siganl, t_list *imput_list, int pos, int *len)
+
+#include <line.h>
+#include <prompt.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <libft.h>
+
+void            ft_paste(t_term *term, int pos, char *to_paste)
 {
-    if (!selected && len) /* with arrows */
+    if (to_paste)
     {
-        if (len > 0)
-            get_range(imput_list, pos, *len);
-        else if (len < 0)
-            get_range(imput_list, pos - *len, pos);
+        line_insert_at(term->line->line, pos, to_paste);
+        term->cursor.max.x += ft_strlen(to_paste);
     }
-    else if (!(status & 2))
-        get_range(imput_list, pos, selected);       /* this must return a str i should use it (put it on a struct could be a good idea) */
-
-    else if (status & 2)
-        get_range(imput_list, pos - *selected, pos);
-    *selected = 0;
-    *len = 0;
-    return (0);
 }
 
-int         ft_cut(int status, int *selected, char siganl, t_list *imput_list, int pos, int *len)
+char             *ft_copy(t_term *term, int pos, int dir, int size)
 {
-    if (!selected && len) /* with arrows */
-    {
-        if (len > 0)
-        {
-            get_range(imput_list, pos, *len);
-            delete_range(imput_list, pos, *len)
-        }
-        else if (len < 0)
-        {
-            get_range(imput_list, pos - *len, pos);
-            delete_range(imput_list, pos - *len, pos);
-        }
-    }
-    else if (!(status & 2))
-    {
-        get_range(imput_list, pos, *selected);       /* this must return a str i should use it (put it on a struct could be a good idea) */
-        delete_range(imput_list, pos, *selected)
-    }
+    char    *copy;
 
-    else if (status & 2)
-    {
-        get_range(imput_list, pos - *selected, pos);
-        delete_range(imput_list, pos - *selected, pos);
-    }
-    *selected = 0;
-    *len = 0;
-    return (0);
+    if (size <= 0)
+        return (NULL);
+    if (dir < 0)
+        copy = line_get_range(term->line->line, pos - size, pos);
+    else
+        copy = line_get_range(term->line->line, pos, size);
+    return (copy);
 }
 
-
-/*
-
-status -> bit[0] = cpy process
-status -> bit[1] = inverse copy
-
-*/
-    
-int         copy_cut_call(char signal, int *status, t_list *imput_list, int pos, int(*f)(int, int *, char, t_list *, int , int *)) /* call this fck each time a key is pressed */
+char            *ft_cut(t_term *term, int pos, int dir, int size)
 {
-    static int  selected;
-    static int len;
+    char    *copy;
 
-    if (*status & 1 && signal != "digit key" && signal != "minus key" && signal != "left arrow" && signal != "right arrow")
-        ft_copy(status, selected, imput_list, pos, len);
-    if (signal == "copy signal" || (*status & 1 && !(signal == "digit keys" && signal == "minus key"
-            && signal != "left arrow" && status != "right arrow"))) /* probally have to add a end key */
-        *status ^= (1 << 0);
-    if (*status & 1 && (signal == "digit keys" || signal == "minus key" || signal == "right arrow" && signal == "left arrow"))
+    if (size <= 0)
+        return (NULL);
+    if (dir < 0)
     {
-        if (status == "right arrow")
-            len++;
-        if (status == "left arrow")
-            len--;
-        *status |= signal == "minus signal" && !(*status & 2) && !selected ? 2 : 0;
-        if (signal == "digit keys")
-            key_sign_to_int(&selected, signal);  }
-    return (0);
+        copy = line_get_range(term->line->line, pos - size, pos);
+        term->line->line = del_line(term->line->line, pos - size, pos);
+    }
+    else if (dir > 0)
+    {
+        copy = line_get_range(term->line->line, pos, size);
+        term->line->line = del_line(term->line->line, pos, size);
+    }
+    term->cursor.max.x -= size;
+    return (copy);
 }
 
-int         ft_paste(int pos, char signal, char *to_paste)
+static void     handle_cpy_and_cut_arrows(int *size, int *dir)
 {
-    if (signal == "paste code")
-        insert_arg(pos, to_paste);
-    return (0);
+    char    buff[2];
+    int     ret;
+
+    while ((ret = read(STDIN_FILENO, buff, 2)) == 1
+            && (buff[1] == 'D' || buff[1] == 'C' || c == ENTER))
+    {
+        if (c == ENTER)
+            break ;
+        else if (buff[1] == 'D')
+            *size++;
+        else if (buff[1] == 'C')
+            *size--;
+    }
+    if (size < 0)
+    {
+        *size = -*size;
+        *dir = -1;
+    }
 }
 
+void            handle_cpy_and_cut(t_term *term, char signal, int pos, char *(*x)(t_term *, int, int, int))
+{
+    int     ret;
+    int     dir;
+    int     size;
+    char    c;
+
+    dir = 1;
+    size = 0;
+    while ((ret = read(STDIN_FILENO, &c, 1)) == 1
+        && (c == ENTER || ft_isdigit(c) || c == MINUS))
+    {
+        if (c == ENTER)
+            break ;
+        if (!size && c == MINUS)
+            dir = -dir;
+        if (ft_isdigit(c))
+            size = size * 10 + (int)c;
+    }
+    if (!size && c == '\e')
+        handle_cpy_and_cut_arrows(&size, &dir);
+    term->copy = x(term, pos, dir, size);
+}

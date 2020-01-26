@@ -6,10 +6,11 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/14 06:46:56 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/26 22:26:30 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/26 23:15:45 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
+
 
 #include <tests.h>
 #include "global_var.h"
@@ -21,7 +22,7 @@ int	main(void)
 	line_test();
 	map_test();
 	path_test();
-	lexer_test(ac, av, ep);
+	lexer_test();
 	return (0);
 }
 

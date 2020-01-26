@@ -1,15 +1,15 @@
 /* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   prompt.c                                         .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2020/01/19 21:31:00 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/26 20:55:59 by chamada     ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   prompt.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: plamtenz <plamtenz@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/19 21:31:00 by chamada           #+#    #+#             */
+/*   Updated: 2020/01/26 21:53:25 by plamtenz         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
+
 
 #include <prompt.h>
 #include <line.h>
@@ -63,6 +63,7 @@ int			get_status(int status, char c)
 t_line		*read_line(t_term *term)
 {
 	char	c;
+	char 	buf[7];
 	int		ret;
 	int		status;
 
