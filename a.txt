@@ -1,0 +1,8 @@
+a.txt
+
+tests:
+includes
+srcs
+
+zone:
+a

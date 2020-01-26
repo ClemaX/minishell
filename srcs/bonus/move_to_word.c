@@ -1,18 +1,16 @@
 /* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   move_to_word.c                                   .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: plamtenz <plamtenz@student.le-101.fr>      +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2020/01/23 18:22:26 by plamtenz     #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/24 17:05:23 by plamtenz    ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   move_to_word.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: plamtenz <plamtenz@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/23 18:22:26 by plamtenz          #+#    #+#             */
+/*   Updated: 2020/01/26 21:02:18 by plamtenz         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
-# include "libft.h"
 
-/* 2 pointer to fct called when we do ctrl+right or ctrl+left */
+# include "libft.h"
 
 int         next_wd_right(char *line, int *pos)
 {

@@ -1,21 +1,27 @@
 /* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   prompt.h                                         .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2020/01/19 21:32:10 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/25 21:17:45 by chamada     ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   prompt.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: plamtenz <plamtenz@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/19 21:32:10 by chamada           #+#    #+#             */
+/*   Updated: 2020/01/26 21:01:45 by plamtenz         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef PROMPT_H
 # define PROMPT_H
 
 # include <term.h>
 # include <line.h>
+
+# define COPY	19
+# define CUT	24
+# define PASTE	23
+# define ENTER	10
+# define MINUS	45
 
 typedef struct	s_cursor
 {
@@ -67,6 +73,7 @@ typedef struct	s_term
 	t_history		*line;
 	struct termios	s_termios;
 	struct termios	s_termios_bkp;
+	char			*copy;
 }				t_term;
 
 t_line			*prompt(t_term *term);
@@ -81,5 +88,14 @@ void			sig_handler(int sig, void *param);
 void			sig_init(t_term *term);
 
 void			cursor_del_range(t_term *term, int min, int max);
+
+void			handle_cpy_and_cut(t_term *term, char signal, 
+	int pos, char *(*x)(t_term *, int, int, int));
+char       		*ft_copy(t_term *term, int pos, int dir, int size);
+char            *ft_cut(t_term *term, int pos, int dir, int size);
+void            ft_paste(t_term *term, int pos, char *to_paste);
+
+int        		next_wd_right(char *line, int *pos);
+int      		next_wd_left(char *line, int *pos);
 
 #endif

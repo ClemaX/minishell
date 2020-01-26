@@ -1,5 +1,7 @@
 Makefile
 a
+a.txt
+at.xt
 includes
 libft
 minishell
@@ -7,3 +9,4 @@ minishell.dSYM
 objs
 srcs
 tests
+zone
