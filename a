@@ -1,0 +1,9 @@
+Makefile
+a
+includes
+libft
+minishell
+minishell.dSYM
+objs
+srcs
+tests

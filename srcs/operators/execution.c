@@ -1,15 +1,15 @@
 /* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   execution.c                                      .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2020/01/18 03:41:36 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/26 22:49:32 by chamada     ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execution.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: plamtenz <plamtenz@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/18 03:41:36 by chamada           #+#    #+#             */
+/*   Updated: 2020/01/27 16:14:11 by plamtenz         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
+
 
 #include <execution.h>
 #include <command.h>
@@ -44,19 +44,18 @@ static int		job_execution(t_node *node, t_term *term)
 
 void			cmd_line_execution(t_node *node, t_term *term)
 {
-	int ret;
 
-	ret = 0; /* ret is 0 by default does not need initiaisation but i $? with no execution it have to be 0 */
+	term->ret = 0; /* ret is 0 by default does not need initiaisation but i $? with no execution it have to be 0 */
 	if (!node)
 		return ;
 	if (node->type == NODE_SEQ)
 	{
-		ret = job_execution(node->ch1, term);
+		term->ret = job_execution(node->ch1, term);
 		cmd_line_execution(node->ch2, term);
 	}
 	else
-		ret = job_execution(node, term);
-	ft_printf("%d\n", ret);
+	term->ret = job_execution(node, term);
+	ft_printf("%d\n", term->ret);
 }
 
 int			init_cmd(t_node *node, t_cmd *cmd)

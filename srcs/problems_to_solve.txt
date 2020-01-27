@@ -1,0 +1,26 @@
+
+
+Errors:
+
+-When we write into a writen str, we replace char where the cursor is placed
+
+-When we write and we move into text with arrow in the middlle of this writen str, if we write another time and then we
+delete all, second write isnt deleted in data
+
+-Builtings with pipes and redirection
+
+-Arguments further redirections
+
+
+
+TO DO:
+
+- Executable launching
+- Options in CD Builting
+- remove ' " '
+- add ">>" and finish "<<"
+- $?
+- Add to code : copy, paste, cut, ctrl+right, ctrl+left, home, end
+- Ctrl+up and Ctrl+down
+- && and || with '(' ')'
+- Add wildcard to code

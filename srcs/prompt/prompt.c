@@ -6,7 +6,7 @@
 /*   By: plamtenz <plamtenz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/19 21:31:00 by chamada           #+#    #+#             */
-/*   Updated: 2020/01/26 21:53:25 by plamtenz         ###   ########.fr       */
+/*   Updated: 2020/01/27 16:05:09 by plamtenz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ int			get_status(int status, char c)
 t_line		*read_line(t_term *term)
 {
 	char	c;
-	char 	buf[7];
 	int		ret;
 	int		status;
 
