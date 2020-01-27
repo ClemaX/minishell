@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/19 21:32:10 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/26 23:15:54 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/27 21:15:58 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -45,6 +45,7 @@ typedef struct	s_history
 
 typedef struct	s_caps
 {
+	char	*im;
 	char	*cm;
 	char	*ho;
 	char	*cl;
@@ -66,7 +67,8 @@ typedef struct	s_term
 	t_cursor		cursor;
 	t_caps			caps;
 	t_history		*history;
-	t_history		*line;
+	t_history		*current;
+	t_line			*line;
 	t_map			*env;
 	char			*name;
 	struct termios	s_termios;
@@ -80,7 +82,10 @@ t_history		*history_add(t_history **history);
 void			history_clr(t_history **history);
 
 int				term_init(t_term *term, const char *term_type);
+void			term_clear_line(t_term *term);
 int				caps_handler(t_term *term);
+void			caps_load(t_term *term);
+
 
 void			sig_handler(int sig, void *param);
 void			sig_init(t_term *term);

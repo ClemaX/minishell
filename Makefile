@@ -17,7 +17,8 @@ SRCS	= $(addprefix $(SRCDIR)/,												\
 	$(addprefix map/, map.c map_utils.c map_sort.c)								\
 	$(addprefix operators/, execution.c pipe.c redirection.c)					\
 	$(addprefix parser/, parser.c job.c command.c cmd_line.c arg_list.c node.c) \
-	$(addprefix prompt/, cursor.c history.c line.c line_utils.c prompt.c signals.c term.c))
+	$(addprefix prompt/, cursor.c history.c line.c line_utils.c prompt.c		\
+				signals.c term.c caps.c))
 OBJS	= $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS) $(MAIN))
 OBJDS	= $(addprefix $(OBJDIR)/, builtins command env lexer map operators parser prompt)
 HDRS	= $(addprefix $(INCDIR)/, builtins.h command.h env.h lexer.h line.h map.h)

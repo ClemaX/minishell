@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/25 20:55:47 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/26 23:11:57 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/27 18:57:05 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -58,4 +58,24 @@ char	*line_get_range(t_line *line, int min, int max)
 		curr = curr->next;
 	}
 	return (str);
+}
+
+t_line	*line_dup(t_line *line)
+{
+	t_line	*dup;
+	t_line	*new;
+
+	if (!line || !(new = malloc(sizeof(*new))))
+		return (NULL);
+	dup = new;
+	new->c = line->c;
+	while ((line = line->next))
+	{
+		if (!(new->next = malloc(sizeof(*new))))
+			return (line_clr(&dup));
+		new = new->next;
+		new->c = line->c;
+	}
+	new->next = NULL;
+	return (dup);
 }

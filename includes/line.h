@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/11/20 17:07:54 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/26 19:09:58 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/27 18:57:13 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -30,5 +30,6 @@ char			*line_get(t_line **line);
 char			*line_cat(t_line **line, char clr);
 void			line_insert_at(t_line **line, int pos, char *str);
 char			*line_get_range(t_line *line, int min, int max);
+t_line			*line_dup(t_line *line);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/22 12:11:46 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/24 17:42:41 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/27 21:08:33 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -34,7 +34,7 @@ void	sig_handler(int sig, void *param)
 			}
 			ft_printf("\nminish>$ ");
 			term->cursor = (t_cursor){.x=0, .y=0};
-			line_clr(&term->line->line);
+			line_clr(&term->line);
 			return ;
 		}
 		else if (g_pid && sig == SIGQUIT)

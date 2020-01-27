@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/12 04:38:55 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/26 23:06:26 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/27 21:15:05 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -67,7 +67,8 @@ int			main(int ac, char **av, const char **envp)
 	while ((prompt(&term)))
 	{
 		ft_printf("\n");
-		line = line_parse(line_cat(&term.line->line, 0));
+		line = line_parse(line_cat(&term.line, 0));
+		term.line = NULL;
 		tokens = line_tokenize(line);
 		token_foreach(tokens, &term.env, &set_token_type_op);
 		token_foreach(tokens, &term.env, &var_expand);
