@@ -1,15 +1,15 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   term.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: plamtenz <plamtenz@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/19 22:32:43 by chamada           #+#    #+#             */
-/*   Updated: 2020/01/26 21:36:55 by plamtenz         ###   ########.fr       */
-/*                                                                            */
+/*                                                          LE - /            */
+/*                                                              /             */
+/*   term.c                                           .::    .:/ .      .::   */
+/*                                                 +:+:+   +:    +:  +:+:+    */
+/*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
+/*                                                 #+#   #+    #+    #+#      */
+/*   Created: 2020/01/19 22:32:43 by chamada      #+#   ##    ##    #+#       */
+/*   Updated: 2020/01/27 17:18:43 by chamada     ###    #+. /#+    ###.fr     */
+/*                                                         /                  */
+/*                                                        /                   */
 /* ************************************************************************** */
-
 
 #include <prompt.h>
 #include <stdlib.h>
@@ -18,6 +18,7 @@
 
 void	caps_load(t_term *term)
 {
+	term->caps.im = tgetstr("im", NULL);
 	term->caps.cm = tgetstr("cm", NULL);
 	term->caps.ho = tgetstr("ho", NULL);
 	term->caps.cl = tgetstr("cl", NULL);
@@ -42,6 +43,22 @@ void	clear_line(t_term *term)
 	term->cursor.x = 0;
 }
 
+t_line	*line_dup(t_line *line)
+{
+	t_line	*dup;
+	t_line	*new;
+
+	dup = NULL;
+	while (line)
+	{
+		if (!(new = malloc(sizeof(*new))))
+			return (line_clr(&dup));
+		dup = new;
+		
+		line = line->next;
+	}
+}
+
 int		caps_handler(t_term *term)
 {
 	char			buff[2];
@@ -53,7 +70,7 @@ int		caps_handler(t_term *term)
 		clear_line(term);
 		term->cursor.x = line_len(term->line->line);
 		term->cursor.max.x = term->cursor.x;
-		//ft_printf("%s", line_cat(&term->line->line, 0));
+		ft_printf("%s", line_cat(&term->line->line, 0));
 	}
 	else if (buff[1] == 'B' && term->line && term->line->next)
 	{
@@ -61,7 +78,7 @@ int		caps_handler(t_term *term)
 		clear_line(term);
 		term->cursor.x = line_len(term->line->line);
 		term->cursor.max.x = term->cursor.x;
-		//ft_printf("%s", line_cat(&term->line->line, 0));
+		ft_printf("%s", line_cat(&term->line->line, 0));
 	}
 	else if (buff[1] == 'C' && term->cursor.x < term->cursor.max.x)
 	{
