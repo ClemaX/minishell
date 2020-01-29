@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/18 03:41:36 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/26 22:49:32 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/29 03:14:08 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -56,7 +56,7 @@ void			cmd_line_execution(t_node *node, t_term *term)
 	}
 	else
 		ret = job_execution(node, term);
-	ft_printf("%d\n", ret);
+//	ft_printf("%d\n", ret);
 }
 
 int			init_cmd(t_node *node, t_cmd *cmd)

@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/25 15:33:02 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/27 21:06:36 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/29 03:36:05 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -14,22 +14,7 @@
 #include <prompt.h>
 #include <libft.h>
 #include <stdlib.h>
-
-t_line	*del_line(t_line *curr, int min, int max, int i)
-{
-	t_line	*next;
-
-	if (!curr)
-		return (NULL);
-	if (i >= min && i <= max)
-	{
-		next = curr->next;
-		free(curr);
-		return (next);
-	}
-	curr->next = del_line(curr->next, min, max, i + 1);
-	return (curr);
-}
+#include <unistd.h>
 
 void	cursor_del_range(t_term *term, int min, int max)
 {
@@ -46,5 +31,27 @@ void	cursor_del_range(t_term *term, int min, int max)
 	tputs(tgoto(term->caps.ch, 0, new_x + 9), 1, &ft_putchar);
 	tputs(term->caps.dc_n, max - min, &ft_putchar);
 	len = line_len(term->line);
-	term->line = del_line(term->line, len - max, len - min, 0);
+	term->line = line_del_range(term->line, len - max, len - min, 0);
+}
+
+void	cursor_le(t_term *term)
+{
+	tputs(term->caps.le, 1, &ft_putchar);
+	term->cursor.x--;
+}
+
+void	cursor_nd(t_term *term)
+{
+	tputs(term->caps.nd, 1, &ft_putchar);
+	term->cursor.x++;
+}
+
+void	cursor_putc(t_term *term, char c)
+{
+	tputs(term->caps.im, 1, &ft_putchar);
+	write(1, &c, 1);
+	line_insert_at_c(&term->line, term->cursor.x, c);
+	term->cursor.x++;
+	term->cursor.max.x++;
+	tputs(term->caps.ei, 1, &ft_putchar);
 }

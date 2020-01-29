@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/27 19:20:42 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/27 21:25:53 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/29 03:36:15 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -18,6 +18,7 @@
 void	caps_load(t_term *term)
 {
 	term->caps.im = tgetstr("im", NULL);
+	term->caps.ei = tgetstr("ei", NULL);
 	term->caps.cm = tgetstr("cm", NULL);
 	term->caps.ho = tgetstr("ho", NULL);
 	term->caps.cl = tgetstr("cl", NULL);
@@ -40,35 +41,13 @@ int		caps_handler(t_term *term)
 
 	if (read(0, buff, 2) != 2)
 		return (0);
-	if (buff[1] == 'A' && term->current && term->current->prev)
-	{
-		term->current = term->current->prev;
-		line_clr(&term->line);
-		term->line = line_dup(term->current->line);
-		term_clear_line(term);
-		term->cursor.x = line_len(term->line);
-		term->cursor.max.x = term->cursor.x;
-		ft_printf("%s", line_cat(&term->line, 0));
-	}
-	else if (buff[1] == 'B' && term->current && term->current->next)
-	{
-		term->current = term->current->next;
-		line_clr(&term->line);
-		term->line = line_dup(term->current->line);
-		term_clear_line(term);
-		term->cursor.x = line_len(term->line);
-		term->cursor.max.x = term->cursor.x;
-		ft_printf("%s", line_cat(&term->line, 0));
-	}
+	if (buff[1] == 'A')
+		history_prev(term);
+	else if (buff[1] == 'B')
+		history_next(term);
 	else if (buff[1] == 'C' && term->cursor.x < term->cursor.max.x)
-	{
-		tputs(term->caps.nd, 1, &ft_putchar);
-		term->cursor.x++;
-	}
+		cursor_nd(term);
 	else if (buff[1] == 'D' && term->cursor.x)
-	{
-		tputs(term->caps.le, 1, &ft_putchar);
-		term->cursor.x--;
-	}
+		cursor_le(term);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/19 21:32:10 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/27 21:15:58 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/29 03:36:25 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -46,6 +46,7 @@ typedef struct	s_history
 typedef struct	s_caps
 {
 	char	*im;
+	char	*ei;
 	char	*cm;
 	char	*ho;
 	char	*cl;
@@ -80,6 +81,8 @@ t_line			*prompt(t_term *term);
 
 t_history		*history_add(t_history **history);
 void			history_clr(t_history **history);
+void			history_next(t_term *term);
+void			history_prev(t_term *term);
 
 int				term_init(t_term *term, const char *term_type);
 void			term_clear_line(t_term *term);
@@ -91,6 +94,9 @@ void			sig_handler(int sig, void *param);
 void			sig_init(t_term *term);
 
 void			cursor_del_range(t_term *term, int min, int max);
+void			cursor_le(t_term *term);
+void			cursor_nd(t_term *term);
+void			cursor_putc(t_term *term, char c);
 
 void			handle_cpy_and_cut(t_term *term, char signal, 
 	int pos, char *(*x)(t_term *, int, int, int));

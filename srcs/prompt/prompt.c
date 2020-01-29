@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/19 21:31:00 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/27 21:16:14 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/29 03:29:44 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -66,7 +66,6 @@ t_line		*read_line(t_term *term)
 	int		ret;
 	int		status;
 
-	term->current = history_add(&term->history);
 	status = 0;
 	ft_printf("minish>$ ");
 	while ((ret = read(STDIN_FILENO, &c, 1)) == 1)
@@ -80,16 +79,15 @@ t_line		*read_line(t_term *term)
 		}
 		else if (!(handle_special(term, c)))
 		{
-			write(1, &c, 1);
-			line_add(&term->line, c);
-			term->cursor.x++;
-			term->cursor.max.x++;
+			cursor_putc(term, c);
 			status = get_status(status, c);
 		}
 	}
 	if (ret != 1)
 		return (line_clr(&term->line));
-	return (term->current->line = term->line);
+	term->current = history_add(&term->history);
+	term->current->line = term->line;
+	return (term->current->line);
 }
 
 t_line		*prompt(t_term *term)

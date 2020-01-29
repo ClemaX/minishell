@@ -21,7 +21,7 @@ SRCS	= $(addprefix $(SRCDIR)/,												\
 				signals.c term.c caps.c))
 OBJS	= $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS) $(MAIN))
 OBJDS	= $(addprefix $(OBJDIR)/, builtins command env lexer map operators parser prompt)
-HDRS	= $(addprefix $(INCDIR)/, builtins.h command.h env.h lexer.h line.h map.h)
+HDRS	= $(addprefix $(INCDIR)/, builtins.h command.h env.h execution.h global_var.h lexer.h line.h map.h parser.h prompt.h token.h)
 TESTSD	= tests/srcs/
 TESTID	= tests/includes/
 TESTS	= $(addprefix $(TESTSD), main.c error.c test_utils.c value_utils.c		\
