@@ -1,18 +1,18 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minish_cmd.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: plamtenz <plamtenz@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/14 08:51:26 by plamtenz          #+#    #+#             */
-/*   Updated: 2020/01/23 19:08:38 by plamtenz         ###   ########.fr       */
-/*                                                                            */
+/*                                                          LE - /            */
+/*                                                              /             */
+/*   minish_cmd.c                                     .::    .:/ .      .::   */
+/*                                                 +:+:+   +:    +:  +:+:+    */
+/*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
+/*                                                 #+#   #+    #+    #+#      */
+/*   Created: 2020/01/14 08:51:26 by plamtenz     #+#   ##    ##    #+#       */
+/*   Updated: 2020/01/30 04:12:36 by chamada     ###    #+. /#+    ###.fr     */
+/*                                                         /                  */
+/*                                                        /                   */
 /* ************************************************************************** */
 
-
-#include "command.h"
-#include "builtins.h"
+#include <command.h>
+#include <builtins.h>
 #include <map.h>
 #include <env.h>
 #include <unistd.h>
@@ -20,6 +20,7 @@
 #include <libft.h>
 #include <stdlib.h>
 #include <global_var.h>
+#include <sys/wait.h>
 
 int		cmd_exec(t_cmd *cmd, char *name, int (x)(char *, t_cmd *))
 {

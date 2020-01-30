@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/12 04:38:55 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/30 03:37:25 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/30 04:13:31 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -21,7 +21,7 @@
 #include <prompt.h>
 #include <execution.h>
 
-int g_pid = 0;
+pid_t g_pid = 0;
 /*static int	print_status(t_status status, t_cmd *cmd)
 {
 	if (status)
