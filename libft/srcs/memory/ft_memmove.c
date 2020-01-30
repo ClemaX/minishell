@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/07 18:53:59 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2019/12/09 14:41:00 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/30 04:02:16 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,9 +15,6 @@
 
 void	*ft_memmove(void *dst, const void *src, size_t len)
 {
-	size_t i;
-
-	i = 0;
 	if (src > dst)
 		ft_memcpy(dst, src, len);
 	else if (dst != src)
