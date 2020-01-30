@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/11/21 21:47:21 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/11 20:41:55 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/30 04:09:38 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -44,7 +44,7 @@ static int	cvt_str(const char **src, t_spec spec, va_list ap)
 	int		len;
 
 	next = ft_strchr(*src, ' ');
-	len = (next) ? next - *src : ft_strlen(*src);
+	len = (next) ? (size_t)(next - *src) : ft_strlen(*src);
 	if (spec.width != -1 && spec.width < len)
 		len = spec.width;
 	if (!(spec.flags & STAR))
