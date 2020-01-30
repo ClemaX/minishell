@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/12 04:38:55 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/27 21:15:05 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/30 03:37:25 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -47,21 +47,21 @@ t_map		*map_dup(t_map	*map)
 	return (dup);
 }
 
-int			main(int ac, char **av, const char **envp)
+int			main(int ac, char **av, const char **ep)
 {
-	t_token		*tokens;
-	t_node		*tree;
-	static t_term	term;
-	char		*term_type;
-	char		*line;
-	t_line		*parsed;
+	t_token	*tokens;
+	t_node	*tree;
+	t_term	term;
+	char	*term_type;
+	char	*line;
+	t_line	*parsed;
 
 	(void)ac;
 	term.name = av[0];
 	parsed = NULL;
 	sig_init(&term);
 	term.history = NULL;
-	term.env = map_load(envp);
+	term.env = map_load(ep);
 	term_type = map_get(term.env, "TERM")->value;
 	term_init(&term, term_type);
 	while ((prompt(&term)))
@@ -77,5 +77,5 @@ int			main(int ac, char **av, const char **envp)
 		cmd_line_execution(tree, &term);
 	}
 	ft_printf("exit\n");
-	return (1);
+	return (term_destroy(&term));
 }

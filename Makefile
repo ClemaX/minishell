@@ -30,7 +30,7 @@ TESTS	= $(addprefix $(TESTSD), main.c error.c test_utils.c value_utils.c		\
 all:			libft $(NAME)
 
 libft:
-	make -C $(LIBFT) libft.a
+	make -C $(LIBFT) libft.a CC=$(CC)
 
 $(LIBFT)/libft.a: libft
 
@@ -38,7 +38,7 @@ $(OBJDS):
 	mkdir -p $@
 
 $(NAME):		$(OBJDS) $(OBJS) $(LIBFT)/libft.a
-	$(CC) $(OBJS) $(CFLAGS) $(IFLAGS) $(LFLAGS) -o $@
+	$(CC) $(OBJS) $(CFLAGS) $(IFLAGS) $(LFLAGS) -o $(NAME)
 
 $(OBJDIR):
 	mkdir -p $@
@@ -52,7 +52,8 @@ clean:
 
 fclean: 		clean
 	make -C $(LIBFT) $@
-	/bin/rm -f $(NAME)
+	/bin/rm -f $(NAME) test
+	/bin/rm -rf test.dSYM
 
 re:				fclean all
 
@@ -64,6 +65,8 @@ test: 			HDRS	+=	$(addprefix $(TESTID), test.h)
 test:			SRCS	+=	$(TESTS)
 test:			OBJS	=	$(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS))
 test:			CFLAGS	=	-Wall -Wextra -g
-test:			test-dir all
+test:			NAME	=	test
+test:			test-dir re
+	./$(NAME)
 
 .PHONY: libft clean fclean
