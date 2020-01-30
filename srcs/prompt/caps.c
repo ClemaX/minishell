@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/27 19:20:42 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/29 03:36:15 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/29 04:03:49 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -19,6 +19,8 @@ void	caps_load(t_term *term)
 {
 	term->caps.im = tgetstr("im", NULL);
 	term->caps.ei = tgetstr("ei", NULL);
+	term->caps.ic = tgetstr("ic", NULL);
+	term->caps.ip = tgetstr("ip", NULL);
 	term->caps.cm = tgetstr("cm", NULL);
 	term->caps.ho = tgetstr("ho", NULL);
 	term->caps.cl = tgetstr("cl", NULL);

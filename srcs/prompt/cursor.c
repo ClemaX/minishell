@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/25 15:33:02 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/29 03:36:05 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/29 04:04:52 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -49,9 +49,13 @@ void	cursor_nd(t_term *term)
 void	cursor_putc(t_term *term, char c)
 {
 	tputs(term->caps.im, 1, &ft_putchar);
+	if (term->caps.ic)
+		tputs(term->caps.ic, 1, &ft_putchar);
 	write(1, &c, 1);
 	line_insert_at_c(&term->line, term->cursor.x, c);
 	term->cursor.x++;
 	term->cursor.max.x++;
+	if (term->caps.ip)
+		tputs(term->caps.ip, 1, &ft_putchar);
 	tputs(term->caps.ei, 1, &ft_putchar);
 }
