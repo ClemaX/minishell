@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/14 08:51:26 by plamtenz     #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/30 04:17:07 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/30 05:25:26 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -29,17 +29,17 @@ int		cmd_exec(t_cmd *cmd, char *name, int (x)(char *, t_cmd *))
 	if (!cmd->ac)
 		return (0);
 	if (!ft_strncmp(cmd->av[0], "echo", 5))
-		return (ft_echo(cmd->ac, cmd->av));
+		return (ft_echo(cmd));
 	if (!ft_strncmp(cmd->av[0], "cd", 3))
-		return (ft_cd(cmd->ac, cmd->av, cmd));
+		return (ft_cd(cmd));
 	if (!ft_strncmp(cmd->av[0], "pwd", 4))
 		return (ft_pwd());
 	if (!ft_strncmp(cmd->av[0], "export", 7))
-		return (ft_export(cmd->ac, cmd->av, cmd, name));
+		return (ft_export(cmd, name));
 	if (!ft_strncmp(cmd->av[0], "unset", 6))
 		return (ft_unset(cmd, name));
 	if (!ft_strncmp(cmd->av[0], "env", 4))
-		return (ft_env(cmd->glob_env));
+		return (ft_env(cmd->env));
 	if (!ft_strncmp(cmd->av[0], "exit", 5))
 		return (ft_exit());
 	else if ((exec = path_get(cmd->env, cmd->av[0])))

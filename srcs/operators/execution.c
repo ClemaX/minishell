@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/18 03:41:36 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/29 03:14:08 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/30 05:05:19 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -44,19 +44,16 @@ static int		job_execution(t_node *node, t_term *term)
 
 void			cmd_line_execution(t_node *node, t_term *term)
 {
-	int ret;
-
-	ret = 0; /* ret is 0 by default does not need initiaisation but i $? with no execution it have to be 0 */
 	if (!node)
-		return ;
-	if (node->type == NODE_SEQ)
+		term->ret = 0;
+	else if (node->type == NODE_SEQ)
 	{
-		ret = job_execution(node->ch1, term);
+		term->ret = job_execution(node->ch1, term);
 		cmd_line_execution(node->ch2, term);
 	}
 	else
-		ret = job_execution(node, term);
-//	ft_printf("%d\n", ret);
+		term->ret = job_execution(node, term);
+//	ft_printf("%d\n", term->ret);
 }
 
 int			init_cmd(t_node *node, t_cmd *cmd)
@@ -96,7 +93,6 @@ int		simple_cmd(t_node *node, t_term *term,
 	ret = -1;
 	if (node)
 	{
-		cmd.glob_env = term->env;
 		cmd.env = term->env;
 		if (init_cmd(node, &cmd))
 			ret = cmd_exec(&cmd, term->name, exec);

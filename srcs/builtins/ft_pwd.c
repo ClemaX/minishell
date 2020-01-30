@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/14 06:43:52 by plamtenz     #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/15 12:10:22 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/30 04:44:42 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,7 +15,7 @@
 #include <limits.h>
 #include <unistd.h>
 
-int		ft_pwd(void)
+int	ft_pwd(void)
 {
 	char cwd[_POSIX_PATH_MAX];
 

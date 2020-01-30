@@ -6,31 +6,32 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/14 06:44:06 by plamtenz     #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/30 04:16:28 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/30 05:32:32 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include <libft.h>
+#include <command.h>
 
-int	ft_echo(int ac, char **argv)
+int	ft_echo(t_cmd *cmd)
 {
 	char	opt;
-	short	arg;
+	int		i;
 
-	arg = 1;
 	opt = 0;
-	if (ac > 1)
+	i = 1;
+	if (cmd->ac > 1)
 	{
-		if ((opt = (ft_strncmp("-n", argv[1], 3) == 0)))
+		if ((opt = (ft_strncmp("-n", cmd->av[1], 3) == 0)))
+			i++;
+		while (i < cmd->ac)
 		{
-			ac--;
-			arg++;
+			ft_printf((i != cmd->ac - 1) ? "%s " : "%s", cmd->av[i]);
+			i++;
 		}
-		while (--ac)
-			ac != 1 ? ft_printf("%s ", argv[arg++])
-			: ft_printf("%s", argv[arg++]);
 	}
-	!opt ? ft_printf("\n") : 0;
+	if (!opt)
+		ft_printf("\n");
 	return (0);
 }

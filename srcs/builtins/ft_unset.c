@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/14 10:00:23 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/22 14:27:55 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/30 04:45:20 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -26,7 +26,6 @@ int	ft_unset(t_cmd *cmd, char *name)
 			return (1);
 		}
 		cmd->env = map_del(cmd->env, cmd->av[cmd->ac]);
-		cmd->glob_env = map_del(cmd->glob_env, cmd->av[cmd->ac]);
 	}
 	return (0);
 }

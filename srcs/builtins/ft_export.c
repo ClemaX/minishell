@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   ft_export.c                                      .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: plamtenz <plamtenz@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/15 16:03:42 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/24 17:05:10 by plamtenz    ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/30 05:22:50 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -28,29 +28,29 @@ int	print_env(t_map *map)
 	return (0);
 }
 
-int	ft_export(int ac, char **av, t_cmd *cmd, char *name)
+int	ft_export(t_cmd *cmd, char *name)
 {
 	t_map	*var;
 
-	if (ac == 1)
+	if (cmd->ac == 1)
 	{
-		map_sort(&cmd->glob_env, &map_cmp);
-		print_env(cmd->glob_env);
+		map_sort(&cmd->env, &map_cmp);
+		print_env(cmd->env);
 	}
 	else
 	{
-		while (ac-- > 1)
+		while (cmd->ac-- > 1)
 		{
-			if (!key_check(av[ac]))
+			if (!key_check(cmd->av[cmd->ac]))
 			{
 				ft_printf("%s: %s `%s' : not a valid identifier\n",
-					name, av[0], av[ac]);
+					name, cmd->av[0], cmd->av[cmd->ac]);
 				return (1);
 			}
-			if ((var = map_get(cmd->env, av[ac])) &&
-				!map_set(&cmd->glob_env, var->key, var->value))
+			if ((var = map_get(cmd->env, cmd->av[cmd->ac])) &&
+				!map_set(&cmd->env, var->key, var->value))
 				return (1);
-			else if (!map_set(&cmd->glob_env, av[ac], ""))
+			else if (!map_set(&cmd->env, cmd->av[cmd->ac], ""))
 				return (1);
 		}
 	}

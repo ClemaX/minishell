@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/20 02:53:18 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/29 04:31:53 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/30 04:32:18 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -60,6 +60,27 @@ int	var_expand(t_token *token, void *env)
 	{
 		*c = '\0';
 		if ((var = map_get(*((t_map**)env), c + 1)))
+		{
+			if (!(join = ft_strjoin(token->data, var->value)))
+				return (-1);
+			free(token->data);
+			token->data = join;
+		}
+		return (1);
+	}
+	return (0);
+}
+
+int	tilde_expand(t_token *token, void *env)
+{
+	char	*c;
+	char	*join;
+	t_map	*var;
+
+	if ((c = ft_strchr(token->data, '~')))
+	{
+		*c = '\0';
+		if ((var = map_get(*((t_map**)env), "HOME")))
 		{
 			if (!(join = ft_strjoin(token->data, var->value)))
 				return (-1);

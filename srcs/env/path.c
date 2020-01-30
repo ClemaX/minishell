@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/16 21:16:09 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/21 07:53:18 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/30 05:09:08 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,6 +15,7 @@
 #include <sys/stat.h>
 #include <map.h>
 #include <stdlib.h>
+#include <limits.h>
 
 static void	*unload_strs(char **strs)
 {
@@ -49,7 +50,7 @@ char		*path_cat(const char *a, const char *b)
 	char			*cat;
 	char			*c;
 
-	if (!(cat = ft_calloc(len + 1, sizeof(*cat))))
+	if (len > _POSIX_PATH_MAX || !(cat = ft_calloc(len + 1, sizeof(*cat))))
 		return (NULL);
 	c = cat;
 	while (*a)

@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/12 04:43:38 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/21 08:13:48 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/30 04:38:51 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -25,7 +25,6 @@ typedef struct		s_cmd
 	int		ac;
 	char	**av;
 	t_map	*env;
-	t_map	*glob_env;
 	int		op;
 	int		ret;
 }					t_cmd;

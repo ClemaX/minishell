@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/14 06:11:33 by plamtenz     #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/30 04:16:53 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/30 05:23:14 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -34,12 +34,12 @@
 /*
 **-------------------------------- PROTOTYPES ----------------------------------
 */
-int                     ft_echo(int ac, char **argv);
+int                     ft_echo(t_cmd *cmd);
 int                     ft_pwd(void);
 int                     ft_exit(void);
-int                     ft_cd(int ac, char **argv, t_cmd *cmd);
+int                     ft_cd(t_cmd *cmd);
 int                     ft_env(t_map *env);
 int                     ft_unset(t_cmd *cmd, char *name);
-int                     ft_export(int ac, char **av, t_cmd *cmd, char *name);
+int                     ft_export(t_cmd *cmd, char *name);
 
 #endif

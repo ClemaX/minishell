@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/12 04:38:55 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/30 04:13:31 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/30 04:57:33 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -73,9 +73,10 @@ int			main(int ac, char **av, const char **ep)
 		token_foreach(tokens, &term.env, &set_token_type_op);
 		token_foreach(tokens, &term.env, &var_expand);
 		token_foreach(tokens, &term.env, &var_assign);
+		token_foreach(tokens, &term.env, &tilde_expand);
 		tree = cmd_line(&tokens);
 		cmd_line_execution(tree, &term);
 	}
 	ft_printf("exit\n");
-	return (term_destroy(&term));
+	return (term_destroy(NULL));
 }

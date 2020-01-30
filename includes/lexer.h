@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/18 22:57:54 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/24 19:41:28 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/30 04:33:55 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -30,6 +30,7 @@ char	*line_parse(char *str);
 t_token	*line_tokenize(char *line);
 int		var_expand(t_token *token, void *env);
 int		var_assign(t_token *token, void *env);
+int	    tilde_expand(t_token *token, void *env);
 int		set_token_type_op(t_token *token, void *param);
 
 #endif

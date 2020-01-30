@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/19 21:32:10 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/29 04:10:58 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/30 04:47:07 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -77,6 +77,7 @@ typedef struct	s_term
 	struct termios	s_termios;
 	struct termios	s_termios_bkp;
 	char			*copy;
+	int				ret;
 }				t_term;
 
 t_line			*prompt(t_term *term);
@@ -87,7 +88,7 @@ void			history_next(t_term *term);
 void			history_prev(t_term *term);
 
 int				term_init(t_term *term, const char *term_type);
-int				term_destroy(t_term *term);
+int				term_destroy(void *param);
 void			term_clear_line(t_term *term);
 int				caps_handler(t_term *term);
 void			caps_load(t_term *term);

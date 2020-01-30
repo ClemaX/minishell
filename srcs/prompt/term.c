@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/19 22:32:43 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/30 02:00:06 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/30 04:51:44 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -37,19 +37,26 @@ int		term_init(t_term *term, const char *term_type)
 	term->current = NULL;
 	term->cursor = (t_cursor){.x=0, .y=0, .max={.x=0, .y=0}};
 	caps_load(term);
+	term_destroy(term);
 	if (tcsetattr(STDIN_FILENO, TCSANOW, &term->s_termios) == -1)
 		return (-1);
 	return (0);
 }
 
-int		term_destroy(t_term *term)
+int		term_destroy(void *param)
 {
+	static t_term	*term;
+
+	if (!term)
+	{
+		term = (t_term*)param;
+		return (1);
+	}
 	if (tcsetattr(0, 0, &term->s_termios_bkp) == -1)
 		return (-1);
 	line_clr(&term->line);
 	history_clr(&term->history);
 	free(term->copy);
 	map_clr(&term->env);
-	free(term);
 	return (0);
 }
