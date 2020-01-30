@@ -1,15 +1,15 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   builtins.h                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: plamtenz <plamtenz@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/14 06:11:33 by plamtenz          #+#    #+#             */
-/*   Updated: 2020/01/16 22:04:01 by plamtenz         ###   ########.fr       */
-/*                                                                            */
+/*                                                          LE - /            */
+/*                                                              /             */
+/*   builtins.h                                       .::    .:/ .      .::   */
+/*                                                 +:+:+   +:    +:  +:+:+    */
+/*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
+/*                                                 #+#   #+    #+    #+#      */
+/*   Created: 2020/01/14 06:11:33 by plamtenz     #+#   ##    ##    #+#       */
+/*   Updated: 2020/01/30 04:16:53 by chamada     ###    #+. /#+    ###.fr     */
+/*                                                         /                  */
+/*                                                        /                   */
 /* ************************************************************************** */
-
 #ifndef BUILTINGS_H
 # define BUILTINGS_H
 
@@ -34,7 +34,7 @@
 /*
 **-------------------------------- PROTOTYPES ----------------------------------
 */
-int                     ft_echo(int ac, char **argv, char **envp);
+int                     ft_echo(int ac, char **argv);
 int                     ft_pwd(void);
 int                     ft_exit(void);
 int                     ft_cd(int ac, char **argv, t_cmd *cmd);

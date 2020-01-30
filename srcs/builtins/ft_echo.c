@@ -6,20 +6,18 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/14 06:44:06 by plamtenz     #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/15 18:15:55 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/30 04:16:28 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include <libft.h>
 
-int	ft_echo(int ac, char **argv, char **envp)
+int	ft_echo(int ac, char **argv)
 {
 	char	opt;
 	short	arg;
-	char	**env;
 
-	env = envp;
 	arg = 1;
 	opt = 0;
 	if (ac > 1)
