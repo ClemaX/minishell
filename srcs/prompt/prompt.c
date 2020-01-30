@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/19 21:31:00 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/29 03:29:44 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/29 04:28:17 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -27,7 +27,7 @@ static int	handle_special(t_term *term, char c)
 	}
 	else if (c == '\n')
 	{
-		ft_printf("> ");
+		ft_printf("\n> ");
 		term->cursor.y++;
 		term->cursor.x = 0;
 	}

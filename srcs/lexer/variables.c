@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/20 02:53:18 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/20 03:37:46 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/29 04:31:53 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,7 +16,7 @@
 #include <libft.h>
 #include <stdlib.h>
 
-int		key_check(char *key)
+int	key_check(char *key)
 {
 	while (*key)
 	{
