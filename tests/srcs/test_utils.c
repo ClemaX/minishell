@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/26 16:34:23 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/26 20:59:51 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/30 21:47:56 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -22,7 +22,7 @@ int		diff_s(char *got, char *expected)
 	if ((diff = ft_strcmp(got, expected)))
 		ft_printf("%s: got: %s, expected: %s\n",
 			RED"DIFF"RESET, got, expected);
-	return (diff);
+	return (diff != 0);
 }
 
 int		diff_p(void *got, void *expected)

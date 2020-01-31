@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/14 06:46:56 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/30 03:38:12 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/30 20:08:44 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -22,7 +22,7 @@ int	main(void)
 	line_test();
 	map_test();
 	path_test();
-//	lexer_test();
+	lexer_test();
 	return (0);
 }
 
