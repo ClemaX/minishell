@@ -35,15 +35,19 @@ libft:
 $(LIBFT)/libft.a: libft
 
 $(OBJDS):
+	@echo MK $@
 	mkdir -p $@
 
 $(NAME):		$(OBJDS) $(OBJS) $(LIBFT)/libft.a
+	@echo LINK $(NAME)
 	$(CC) $(OBJS) $(CFLAGS) $(IFLAGS) $(LFLAGS) -o $(NAME)
 
 $(OBJDIR):
+	@echo MK $@
 	mkdir -p $@
 
 $(OBJDIR)/%.o:	$(SRCDIR)/%.c $(HDRS) Makefile
+	@echo CC $<
 	$(CC) $(CFLAGS) $(IFLAGS) -c -o $@ $<
 
 clean:
@@ -52,12 +56,15 @@ clean:
 
 fclean: 		clean
 	make -C $(LIBFT) $@
+	@echo RM $(NAME) test
 	/bin/rm -f $(NAME) test
+	@echo RM test.dSYM
 	/bin/rm -rf test.dSYM
 
 re:				fclean all
 
 test-dir:		$(OBJDIR)
+	@echo MK $(OBJDIR)/tests
 	mkdir -p $(OBJDIR)/tests
 
 test:			IFLAGS	+=	-I$(TESTID)
@@ -70,3 +77,5 @@ test:			test-dir re
 	./$(NAME)
 
 .PHONY: libft clean fclean
+
+$(VERBOSE).SILENT:
