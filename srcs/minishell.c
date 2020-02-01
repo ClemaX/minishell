@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/12 04:38:55 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/30 04:57:33 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/01 05:24:13 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -54,11 +54,9 @@ int			main(int ac, char **av, const char **ep)
 	t_term	term;
 	char	*term_type;
 	char	*line;
-	t_line	*parsed;
 
 	(void)ac;
 	term.name = av[0];
-	parsed = NULL;
 	sig_init(&term);
 	term.history = NULL;
 	term.env = map_load(ep);
