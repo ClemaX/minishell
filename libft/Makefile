@@ -43,20 +43,27 @@ OBJS	=		$(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS))
 all:			$(NAME)
 
 $(NAME):		$(OBJDS) $(OBJS)
+	@echo AR $@
 	$(AR) $(AFLAGS) $@ $(OBJS)
 
 $(OBJDS):
-		mkdir -p $@
+	@echo MK $@
+	mkdir -p $@
 
 $(OBJDIR)/%.o:	$(SRCDIR)/%.c $(INCDIR)/$(HEADER) Makefile
+	@echo CC $<
 	$(CC) $(CFLAGS) $(IFLAGS) -c -o $@ $<
 
 clean:
+	@echo RM $(OBJDIR)
 	$(RM) -rf $(OBJDIR)
 
 fclean:			clean
+	@echo RM $(NAME)
 	$(RM) -f $(NAME)
 
 re:				fclean all
 
 .PHONY	=		all clean fclean re bonus
+
+$(VERBOSE).SILENT:
