@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/18 05:42:36 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/26 22:35:52 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/01 05:19:50 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -42,14 +42,14 @@ int		redirection_fill(char *data, char bool)
 
 int		redirection(t_node *node, char std, t_term *term)
 {
-	int		stdout;
+//	int		stdout;
 	int		ret;
 
 	if (!node->ch1 || !node->data)
 		return (-1);
 	if ((g_pid = fork()) == 0)
 	{
-		stdout = dup(STDOUT_FILENO); // need this , think is 4 error check?
+//		stdout = dup(STDOUT_FILENO); // need this , think is 4 error check?
 		if ((redirection_fill(node->data, std) < 0))
 			return (-1);
 		ret = simple_cmd(node->ch1, term, &ft_execve);
