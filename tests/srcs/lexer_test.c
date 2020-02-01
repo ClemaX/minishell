@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/19 22:01:22 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/31 05:52:12 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/01 05:41:13 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -32,6 +32,8 @@ int	var_assign_test(void)
 	diff = diff_s(env->key, "key");
 	diff += diff_s(env->value, "value");
 	diff += diff_p(env->next, NULL);
+	map_clr(&env);
+	free(token.data);
 	return (!diff);
 }
 
@@ -52,6 +54,8 @@ int	var_expand_test(void)
 		error();
 	}
 	diff = diff_s(token.data, "value");
+	map_clr(&env);
+	free(token.data);
 	return (!diff);
 }
 

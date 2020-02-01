@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/26 16:04:24 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/26 21:01:57 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/01 05:52:09 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -26,8 +26,12 @@ int		tab_print(char **tab)
 
 void	*tab_unload(char **tab)
 {
+	char	**start;
+
+	start = tab;
 	while (*tab)
 		free(*tab++);
+	free(start);
 	return (NULL);
 }
 

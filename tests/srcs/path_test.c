@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/16 22:59:05 by chamada      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/26 21:26:16 by chamada     ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/01 05:42:40 by chamada     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -52,6 +52,7 @@ int	path_get_test(void)
 	path = path_get(env, "xzarble");
 	diff += diff_p(path, NULL);
 	free(path);
+	map_clr(&env);
 	return (!diff);
 }
 
