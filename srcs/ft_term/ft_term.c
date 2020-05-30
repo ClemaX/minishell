@@ -29,12 +29,14 @@ int		handle_special(int status, char c)
 {
 	if (c == '\n')
 		status |= TERM_NEWLINE;
+	else if (status & TERM_B_SLASH)
+		return (status & ~TERM_B_SLASH);
 	else if (c == '"')
 		status ^= TERM_D_QUOTE;
 	else if (!(status & TERM_D_QUOTE) && c == '\'')
 		status ^= TERM_S_QUOTE;
 	else if (!(status & TERM_B_SLASH) && c == '\\')
-		status &= TERM_B_SLASH;
+		status |= TERM_B_SLASH;
 	return (status);
 }
 
@@ -72,6 +74,7 @@ int		handle_status(int status)
 			ft_printf("> ");
 		else
 			ft_printf("minish> ");
+		status &= ~TERM_B_SLASH;
 	}
 	return (status);
 }
