@@ -38,6 +38,7 @@ typedef	struct	s_term
 extern t_term	g_term;
 
 int				term_init(const char **envp);
+int				term_destroy(void);
 int				term_prompt(void);
 t_line			*history_add(t_line *prev);
 void			history_clear(t_line **hist);
