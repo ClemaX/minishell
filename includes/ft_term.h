@@ -23,6 +23,7 @@ typedef struct	s_line
 	ssize_t			length;
 	ssize_t			size;
 	struct s_line	*next;
+	struct s_line	*prev;
 }				t_line;
 
 typedef	struct	s_term
@@ -31,11 +32,16 @@ typedef	struct	s_term
 	struct termios	s_ios;
 	struct termios	s_ios_bkp;
 	t_map			*env;
+	t_line			*hist;
 }				t_term;
 
 extern t_term	g_term;
 
 int				term_init(const char **envp);
 int				term_prompt(void);
+t_line			*history_add(t_line *prev);
+void			history_clear(t_line **hist);
+int				line_append(t_line *line, char c);
+void			line_clear(t_line **line);
 
 #endif

@@ -13,52 +13,16 @@ void	term_interrupt(int signal) {
 
 int		term_init(const char **envp)
 {
-	t_map	*term_type;
+	t_map		*term_type;
 
 	signal(SIGINT, &term_interrupt);
 	if (!(g_term.env = map_load(envp)))
 		return (-1);
 	if (!(term_type = map_get(g_term.env, "TERM"))
-	|| tgetent(NULL, term_type->value) <= 0
 	|| tcgetattr(0, &g_term.s_ios) == -1)
 		return (-1);
 	g_term.s_ios_bkp = g_term.s_ios;
 	return (0);
-}
-
-int		line_append(t_line *line, char c)
-{
-	char	*new;
-	line->length++;
-	if (line->length + 1 > line->size)
-	{
-		line->size *= 2;
-		if (!(new = malloc(sizeof(*new) * line->size)))
-			return (-1);
-		ft_strlcpy(new, line->data, line->size);
-		free(line->data);
-		line->data = new;
-	}
-	line->data[line->length] = '\0';
-	line->data[line->length - 1] = c;
-	return (1);
-}
-
-t_line	*new_line(void)
-{
-	t_line	*line;
-
-	if (!(line = malloc(sizeof(*line))))
-		return (NULL);
-	if (!(line->data = malloc(sizeof(*line->data) * 10)))
-	{
-		free(line);
-		return (NULL);
-	}
-	*line->data = '\0';
-	line->length = 0;
-	line->size = 10;
-	return (line);
 }
 
 int		handle_special(int status, char c)
@@ -74,7 +38,7 @@ int		handle_special(int status, char c)
 	return (status);
 }
 
-int		read_char(int status, t_line *line)
+int		read_char(int status)
 {
 	int		ret;
 	char	c;
@@ -89,7 +53,7 @@ int		read_char(int status, t_line *line)
 	}
 	else {
 		status = handle_special(status, c);
-		if (line_append(line, c) == -1)
+		if (line_append(g_term.hist, c) == -1)
 		{
 			status &= ~TERM_READING;
 			status |= TERM_ERROR;
@@ -98,20 +62,32 @@ int		read_char(int status, t_line *line)
 	return (status);
 }
 
+int		handle_status(int status)
+{
+	if (status & TERM_NEWLINE)
+	{
+		status &= ~TERM_NEWLINE;
+		g_term.hist = history_add(g_term.hist);
+		if (status & TERM_WAITING)
+			ft_printf("> ");
+		else
+			ft_printf("minish> ");
+	}
+	return (status);
+}
+
 int		term_prompt(void)
 {
 	int		status;
-	t_line	*history;
 
-	if (!(history = new_line()))
+	if (!(g_term.hist = history_add(NULL)))
 		return (-1);
 	status = TERM_READING;
-    while ((status = read_char(status, history)) & TERM_READING)
+	ft_printf("minish> ");
+    while ((status = read_char(status)) & TERM_READING)
 	{
-		if (status & TERM_NEWLINE)
-			ft_printf("%s", history->data);
-		if (status & TERM_WAITING)
-			ft_printf("...");
+		status = handle_status(status);
 	}
+	history_clear(&g_term.hist);
 	return ((status & TERM_ERROR) ? -1 : 0);
 }

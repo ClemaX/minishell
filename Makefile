@@ -9,7 +9,7 @@ IFLAGS	= -I$(INCDIR) -I$(LIBFT)/includes
 LFLAGS	= -L$(LIBFT) -lft -ltermcap
 MAIN	= $(SRCDIR)/main.c
 SRCS	= $(addprefix $(SRCDIR)/, 												\
-			$(addprefix ft_term/, ft_term.c))
+			$(addprefix ft_term/, ft_term.c history.c))
 OBJS	= $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS) $(MAIN))
 OBJDS	= $(addprefix $(OBJDIR)/, ft_term)
 HDRS	= $(addprefix $(INCDIR)/, ft_term.h)
