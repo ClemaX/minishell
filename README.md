@@ -19,19 +19,26 @@ To do:
 2) Use
 - launch and search exe (a, b, c)
 - builtings (a, c)
-- ; use (a, b)
-- ' " use (a, b)
-- () (a, b)
-- && || (a, b)
+- ; use (a, b) t
+- ' " use (a, b) t
+- () (a, b) t
+- && || (a, b) t
 - wildcard * (a, b, c)
 - > << >> < stuff (a, b)
-- pipes (a, b)
+- pipes (a, b) t
 - env var (all)
 - $? (all)
 - keys (ctrl) (none)
+- OP_SEMICOLON,
+- OP_AND,
+- OP_PIPE,
+- OP_LESSER,
+- OP_GREATER,
+- OP_OR,
+- TOKEN
 
 
 3) Structure
-- a)lexer for tokens 
-- b)tokens to btree 
+- a)lexer for tokens
+- b)tokens to btree
 - c)tbree for execution
