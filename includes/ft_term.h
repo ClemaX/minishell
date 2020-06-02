@@ -67,8 +67,8 @@ extern t_term	g_term;
 
 int				term_init(const char **envp);
 int				term_destroy(void);
-int				term_prompt(void);
-int				term_input(int status);
+int				term_prompt(int (*exec)(const char*));
+int				term_input(int status, int (*exec)(const char*));
 
 void			term_up(void);
 void			term_down(void);
