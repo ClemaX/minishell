@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_types.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chamada <chamada@student.le-101.fr>        +#+  +:+       +#+        */
+/*   By: plamtenz <plamtenz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/02 20:59:50 by plamtenz          #+#    #+#             */
-/*   Updated: 2020/06/02 20:50:06 by chamada          ###   ########lyon.fr   */
+/*   Updated: 2020/06/02 23:06:44 by plamtenz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 
 static bool parse_simple_tokens(t_token *new, const char **txt)
 {
-	if (!(new->data = malloc(sizeof(char) * 1)))
+	if (!(new->data = malloc(sizeof(char) * 1 + 1)) && (new->data[1] = 0))
 		return (false);
 	if (*txt[0] == ';' && ft_strlcpy(new->data, *txt, 1) && (*txt)++)
 		new->type = T_SEM;
@@ -39,17 +39,17 @@ static bool parse_simple_tokens(t_token *new, const char **txt)
 }
 
 static bool parse_or_pipe(t_token *new, const char **txt)
-{
+{)
 	if (*txt[0] == '|')
 	{
 		if (!ft_strncmp(*txt, "||", 2) &&
-			(new->data = malloc(sizeof(char) * 2)))
+			(new->data = malloc(sizeof(char) * 2 + 1)) && (new->data[2] = 0))
 		{
 			ft_strlcpy(new->data, *txt, 2);
 			new->type = T_OR;
 			*txt += 2;
 		}
-		else if ((new->data = malloc(sizeof(char) * 1)))
+		else if ((new->data = malloc(sizeof(char) * 1 + 1)) && (new->data[1] = 0))
 		{
 			ft_strlcpy(new->data, *txt, 1);
 			new->type = T_PIPE;
@@ -67,13 +67,13 @@ static bool parse_greather(t_token *new, const char **txt)
 	if (*txt[0] == '>')
 	{
 		if (!ft_strncmp(*txt, ">>", 2) &&
-			(new->data = malloc(sizeof(char) * 2)))
+			(new->data = malloc(sizeof(char) * 2 + 1)) && (new->data[2] = 0))
 		{
 			ft_strlcpy(new->data, *txt, 2);
 			new->type = T_DGRAT;
 			*txt += 2;
 		}
-		else if ((new->data = malloc(sizeof(char) * 1)))
+		else if ((new->data = malloc(sizeof(char) * 1 + 1)) && (new->data[1] = 0))
 		{
 			ft_strlcpy(new->data, *txt, 1);
 			new->type = T_GRAT;
@@ -91,13 +91,13 @@ static bool parse_less(t_token *new, const char **txt)
 	if (*txt[0] == '<')
 	{
 		if (!ft_strncmp(*txt, "<<", 2) &&
-			(new->data = malloc(sizeof(char) * 2)))
+			(new->data = malloc(sizeof(char) * 2 + 1)) && (new->data[2] = 0))
 		{
 			ft_strlcpy(new->data, *txt, 2);
 			new->type = T_DLESS;
 			*txt += 2;
 		}
-		else if ((new->data = malloc(sizeof(char) * 1)))
+		else if ((new->data = malloc(sizeof(char) * 1 + 1)) && (new->data[1] = 0))
 		{
 			ft_strlcpy(new->data, *txt, 1);
 			new->type = T_LESS;
@@ -117,7 +117,7 @@ t_token		*parse_token(const char **txt)
 	if (!(new = malloc(sizeof(t_token))))
 		return (NULL);
 	if (!ft_strncmp(*txt, "&&", 2) &&
-		(new->data = malloc(sizeof(char) * 2)))
+		(new->data = malloc(sizeof(char) * 2 + 1)) && (new->data[2] = 0))
 	{
 		ft_strlcpy(new->data, *txt, 2);
 		new->type = T_AND;
@@ -130,6 +130,9 @@ t_token		*parse_token(const char **txt)
 		(parse_simple_tokens(new, txt))))
 		;
 	else
+	{
+		free(new)
 		return (NULL);
+	}
 	return (new);
 }
