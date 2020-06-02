@@ -3,6 +3,7 @@
 
 # include <libft.h>
 # include <stdlib.h>
+# include <stdbool.h>
 
 # define LEX_TOKEN		0b00001
 # define LEX_B_SLASH	0b00010
@@ -23,7 +24,9 @@ typedef struct  s_token
 	struct s_token	*next;
 }				t_token;
 
-t_token *lexer_tokenize(const char *input);
-int     lexer_test(void);
+t_token			*lexer_tokenize(const char *input);
+int				lexer_test(void);
+
+t_token			*parse_token(const char **txt);
 
 #endif

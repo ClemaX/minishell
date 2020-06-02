@@ -11,7 +11,7 @@ MAIN	= $(SRCDIR)/main.c
 SRCS	= $(addprefix $(SRCDIR)/, 												\
 			$(addprefix ft_term/, ft_term.c history.c prompt.c input.c			\
 				controls.c cursor.c)											\
-			$(addprefix lexer/, lexer.c))
+			$(addprefix lexer/, lexer.c token_types.c))
 OBJS	= $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS) $(MAIN))
 OBJDS	= $(addprefix $(OBJDIR)/, ft_term lexer)
 HDRS	= $(addprefix $(INCDIR)/, ft_term.h lexer.h)

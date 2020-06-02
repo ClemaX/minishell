@@ -22,16 +22,24 @@ static int	lex_type(int status, char c)
 	return (status);
 }
 
-t_token		*token_add(t_token **tokens, char *data, t_token_t type)
+t_token		*token_new(char *data, t_token_t type)
 {
 	t_token	*new;
-	t_token	*curr;
 
 	if (!data || !(new = malloc(sizeof(*new))))
+	{
+		// TODO: Free data on error
 		return (NULL);
+	}
 	new->data = data;
 	new->type = type;
-	new->next = NULL;
+	return (new);
+}
+
+t_token		*token_add(t_token **tokens, t_token *new)
+{
+	t_token	*curr;
+
 	if (*tokens)
 	{
 		curr = *tokens;
@@ -74,11 +82,12 @@ t_token		*lexer_tokenize(const char *input)
 		while (*input && (status = lex_type(status, *input)) & LEX_TOKEN)
 			input++;
 		if (input != start
-		&& !token_add(&tokens, ft_substr(start, 0, input - start), TOK_TOKEN))
+		&& !token_add(&tokens, token_new(ft_substr(start, 0, input - start), TOK_TOKEN)))
 			return (token_clear(&tokens));
 		if (status & LEX_OP)
 		{
-			ft_printf("TODO: Operator");
+			if (!(token_add(&tokens, parse_token(&input))))
+				return (NULL);
 			status &= ~LEX_OP;
 		}
 	}
@@ -98,7 +107,7 @@ void		token_print(t_token *tokens)
 
 int			lexer_test(void)
 {
-	static const char	*str = "Hello world!";
+	static const char	*str = "Hello && world!";
 	t_token				*tokens;
 
 	tokens = lexer_tokenize(str);
