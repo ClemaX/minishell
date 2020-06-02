@@ -33,6 +33,7 @@ t_token		*token_new(char *data, t_token_t type)
 	}
 	new->data = data;
 	new->type = type;
+	new->next = NULL;
 	return (new);
 }
 
@@ -40,6 +41,9 @@ t_token		*token_add(t_token **tokens, t_token *new)
 {
 	t_token	*curr;
 
+	if (!new)
+		return (NULL);
+	new->next = NULL;
 	if (*tokens)
 	{
 		curr = *tokens;
@@ -92,15 +96,4 @@ t_token		*lexer_tokenize(const char *input)
 		}
 	}
 	return (tokens);
-}
-
-void		token_print(t_token *tokens)
-{
-	while (tokens)
-	{
-		ft_printf("(%d)[%s]", tokens->type, tokens->data);
-		tokens = tokens->next;
-		if (tokens)
-			ft_printf(", ");
-	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_types.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plamtenz <plamtenz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: chamada <chamada@student.le-101.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/02 20:59:50 by plamtenz          #+#    #+#             */
-/*   Updated: 2020/06/02 23:06:44 by plamtenz         ###   ########.fr       */
+/*   Updated: 2020/06/02 21:14:56 by chamada          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static bool parse_simple_tokens(t_token *new, const char **txt)
 }
 
 static bool parse_or_pipe(t_token *new, const char **txt)
-{)
+{
 	if (*txt[0] == '|')
 	{
 		if (!ft_strncmp(*txt, "||", 2) &&
@@ -131,7 +131,7 @@ t_token		*parse_token(const char **txt)
 		;
 	else
 	{
-		free(new)
+		free(new);
 		return (NULL);
 	}
 	return (new);
