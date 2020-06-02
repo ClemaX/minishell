@@ -1,9 +1,23 @@
 #include <ft_term.h>
 #include <lexer.h>
 
+void		token_print(t_token *tokens)
+{
+	while (tokens)
+	{
+		ft_printf("(%d)[%s]", tokens->type, tokens->data);
+		tokens = tokens->next;
+		if (tokens)
+			ft_printf(", ");
+	}
+}
+
 int exec(const char *str)
 {
+    t_token *tokens;
     ft_printf("Input: %s", str);
+    tokens = lexer_tokenize(str);
+    token_print(tokens);
     return (0);
 }
 

@@ -28,7 +28,7 @@ static bool parse_simple_tokens(t_token *new, const char **txt)
 }
 
 static bool parse_or_pipe(t_token *new, const char **txt)
-{)
+{
 	if (*txt[0] == '|')
 	{
 		if (!ft_strncmp(*txt, "||", 2) && ((*txt[2] && *txt[2] != '|') ||
@@ -123,7 +123,7 @@ t_token		*parse_token(const char **txt)
 		;
 	else
 	{
-		free(new)
+		free(new);
 		return (NULL);
 	}
 	return (new);
