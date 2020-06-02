@@ -6,14 +6,14 @@ t_line	*history_add(t_line *prev)
 
 	if (!(line = malloc(sizeof(*line))))
 		return (NULL);
-	if (!(line->data = malloc(sizeof(*line->data) * 10)))
+	line->size = 10;
+	if (!(line->data = malloc(sizeof(*line->data) * line->size)))
 	{
 		free(line);
 		return (NULL);
 	}
 	*line->data = '\0';
 	line->length = 0;
-	line->size = 10;
 	line->next = NULL;
 	line->prev = prev;
 	if (prev)
@@ -27,7 +27,7 @@ void    history_clear(t_line **hist)
 
     while ((curr = *hist))
     {
-        *hist = curr->next;
+        *hist = curr->prev;
         line_clear(&curr);
     }
 }
@@ -35,6 +35,7 @@ void    history_clear(t_line **hist)
 int		line_append(t_line *line, char c)
 {
 	char	*new;
+
 	line->length++;
 	if (line->length + 1 > line->size)
 	{

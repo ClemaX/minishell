@@ -6,10 +6,11 @@ OBJDIR	= objs
 INCDIR	= includes
 CFLAGS	= -Wall -Wextra -Werror
 IFLAGS	= -I$(INCDIR) -I$(LIBFT)/includes
-LFLAGS	= -L$(LIBFT) -lft -ltermcap
+LFLAGS	= -L$(LIBFT) -lft -lcurses -ltermcap
 MAIN	= $(SRCDIR)/main.c
 SRCS	= $(addprefix $(SRCDIR)/, 												\
-			$(addprefix ft_term/, ft_term.c history.c prompt.c))
+			$(addprefix ft_term/, ft_term.c history.c prompt.c input.c			\
+				controls.c cursor.c))
 OBJS	= $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS) $(MAIN))
 OBJDS	= $(addprefix $(OBJDIR)/, ft_term)
 HDRS	= $(addprefix $(INCDIR)/, ft_term.h)
@@ -17,7 +18,8 @@ HDRS	= $(addprefix $(INCDIR)/, ft_term.h)
 TESTSD	= tests/srcs/
 TESTID	= tests/includes/
 TESTS	= $(addprefix $(TESTSD), main.c error.c test_utils.c value_utils.c		\
-	map_test.c path_test.c prompt_test.c lexer_test.c line_tests.c tab_utils.c)
+			map_test.c path_test.c prompt_test.c lexer_test.c line_tests.c		\
+			tab_utils.c)
 
 all:			libft $(NAME)
 
