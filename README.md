@@ -35,3 +35,7 @@ To do:
 - a)lexer for tokens 
 - b)tokens to btree 
 - c)tbree for execution
+
+t_token *k
+-val = 
+-flags
