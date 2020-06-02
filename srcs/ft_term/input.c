@@ -40,7 +40,7 @@ static int	handle_special(int status, char c)
 		status |= TERM_NEWLINE;
 	else if (status & TERM_B_SLASH)
 		return (status & ~TERM_B_SLASH);
-	else if (c == '"')
+	else if (!(status & TERM_S_QUOTE) && c == '"')
 		status ^= TERM_D_QUOTE;
 	else if (!(status & TERM_D_QUOTE) && c == '\'')
 		status ^= TERM_S_QUOTE;
