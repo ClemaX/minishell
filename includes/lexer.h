@@ -25,7 +25,6 @@ typedef struct  s_token
 }				t_token;
 
 t_token			*lexer_tokenize(const char *input);
-int				lexer_test(void);
 
 t_token			*parse_token(const char **txt);
 

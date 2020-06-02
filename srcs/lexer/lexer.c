@@ -104,13 +104,3 @@ void		token_print(t_token *tokens)
 			ft_printf(", ");
 	}
 }
-
-int			lexer_test(void)
-{
-	static const char	*str = "Hello && world!";
-	t_token				*tokens;
-
-	tokens = lexer_tokenize(str);
-	token_print(tokens);
-	return (0);
-}
