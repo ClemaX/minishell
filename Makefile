@@ -10,10 +10,11 @@ LFLAGS	= -L$(LIBFT) -lft -lcurses -ltermcap
 MAIN	= $(SRCDIR)/main.c
 SRCS	= $(addprefix $(SRCDIR)/, 												\
 			$(addprefix ft_term/, ft_term.c history.c prompt.c input.c			\
-				controls.c cursor.c))
+				controls.c cursor.c)											\
+			$(addprefix lexer/, lexer.c))
 OBJS	= $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS) $(MAIN))
-OBJDS	= $(addprefix $(OBJDIR)/, ft_term)
-HDRS	= $(addprefix $(INCDIR)/, ft_term.h)
+OBJDS	= $(addprefix $(OBJDIR)/, ft_term lexer)
+HDRS	= $(addprefix $(INCDIR)/, ft_term.h lexer.h)
 
 TESTSD	= tests/srcs/
 TESTID	= tests/includes/

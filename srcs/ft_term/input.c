@@ -36,10 +36,10 @@ static int	handle_control(int status, char c)
 
 static int	handle_special(int status, char c)
 {
-	if (c == '\n')
-		status |= TERM_NEWLINE;
-	else if (status & TERM_B_SLASH)
+	if (status & TERM_B_SLASH)
 		return (status & ~TERM_B_SLASH);
+    if (c == '\n')
+		status |= TERM_NEWLINE;
 	else if (!(status & TERM_S_QUOTE) && c == '"')
 		status ^= TERM_D_QUOTE;
 	else if (!(status & TERM_D_QUOTE) && c == '\'')
