@@ -1,3 +1,3 @@
 [submodule "libft"]
 	path = libft
-	url = https://ClemaX@bitbucket.org/ClemaX/libft.git
+	url = https://github.com/ClemaX/libft.git
