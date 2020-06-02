@@ -6,7 +6,7 @@
 /*   By: plamtenz <plamtenz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/02 20:59:50 by plamtenz          #+#    #+#             */
-/*   Updated: 2020/06/02 22:58:40 by plamtenz         ###   ########.fr       */
+/*   Updated: 2020/06/02 23:06:44 by plamtenz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,9 @@ t_token		*parse_token(const char **txt)
 		(parse_simple_tokens(new, txt))))
 		;
 	else
+	{
+		free(new)
 		return (NULL);
+	}
 	return (new);
 }
