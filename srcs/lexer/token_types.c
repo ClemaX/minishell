@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/02 20:59:50 by plamtenz          #+#    #+#             */
-/*   Updated: 2020/06/02 21:14:56 by chamada          ###   ########lyon.fr   */
+/*   Updated: 2020/06/02 21:31:28 by chamada          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ static bool parse_or_pipe(t_token *new, const char **txt)
 {
 	if (*txt[0] == '|')
 	{
-		if (!ft_strncmp(*txt, "||", 2) &&
+		if (!ft_strncmp(*txt, "||", 2) && ((*txt[2] && *txt[2] != '|') ||
+			!*txt[2]) &&
 			(new->data = malloc(sizeof(char) * 2 + 1)) && (new->data[2] = 0))
 		{
 			ft_strlcpy(new->data, *txt, 2);
@@ -66,7 +67,8 @@ static bool parse_greather(t_token *new, const char **txt)
 {
 	if (*txt[0] == '>')
 	{
-		if (!ft_strncmp(*txt, ">>", 2) &&
+		if (!ft_strncmp(*txt, ">>", 2) && ((*txt[2] && txt[2] != '>' ) ||
+			!*txt[2]) &&
 			(new->data = malloc(sizeof(char) * 2 + 1)) && (new->data[2] = 0))
 		{
 			ft_strlcpy(new->data, *txt, 2);
@@ -90,7 +92,8 @@ static bool parse_less(t_token *new, const char **txt)
 {
 	if (*txt[0] == '<')
 	{
-		if (!ft_strncmp(*txt, "<<", 2) &&
+		if (!ft_strncmp(*txt, "<<", 2) && ((*txt[2] && *txt[2] != '<') ||
+			!*txt[2]) &&
 			(new->data = malloc(sizeof(char) * 2 + 1)) && (new->data[2] = 0))
 		{
 			ft_strlcpy(new->data, *txt, 2);
