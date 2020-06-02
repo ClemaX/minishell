@@ -39,6 +39,16 @@ To do:
 
 
 3) Structure
+<<<<<<< HEAD
+- a)lexer for tokens 
+- b)tokens to btree 
+- c)tbree for execution
+
+t_token *k
+-val = 
+-flags
+=======
 - a)lexer for tokens
 - b)tokens to btree
 - c)tbree for execution
+>>>>>>> 07ee5a2d2975732bbc431f710f3a9c74da445a09
