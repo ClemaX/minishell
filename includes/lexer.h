@@ -11,7 +11,7 @@
 # define LEX_D_QUOTE	0b01000
 # define LEX_OP			0b10000
 
-# define OPERATORS		";&|><"
+# define OPERATORS		";&|><()"
 
 # define TOK_TOKEN		0b0001
 
