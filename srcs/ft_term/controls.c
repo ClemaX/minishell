@@ -3,18 +3,9 @@
 int		term_cancel(void)
 {
 	write(1, "\n", 1);
-	*g_term.hist->data = '\0';
-	g_term.hist->length = 0;
+	*g_term.line->data = '\0';
+	g_term.line->length = 0;
 	return (TERM_NEWLINE | TERM_READING);
-}
-
-void	term_new_line(int status)
-{
-	g_term.hist = history_add(g_term.hist);
-	if (status & TERM_WAITING)
-		write(1, "> ", 2);
-	else
-		write(1, "minish> ", 8);
 }
 
 void	term_stop(void)
@@ -23,8 +14,23 @@ void	term_stop(void)
 		kill(g_term.pid, SIGSTOP);
 }
 
-void	term_erase(void)
+int		term_new_line(int status)
 {
-	tputs(g_term.caps.c_left, 0, &ft_putchar);
-	tputs(g_term.caps.c_del, 0, &ft_putchar);
+	if ((!g_term.hist.next || g_term.line == g_term.hist.next)
+	&& !(g_term.hist.next = line_new(10)))
+		return ((status | TERM_ERROR) & ~TERM_READING);
+	if (g_term.line != NULL)
+		hist_add(&g_term.hist, g_term.line);
+	g_term.hist.next->prev = g_term.hist.last;
+	*g_term.hist.next->data = '\0';
+	g_term.hist.next->length = 0;
+	g_term.hist.curr = g_term.hist.next;
+	g_term.line = g_term.hist.next;
+	if (status & TERM_WAITING)
+		term_prewrite("> ", 2);
+	else
+		term_prewrite("minish> ", 8);
+	g_term.cursor.x = 0;
+	g_term.cursor.y = 0;
+	return (status & ~TERM_NEWLINE);
 }

@@ -9,8 +9,8 @@ IFLAGS	= -I$(INCDIR) -I$(LIBFT)/includes
 LFLAGS	= -L$(LIBFT) -lft -lcurses -ltermcap
 MAIN	= $(SRCDIR)/main.c
 SRCS	= $(addprefix $(SRCDIR)/, 												\
-			$(addprefix ft_term/, ft_term.c history.c prompt.c input.c			\
-				controls.c cursor.c)											\
+			$(addprefix ft_term/, ft_term.c init.c signals.c history.c input.c	\
+				output.c controls.c cursor.c line.c)							\
 			$(addprefix lexer/, lexer.c token_types.c))
 OBJS	= $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS) $(MAIN))
 OBJDS	= $(addprefix $(OBJDIR)/, ft_term lexer)

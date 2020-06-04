@@ -10,15 +10,17 @@ void		token_print(t_token *tokens)
 		if (tokens)
 			ft_printf(", ");
 	}
+	ft_printf("\n");
 }
 
 int exec(const char *str)
 {
-    t_token *tokens;
-    ft_printf("Input: %s", str);
-    tokens = lexer_tokenize(str);
-    token_print(tokens);
-    return (0);
+	t_token *tokens;
+
+	ft_printf("Input: %s", str);
+	tokens = lexer_tokenize(str);
+	token_print(tokens);
+	return (0);
 }
 
 int	main(int ac, const char **av, const char **envp)
