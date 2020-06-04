@@ -28,11 +28,20 @@
 
 typedef short	t_token_t;
 
+
+typedef struct      s_par
+{
+    int             level;
+    int             fd;
+    bool            cond;
+}                   t_par;
+
 typedef struct  s_token
 {
 	char			*data;
 	t_token_t		type;
 	struct s_token	*next;
+	t_par			p;
 }				t_token;
 
 t_token			*lexer_tokenize(const char *input);
