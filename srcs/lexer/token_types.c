@@ -1,17 +1,6 @@
 
 #include "lexer.h"
 
-#define OPEN_PAR        1
-#define CLOSE_PAR       2
-#define T_AND           4
-#define T_OR            8
-#define T_PIPE          16
-#define T_DGRAT         32
-#define T_DLESS         64
-#define T_GRAT          128
-#define T_LESS          256
-#define T_SEM           512
-
 static bool parse_simple_tokens(t_token *new, const char **txt)
 {
 	if (!(new->data = malloc(sizeof(char) * 1 + 1)) && !(new->data[1] = 0))
