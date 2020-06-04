@@ -1,55 +1,44 @@
 #include <ft_term.h>
 
-t_term g_term = (t_term){.pid=0};
+t_term		g_term = (t_term){.pid=0};
 
-void	term_interrupt(int signal) {
-	if (signal == SIGINT)
+static int	handle_status(int status)
+{
+	if (status & TERM_INT)
+		status = term_cancel();
+	if (status & TERM_EOF && g_term.line->length == 0)
+		status &= ~TERM_READING;
+	if (status & TERM_NEWLINE)
+		status = term_new_line(status);
+	if (status & TERM_STOP)
+		term_stop();
+	if (status & TERM_ERASE)
+		term_erase();
+	return ((status & (~TERM_CONSUME & ~TERM_NEWLINE)));
+}
+
+int			term_prompt(int (*exec)(const char*))
+{
+	int		status;
+
+	status = TERM_READING;
+	if (!term_new_line(status))
+		return (-1);
+	while (status & TERM_READING)
 	{
-		if (g_term.pid)
-			kill(g_term.pid, SIGINT);
-		write(1, "\n", 1);
+		status = term_input(status);
+		if (status & TERM_NEWLINE)
+			exec(g_term.line->data);
+		status = handle_status(status);
 	}
+	if (term_destroy() == -1)
+		status |= TERM_ERROR;
+	return ((status & TERM_ERROR) ? -1 : 0);
 }
 
-static int	init_caps()
+int			term_destroy(void)
 {
-	char	*area;
-
-	area = NULL;
-	return ((g_term.caps.c_del = tgetstr("dc", &area))
-	&& (g_term.caps.c_up = tgetstr("up", &area))
-	&& (g_term.caps.c_down = tgetstr("do", &area))
-	&& (g_term.caps.c_left = tgetstr("le", &area))
-	&& (g_term.caps.c_right = tgetstr("nd", &area))
-	&& (g_term.caps.k_up = tgetstr("ku", &area))
-	&& (g_term.caps.k_down = tgetstr("kd", &area))
-	&& (g_term.caps.k_left = tgetstr("kl", &area))
-	&& (g_term.caps.k_right = tgetstr("kr", &area)));
-}
-
-int		term_init(const char **envp)
-{
-	t_map		*term_type;
-	char		term_buff[MAX_ENTRY];
-
-	signal(SIGINT, &term_interrupt);
-	if (!(g_term.env = map_load(envp)))
-		return (-1);
-	if (!(term_type = map_get(g_term.env, "TERM"))
-	|| tgetent(term_buff, term_type->value) <= 0
-	|| tcgetattr(0, &g_term.s_ios) == -1)
-		return (-1);
-	g_term.s_ios_bkp = g_term.s_ios;
-	g_term.s_ios.c_lflag &= ~(ICANON | ECHO | ISIG);
-	if (tcsetattr(STDIN_FILENO, TCSANOW, &g_term.s_ios) == -1
-	|| !init_caps())
-		return (-1);
-	return (0);
-}
-
-int		term_destroy(void)
-{
-	history_clear(&g_term.hist);
+	hist_clear(&g_term.hist);
 	map_clr(&g_term.env);
 	if (tcsetattr(0, 0, &g_term.s_ios_bkp) == -1)
 		return (-1);

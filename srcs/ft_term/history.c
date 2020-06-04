@@ -1,62 +1,42 @@
 #include <ft_term.h>
 
-t_line	*history_add(t_line *prev)
+void	hist_add(t_hist *hist, t_line *line)
 {
-	t_line	*line;
+	if (hist->last)
+		hist->last->next = line;
+	line->prev = hist->last;
+	hist->last = line;
+	hist->last->next = hist->next;
+}
 
-	if (!(line = malloc(sizeof(*line))))
-		return (NULL);
-	line->size = 10;
-	if (!(line->data = malloc(sizeof(*line->data) * line->size)))
+void	hist_clear(t_hist *hist)
+{
+	t_line	*curr;
+
+	free(hist->next);
+	while ((curr = hist->last))
 	{
-		free(line);
-		return (NULL);
+		hist->last = curr->prev;
+		line_clear(&curr);
 	}
-	*line->data = '\0';
-	line->length = 0;
-	line->next = NULL;
-	line->prev = prev;
-	if (prev)
-		prev->next = line;
-	return (line);
 }
 
-void    history_clear(t_line **hist)
+void	hist_commit(t_hist *hist, t_line *line)
 {
-    t_line  *curr;
-
-    while ((curr = *hist))
-    {
-        *hist = curr->prev;
-        line_clear(&curr);
-    }
+	free(hist->curr->data);
+	hist->curr->data = line->data;
+	hist->curr->length = line->length;
+	hist->curr->size = line->size;
 }
 
-int		line_append(t_line *line, char c)
+void	hist_pop(t_hist *hist)
 {
-	char	*new;
+	t_line	*prev;
 
-	line->length++;
-	if (line->length + 1 > line->size)
+	if (hist->last)
 	{
-		line->size *= 2;
-		if (!(new = malloc(sizeof(*new) * line->size)))
-			return (-1);
-		ft_strlcpy(new, line->data, line->size);
-		free(line->data);
-		line->data = new;
+		prev = hist->last->prev;
+		line_clear(&hist->last);
+		hist->last = prev;
 	}
-	line->data[line->length] = '\0';
-	line->data[line->length - 1] = c;
-	return (1);
-}
-
-void    line_clear(t_line **line)
-{
-    if (*line)
-    {
-        free((*line)->data);
-        free(*line);
-        *line = NULL;
-    }
 }

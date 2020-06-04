@@ -67,7 +67,7 @@ static bool parse_greather(t_token *new, const char **txt)
 {
 	if (*txt[0] == '>')
 	{
-		if (!ft_strncmp(*txt, ">>", 2) && ((*txt[2] && txt[2] != '>' ) ||
+		if (!ft_strncmp(*txt, ">>", 2) && ((*txt[2] && *txt[2] != '>' ) ||
 			!*txt[2]) &&
 			(new->data = malloc(sizeof(char) * 2 + 1)) && (new->data[2] = 0))
 		{

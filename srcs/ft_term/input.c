@@ -49,25 +49,7 @@ static int	handle_special(int status, char c)
 	return (status);
 }
 
-static int	handle_status(int status, int (*exec)(const char *))
-{
-	if (status & TERM_INT)
-		status = term_cancel();
-	if (status & TERM_NEWLINE)
-    {
-        exec(g_term.hist->data);
-		term_new_line(status);
-    }
-	if (status & TERM_EOF && g_term.hist->length == 0)
-		status &= ~TERM_READING;
-	if (status & TERM_STOP)
-		term_stop();
-	if (status & TERM_ERASE)
-		term_erase();
-	return (status & ~TERM_CONSUME);
-}
-
-int         term_input(int status, int (*exec)(const char*))
+int			term_input(int status)
 {
 	int		ret;
 	char	c;
@@ -83,10 +65,8 @@ int         term_input(int status, int (*exec)(const char*))
 	if ((status & (TERM_READING | TERM_CONSUME)) == TERM_READING)
 	{
 		status = handle_special(status, c);
-		write(1, &c, 1);
-		if (line_append(g_term.hist, c) == -1)
+		if (!(status & TERM_CONSUME) && !term_write(&c, 1))
 			return ((status | TERM_ERROR) & ~TERM_READING);
 	}
-	status = handle_status(status, exec);
 	return (status);
 }
