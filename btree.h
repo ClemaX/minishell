@@ -11,13 +11,6 @@
 #define S_PIPE      128
 #define S_OUTPAR    256
 #define S_SEM       512
-
-typedef struct s_btree
-{
-    void        *ch1;
-    void        *ch2;
-    char        *data;
-    short       status;
-}               t_btree;
+#define NONE        1024
 
 #endif
