@@ -15,6 +15,17 @@
 
 # define TOK_TOKEN		0b0001
 
+#define OPEN_PAR        1
+#define CLOSE_PAR       2
+#define T_AND           4
+#define T_OR            8
+#define T_PIPE          16
+#define T_DGRAT         32
+#define T_DLESS         64
+#define T_GRAT          128
+#define T_LESS          256
+#define T_SEM           512
+
 typedef short	t_token_t;
 
 typedef struct  s_token
