@@ -85,7 +85,6 @@ int        execute_simple_comand(t_token *bt, t_term *t)
 
 int         execute_pipe(t_token *bt, t_term *t)
 {
-    // if S_PIPE2 and is a () have to pipe with all the ()
     if (bt->type & S_PIPE && bt->next)
         bt->next->type |= S_PIPE2;
     ; // execute the cmd
@@ -93,7 +92,7 @@ int         execute_pipe(t_token *bt, t_term *t)
     ; // save fd 
     ; // next bt has to have a pipe symbol
     if ((bt->type & S_INAND || bt->type & S_INOR) && bt->type & S_PIPE2)
-        ; // save pid status * last pid status if it exist and put symbol in next <--- IMPORTANT AF (AND OR)
+        ; // save ret status * last ret status if it exist and put symbol in next <--- IMPORTANT AF (AND OR)
     if (!(bt->type & NOT_REPEAT) && !(bt->type & S_PIPE))
         set_redirection(bt);
     if (bt->type & S_PIPE2) // check in this condition if next->type & NOT_REPEAT
@@ -109,9 +108,9 @@ bool        execute_job(t_token *bt, t_term *t)
 {
     if (bt->type & S_PIPE || bt->type & S_PIPE2)
         execute_pipe(bt, t);
-    else if (bt->type & NONE && !(bt->type & NOT_REPEAT))
+    else if (bt->type & NONE || !(bt->type & NOT_REPEAT))
         execute_simple_command(bt, t);
-    else if (bt->type & NOT_REPEAT)
+    else if (bt->type & NOT_REPEAT) // not good
         execute_redirection(bt, t);
 }
 
