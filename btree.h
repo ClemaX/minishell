@@ -12,5 +12,9 @@
 #define S_OUTPAR    256
 #define S_SEM       512
 #define NONE        1024
+#define NOT_REPEAT  2048
+#define S_PIPE2     4096
+
+
 
 #endif
