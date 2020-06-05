@@ -19,7 +19,7 @@ int		term_new_line(int status)
 	if ((!g_term.hist.next || g_term.line == g_term.hist.next)
 	&& !(g_term.hist.next = line_new(10)))
 		return ((status | TERM_ERROR) & ~TERM_READING);
-	if (g_term.line != NULL)
+	if (g_term.line)
 		hist_add(&g_term.hist, g_term.line);
 	g_term.hist.next->prev = g_term.hist.last;
 	*g_term.hist.next->data = '\0';

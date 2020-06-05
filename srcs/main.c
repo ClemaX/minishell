@@ -20,6 +20,7 @@ int exec(const char *str)
 	ft_printf("Input: %s", str);
 	tokens = lexer_tokenize(str);
 	token_print(tokens);
+	token_clear(&tokens);
 	return (0);
 }
 

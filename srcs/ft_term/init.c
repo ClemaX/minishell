@@ -6,6 +6,8 @@ static int	init_caps()
 
 	area = NULL;
 	return ((g_term.caps.clear = tgetstr("cl", &area))
+	&& (g_term.caps.standout = tgetstr("so", &area))
+	&& (g_term.caps.standout_end = tgetstr("se", &area))
 	&& (g_term.caps.c_del = tgetstr("dc", &area))
 	&& (g_term.caps.c_del_line = tgetstr("ce", &area))
 	&& (g_term.caps.c_move = tgetstr("cm", &area))

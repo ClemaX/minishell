@@ -47,5 +47,6 @@ typedef struct  s_token
 t_token			*lexer_tokenize(const char *input);
 
 t_token			*parse_token(const char **txt);
+t_token			*token_clear(t_token **tokens);
 
 #endif

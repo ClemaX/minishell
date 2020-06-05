@@ -56,18 +56,18 @@ t_token		*token_add(t_token **tokens, t_token *new)
 	return (new);
 }
 
-t_token		*token_clear(t_token **token)
+t_token		*token_clear(t_token **tokens)
 {
 	t_token	*next;
 
-	while (*token)
+	while (*tokens)
 	{
-		next = (*token)->next;
-		free((*token)->data);
-		free(*token);
-		*token = next;
+		next = (*tokens)->next;
+		free((*tokens)->data);
+		free(*tokens);
+		*tokens = next;
 	}
-	return (*token);
+	return (*tokens);
 }
 
 t_token		*lexer_tokenize(const char *input)
