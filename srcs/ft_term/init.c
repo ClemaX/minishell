@@ -5,7 +5,8 @@ static int	init_caps()
 	char	*area;
 
 	area = NULL;
-	return ((g_term.caps.c_del = tgetstr("dc", &area))
+	return ((g_term.caps.clear = tgetstr("cl", &area))
+	&& (g_term.caps.c_del = tgetstr("dc", &area))
 	&& (g_term.caps.c_del_line = tgetstr("ce", &area))
 	&& (g_term.caps.c_move = tgetstr("cm", &area))
 	&& (g_term.caps.c_move_h = tgetstr("ch", &area))

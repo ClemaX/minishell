@@ -23,19 +23,19 @@ void	term_start_line(void)
 	g_term.cursor.x = 0;
 }
 
-void	term_erase(void)
-{
-	if (g_term.cursor.x > 0)
-	{
-		g_term.cursor.x--;
-		tputs(g_term.caps.c_left, 0, &ft_putchar);
-		tputs(g_term.caps.c_del, 0, &ft_putchar);
-		line_erase(g_term.line, 1);
-	}
-}
-
 void	term_clear_line(void)
 {
 	term_start_line();
 	tputs(g_term.caps.c_del_line, 0, &ft_putchar);
+}
+
+void	term_clear_screen(int status)
+{
+	tputs(g_term.caps.clear, 0, &ft_putchar);
+	if (status & TERM_WAITING)
+		term_prewrite("> ", 2);
+	else
+		term_prewrite("minish> ", 8);
+	write(1, g_term.line->data, g_term.line->length);
+	g_term.cursor.x = g_term.line->length;
 }

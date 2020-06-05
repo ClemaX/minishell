@@ -10,6 +10,8 @@ static int	handle_status(int status)
 		status &= ~TERM_READING;
 	if (status & TERM_NEWLINE)
 		status = term_new_line(status);
+	if (status & TERM_CLEAR)
+		term_clear_screen(status);
 	if (status & TERM_STOP)
 		term_stop();
 	if (status & TERM_ERASE)

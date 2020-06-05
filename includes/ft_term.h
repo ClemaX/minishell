@@ -20,9 +20,10 @@
 # define TERM_ERASE		0b0000000010000000
 # define TERM_EOF		0b0000000100000000
 # define TERM_STOP		0b0000001000000000
+# define TERM_CLEAR		0b0000010000000000
 
 # define TERM_WAITING	(TERM_B_SLASH | TERM_S_QUOTE | TERM_D_QUOTE)
-# define TERM_CONSUME	(TERM_NEWLINE | TERM_INT | TERM_EOF | TERM_STOP | TERM_ERASE)
+# define TERM_CONSUME	(TERM_NEWLINE | TERM_CLEAR | TERM_INT | TERM_EOF | TERM_STOP | TERM_ERASE)
 
 typedef struct	s_line
 {
@@ -48,6 +49,7 @@ typedef struct	s_caps
 	char	*c_left;
 	char	*c_left_n;
 	char	*c_right;
+	char	*clear;
 }				t_caps;
 
 typedef struct	s_position
@@ -95,6 +97,7 @@ void			term_right(void);
 int				term_prewrite(const char *str, size_t n);
 int 			term_write(const char *str, size_t n);
 void			term_start_line(void);
+void			term_clear_screen(int status);
 
 int				term_cancel(void);
 void			term_clear_line(void);

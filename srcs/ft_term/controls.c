@@ -34,3 +34,14 @@ int		term_new_line(int status)
 	g_term.cursor.y = 0;
 	return (status & ~TERM_NEWLINE);
 }
+
+void	term_erase(void)
+{
+	if (g_term.cursor.x > 0)
+	{
+		g_term.cursor.x--;
+		tputs(g_term.caps.c_left, 0, &ft_putchar);
+		tputs(g_term.caps.c_del, 0, &ft_putchar);
+		line_erase(g_term.line, 1);
+	}
+}
