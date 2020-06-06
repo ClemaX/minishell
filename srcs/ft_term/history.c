@@ -13,7 +13,6 @@ void	hist_clear(t_hist *hist)
 {
 	t_line	*curr;
 
-	free(hist->next);
 	while ((curr = hist->last))
 	{
 		hist->last = curr->prev;

@@ -31,6 +31,8 @@ static int	handle_control(int status, char c)
 		return (status | TERM_EOF);
 	if (c == g_term.s_ios.c_cc[VSTOP])
 		return (status | TERM_STOP);
+	if (c == '\014')
+		return (status | TERM_CLEAR);
 	return (status);
 }
 

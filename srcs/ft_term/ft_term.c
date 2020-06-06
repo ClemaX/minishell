@@ -10,6 +10,8 @@ static int	handle_status(int status)
 		status &= ~TERM_READING;
 	if (status & TERM_NEWLINE)
 		status = term_new_line(status);
+	if (status & TERM_CLEAR)
+		term_clear_screen(status);
 	if (status & TERM_STOP)
 		term_stop();
 	if (status & TERM_ERASE)
@@ -40,6 +42,7 @@ int			term_destroy(void)
 {
 	hist_clear(&g_term.hist);
 	map_clr(&g_term.env);
+	line_clear(&g_term.line);
 	if (tcsetattr(0, 0, &g_term.s_ios_bkp) == -1)
 		return (-1);
 	return(0);
