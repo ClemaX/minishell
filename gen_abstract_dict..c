@@ -1,25 +1,5 @@
 #include "lexer.h"
-
-#define AND     1
-#define OR      2
-#define PIPE    4
-#define RDG     8
-#define RG      16
-#define RDL     32
-#define RL      64
-#define PARENTHESIS 128
-
-typedef struct s_operator
-{
-    void        *ch1;
-    void        *ch2;
-    struct s_operator  *next;
-    struct s_operator  *back;
-    short       type;
-}               t_op;
-
-char *list_symb_tokens[] = {};
-char *list_text_tokens[] = {};
+#include "abstract_dict.h"
 
 // step 1) Create a linked list with all the operators <*list_symb_tokens[]> ("&& || | > < >> << ; ()") in order ,managing *next and *back ended by NULL
 // step 2) Have fill ch1 and ch2 using <*list_text_tokens[]> with some rules:
@@ -30,37 +10,39 @@ char *list_text_tokens[] = {};
     // - for practical reasons, if && or || has an after or before a operator object the correspondent ch (ch1 or ch2) will
         // be NULL and the conecxion will be done by the next (not woks in back or only AND/OR yes for the others)
     // ch2 of redirection is always a text token
-    // parenthesis can be ignored if they are rounded by or and, they are only usseful for pipe and redirection
+    // parentheses recursively create another step1 and then step 
     // semicolon has no ch1 or ch2 if there are conditions around
 
 // step 1
 // take the int list like i did in my printf
-t_op        *gen_architecture(int *token_list, t_op *last)
+t_op        *gen_architecture(int **token_list, t_op *curr)
 {
-    t_op    *new;
+    t_op    *next;
 
-    if (!(new = malloc(sizeof(t_op))))
+    *token_list = *token_list + 1 ? *token_list + 1 : NULL;
+    if ((**token_list || **token_list & CLOSE_PAR) && !(next = malloc(sizeof(t_op))))
         return (NULL);
-    new->type = 0;
-    if (last)
+    next->type = 0;
+    next->back = curr;
+    next->ch1 = NULL;
+    next->ch2 = NULL;
+    if (**token_list & OPEN_PAR && (curr->type |= PARENTHESIS))
     {
-        new->back = last;
-        last->next = new;
+        gen_architecture(token_list, curr->ch1 = next);
+        next = gen_architecture(token_list, NULL);
     }
-    else
-        new->back = NULL;
-    new->type |= *token_list;
-    if (token_list + 1)
-        token_list++;
-    else
-        return (new);
-    gen_architecture(token_list, new);
+    if (curr)
+    {
+        ((t_op *)curr)->next = next;
+        ((t_op *)curr)->type |= **token_list;
+    }
+    return (gen_architecture(*token_list, next));
 }
 
 // step 2
 bool        gen_sub_architecture(char **token_list, t_op *curr)
 {
-    if (*token_list == NULL)
+    if (*token_list == NULL || !curr)
         return (false);
     if (curr->type & AND || curr->type & OR)
     {
@@ -76,7 +58,8 @@ bool        gen_sub_architecture(char **token_list, t_op *curr)
                 || curr->next->type & RDL|| curr->next->type & RL || curr->next->type & PARENTHESIS
                 || curr->next->type & AND || curr->next->type & OR)) // if AND/OR after ch2 = NULL, next->ch1 = the value
             curr->ch2 = NULL;
-        else // end
+        else // endcurr->ch1 = ft_strdup(*token_list);
+            *token_list = *token_list + 1? *token_list + 1 : NULL;
         {
             curr->ch2 = ft_strdup(*token_list);
             *token_list = *token_list + 1? *token_list + 1 : NULL;
@@ -84,14 +67,19 @@ bool        gen_sub_architecture(char **token_list, t_op *curr)
     }
     else if (curr->type & PIPE)
     {
-        if (curr->back && (curr->back->type & PIPE || curr->back->type & PARENTHESIS))
+        if (curr->back && curr->back->type & PARENTHESIS)
             curr->ch1 = NULL;
+        else if (curr->back && curr->back->type & PIPE)
+        {
+            curr->ch1 = ft_strdup(*token_list);
+            *token_list = *token_list + 1? *token_list + 1 : NULL;
+        }
         else
         {
             curr->ch1 = ft_strdup(*token_list);
             *token_list = *token_list + 1? *token_list + 1 : NULL;
         }
-        if (curr->next && curr->next->type & PARENTHESIS)
+        if (curr->next && (curr->next->type & PARENTHESIS || curr->next->type & PIPE))
             curr->ch2 = NULL;
         else
         {
@@ -104,7 +92,7 @@ bool        gen_sub_architecture(char **token_list, t_op *curr)
     {
         if (curr->back && (curr->back->type & PARENTHESIS ||
                 curr->back->type & PIPE))
-            curr->ch1 = NULL; // that means ch1 is now back (the result of the pipe or the parenthesis
+            curr->ch1 = NULL;
         else
         {
             curr->ch1 = ft_strdup(*token_list);
@@ -115,7 +103,21 @@ bool        gen_sub_architecture(char **token_list, t_op *curr)
     }
     else
     {
-        ; // semicolon and parentesis (parentesis have to be removed)
+        if (curr->type & PARENTHESIS)
+            gen_sub_architecture(token_list, curr->ch1);
+        else
+            if (!curr->next && !curr->back)
+            {
+                curr->ch1 = ft_strdup(*token_list);
+                *token_list = *token_list + 1? *token_list + 1 : NULL;
+                curr->ch2 = ft_strdup(*token_list);
+                *token_list = *token_list + 1? *token_list + 1 : NULL;
+            }
+            else
+            {
+                curr->ch1 = NULL;
+                curr->ch2 = NULL;
+            }
     }
     if (curr->next)
         return (gen_sub_architecture(token_list, curr->next));
