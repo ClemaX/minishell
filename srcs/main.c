@@ -26,9 +26,9 @@ int exec(const char *str)
 
 int	main(int ac, const char **av, const char **envp)
 {
-	int		    ret;
-	(void)	    ac;
-	(void)	    av;
+	int		ret;
+	(void)	ac;
+	(void)	av;
 
 	ret = term_init(envp);
 	if (ret == -1)

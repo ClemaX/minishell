@@ -5,7 +5,9 @@ static int	init_caps()
 	char	*area;
 
 	area = NULL;
-	return ((g_term.caps.clear = tgetstr("cl", &area))
+	return ((g_term.caps.insert = tgetstr("im", &area))
+	&& (g_term.caps.insert_end = tgetstr("ei", &area))
+	&& (g_term.caps.clear = tgetstr("cl", &area))
 	&& (g_term.caps.standout = tgetstr("so", &area))
 	&& (g_term.caps.standout_end = tgetstr("se", &area))
 	&& (g_term.caps.m_blink = tgetstr("mb", &area))

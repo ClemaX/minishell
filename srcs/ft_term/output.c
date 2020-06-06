@@ -11,10 +11,11 @@ int		term_prewrite(const char *str, size_t n)
 
 int		term_write(const char *str, size_t n)
 {
-	if (write(1, str, n) <= 0)
+	if (write(1, str, n) <= 0
+	|| !(line_insert_at(g_term.line, g_term.cursor.x, str, n)))
 		return (0);
 	g_term.cursor.x += n;
-	return (line_append(g_term.line, str, n));
+	return (1);
 }
 
 void	term_start_line(void)

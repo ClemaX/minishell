@@ -38,6 +38,8 @@ typedef struct	s_line
 
 typedef struct	s_caps
 {
+	char	*insert;
+	char	*insert_end;
 	char	*clear;
 	char	*standout;
 	char	*standout_end;
@@ -124,7 +126,7 @@ void			hist_clear(t_hist *hist);
 void			hist_pop(t_hist *hist);
 void			hist_commit(t_hist *hist, t_line *line);
 
-int				line_append(t_line *line, const char *str, size_t n);
+int				line_insert_at(t_line *line, size_t at, const char *str, size_t n);
 void			line_clear(t_line **line);
 int				line_erase(t_line *line, size_t n);
 t_line			*line_dup(t_line *line);

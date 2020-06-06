@@ -1,10 +1,12 @@
 #include <ft_term.h>
 
-int		line_append(t_line *line, const char *str, size_t n)
+int		line_insert_at(t_line *line, size_t at, const char *str, size_t n)
 {
 	char	*new;
 	size_t	new_len;
 
+	if (at > line->length)
+		return (0);
 	new_len = line->length + n;
 	if (new_len + 1 > line->size)
 	{
@@ -16,7 +18,8 @@ int		line_append(t_line *line, const char *str, size_t n)
 		free(line->data);
 		line->data = new;
 	}
-	ft_memcpy(line->data + line->length, str, n);
+	ft_memmove(line->data + at + n, line->data + at, line->length - at);
+	ft_memcpy(line->data + at, str, n);
 	line->length = new_len;
 	line->data[line->length] = '\0';
 	return (1);
