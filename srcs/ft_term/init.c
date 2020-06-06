@@ -8,6 +8,8 @@ static int	init_caps()
 	return ((g_term.caps.clear = tgetstr("cl", &area))
 	&& (g_term.caps.standout = tgetstr("so", &area))
 	&& (g_term.caps.standout_end = tgetstr("se", &area))
+	&& (g_term.caps.m_blink = tgetstr("mb", &area))
+	&& (g_term.caps.m_end = tgetstr("me", &area))
 	&& (g_term.caps.c_del = tgetstr("dc", &area))
 	&& (g_term.caps.c_del_line = tgetstr("ce", &area))
 	&& (g_term.caps.c_move = tgetstr("cm", &area))
@@ -32,6 +34,7 @@ int			term_init(const char **envp)
 	if (!(g_term.env = map_load(envp)))
 		return (-1);
 	if (!(term_type = map_get(g_term.env, "TERM"))
+	|| !map_set(&g_term.env, "PS1", TERM_PS1)
 	|| tgetent(term_buff, term_type->value) <= 0
 	|| tcgetattr(0, &g_term.s_ios) == -1)
 		return (-1);

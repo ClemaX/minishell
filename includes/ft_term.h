@@ -10,6 +10,8 @@
 
 # define MAX_ENTRY		1024
 
+# define TERM_PS1		"minish> "
+
 # define TERM_READING	0b0000000000000001
 # define TERM_ERROR		0b0000000000000010
 # define TERM_B_SLASH	0b0000000000000100
@@ -39,6 +41,8 @@ typedef struct	s_caps
 	char	*clear;
 	char	*standout;
 	char	*standout_end;
+	char	*m_blink;
+	char	*m_end;
 	char	*k_up;
 	char	*k_down;
 	char	*k_left;
@@ -60,6 +64,13 @@ typedef struct	s_position
 	unsigned	y;
 }				t_position;
 
+typedef struct	s_selection
+{
+	t_position	start;
+	t_position	end;
+}				t_selection;
+
+
 typedef struct	s_hist
 {
 	t_line	*last;
@@ -75,6 +86,7 @@ typedef	struct	s_term
 	struct termios	s_ios_bkp;
 	t_position		cursor;
 	t_position		origin;
+	t_selection		select;
 	t_caps			caps;
 	t_map			*env;
 	t_line			*line;
@@ -117,5 +129,8 @@ void			line_clear(t_line **line);
 int				line_erase(t_line *line, size_t n);
 t_line			*line_dup(t_line *line);
 t_line			*line_new(size_t size);
+
+void			selection_left(void);
+void			selection_right(void);
 
 #endif
