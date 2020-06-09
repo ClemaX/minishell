@@ -41,8 +41,11 @@ void	term_clear_line(void)
 
 void	term_clear_screen(int status)
 {
-	tputs(g_term.caps.clear, 0, &ft_putchar);
-	term_write_prompt(status);
-	write(1, g_term.line->data, g_term.line->length);
-	g_term.cursor.x = g_term.line->length;
+	if (g_term.caps.clear)
+	{
+		tputs(g_term.caps.clear, 0, &ft_putchar);
+		term_write_prompt(status);
+		write(1, g_term.line->data, g_term.line->length);
+		g_term.cursor.x = g_term.line->length;
+	}
 }
