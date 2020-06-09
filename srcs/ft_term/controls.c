@@ -39,7 +39,7 @@ void	term_erase(void)
 	{
 		tputs(g_term.caps.c_left, 0, &ft_putchar);
 		tputs(g_term.caps.c_del, 0, &ft_putchar);
-		line_erase_at(g_term.line, g_term.cursor.x, 1);
 		g_term.cursor.x--;
+		line_erase_at(g_term.line, g_term.cursor.x, 1);
 	}
 }

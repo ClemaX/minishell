@@ -21,7 +21,7 @@ static int	handle_status(int status)
 
 int			term_prompt(int (*exec)(const char*))
 {
-	int		status;
+	int	status;
 
 	status = TERM_READING;
 	if (!term_new_line(status))
