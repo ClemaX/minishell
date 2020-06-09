@@ -44,8 +44,6 @@ typedef struct	s_caps
 	char	*clear;
 	char	*standout;
 	char	*standout_end;
-	char	*m_blink;
-	char	*m_end;
 	char	*k_up;
 	char	*k_down;
 	char	*k_left;
@@ -57,7 +55,6 @@ typedef struct	s_caps
 	char	*c_up;
 	char	*c_down;
 	char	*c_left;
-	char	*c_left_n;
 	char	*c_right;
 }				t_caps;
 
