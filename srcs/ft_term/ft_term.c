@@ -1,6 +1,6 @@
 #include <ft_term.h>
 
-t_term		g_term = (t_term){.pid=0};
+t_term	g_term = (t_term){.pid=0};
 
 static int	handle_status(int status)
 {
@@ -33,6 +33,8 @@ int			term_prompt(int (*exec)(const char*))
 		if (status & TERM_NEWLINE)
 		{
 			tputs(g_term.caps.insert_end, 0, &ft_putchar);
+			term_end_line();
+			selection_clear();
 			exec(g_term.line->data);
 			tputs(g_term.caps.insert, 0, &ft_putchar);
 		}

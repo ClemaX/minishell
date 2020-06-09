@@ -29,8 +29,8 @@ static int	init_caps()
 
 int			term_init(const char **envp)
 {
-	t_map		*term_type;
-	char		term_buff[MAX_ENTRY];
+	t_map	*term_type;
+	char	term_buff[MAX_ENTRY];
 
 	signal(SIGINT, &term_interrupt);
 	if (!(g_term.env = map_load(envp)))

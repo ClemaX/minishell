@@ -1,6 +1,6 @@
 #include <ft_term.h>
 
-void		term_up(void)
+void	term_up(void)
 {
 	if (g_term.hist.curr->prev)
 	{
@@ -17,7 +17,7 @@ void		term_up(void)
 	}
 }
 
-void		term_down(void)
+void	term_down(void)
 {
 	if (g_term.hist.curr->next)
 	{
@@ -33,7 +33,6 @@ void		term_down(void)
 		g_term.cursor.x = g_term.hist.curr->length;
 	}
 }
-
 
 void	term_left(void)
 {

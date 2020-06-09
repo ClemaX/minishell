@@ -23,6 +23,7 @@
 # define TERM_EOF		0b0000000100000000
 # define TERM_STOP		0b0000001000000000
 # define TERM_CLEAR		0b0000010000000000
+# define TERM_SELECT	0b0000100000000000
 
 # define TERM_WAITING	(TERM_B_SLASH | TERM_S_QUOTE | TERM_D_QUOTE)
 # define TERM_CONSUME	(TERM_NEWLINE | TERM_CLEAR | TERM_INT | TERM_EOF | TERM_STOP | TERM_ERASE)
@@ -113,7 +114,9 @@ void			term_right(void);
 int				term_prewrite(const char *str, size_t n);
 int 			term_write(const char *str, size_t n);
 void			term_start_line(void);
+void			term_end_line(void);
 void			term_clear_screen(int status);
+void			term_write_prompt(int status);
 
 int				term_cancel(void);
 void			term_clear_line(void);
@@ -128,11 +131,12 @@ void			hist_commit(t_hist *hist, t_line *line);
 
 int				line_insert_at(t_line *line, size_t at, const char *str, size_t n);
 void			line_clear(t_line **line);
-int				line_erase(t_line *line, size_t n);
+int				line_erase_at(t_line *line, size_t at, size_t n);
 t_line			*line_dup(t_line *line);
 t_line			*line_new(size_t size);
 
 void			selection_left(void);
 void			selection_right(void);
+void			selection_clear(void);
 
 #endif

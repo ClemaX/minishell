@@ -25,11 +25,17 @@ int		line_insert_at(t_line *line, size_t at, const char *str, size_t n)
 	return (1);
 }
 
-int		line_erase(t_line *line, size_t n)
+int		line_erase_at(t_line *line, size_t at, size_t n)
 {
-	if (!line || line->length < n)
+	if (!line || line->length - at < n)
 		return (0);
-	line->length -= n;
+	if (at == line->length)
+		line->length -= n;
+	else
+	{
+		ft_memmove(line->data + at, line->data + at + n, n);
+		line->length -= n;
+	}
 	line->data[line->length] = '\0';
 	return (1);
 }

@@ -24,6 +24,15 @@ void	term_start_line(void)
 	g_term.cursor.x = 0;
 }
 
+void	term_end_line(void)
+{
+	if (g_term.line && g_term.line->length)
+	{
+		g_term.cursor.x = g_term.line->length;
+		tputs(tgoto(g_term.caps.c_move_h, 0, g_term.origin.x + g_term.cursor.x), 0, &ft_putchar);
+	}
+}
+
 void	term_clear_line(void)
 {
 	term_start_line();
@@ -33,10 +42,7 @@ void	term_clear_line(void)
 void	term_clear_screen(int status)
 {
 	tputs(g_term.caps.clear, 0, &ft_putchar);
-	if (status & TERM_WAITING)
-		term_prewrite("> ", 2);
-	else
-		term_prewrite("minish> ", 8);
+	term_write_prompt(status);
 	write(1, g_term.line->data, g_term.line->length);
 	g_term.cursor.x = g_term.line->length;
 }

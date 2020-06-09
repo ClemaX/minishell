@@ -1,6 +1,6 @@
 #include <ft_term.h>
 
-static void	handle_alt_escape(void)
+static int	handle_alt_escape(int status)
 {
 	char	c[3];
 
@@ -11,12 +11,12 @@ static void	handle_alt_escape(void)
 			selection_left();
 		else if (c[2] == g_term.caps.k_right[2]) // RIGHT
 			selection_right();
+		return(status | TERM_SELECT);
 	}
 	else if (c[1] == '5') // CONTROL
-	{
-		ft_printf("ctrl + %c", c[2]);
-	}
-	}
+		ft_dprintf(2, "[PROMPT] ctrl + %c\n", c[2]);
+	return (status);
+}
 
 static int	handle_escape(int status)
 {
@@ -29,8 +29,13 @@ static int	handle_escape(int status)
 	if (ret == -1)
 		return ((status | TERM_ERROR) & ~TERM_READING);
 	if (c[1] == '1')
-		handle_alt_escape();
-	else if (c[1] == g_term.caps.k_up[2])
+		return (handle_alt_escape(status));
+	else if (status & TERM_SELECT)
+	{
+		status &= ~TERM_SELECT;
+		selection_clear();
+	}
+	if (c[1] == g_term.caps.k_up[2])
 		term_up();
 	else if (c[1] == g_term.caps.k_down[2])
 		term_down();

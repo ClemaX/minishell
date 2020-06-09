@@ -2,6 +2,7 @@
 
 int		term_cancel(void)
 {
+	selection_clear();
 	write(1, "\n", 1);
 	*g_term.line->data = '\0';
 	g_term.line->length = 0;
@@ -26,10 +27,7 @@ int		term_new_line(int status)
 	g_term.hist.next->length = 0;
 	g_term.hist.curr = g_term.hist.next;
 	g_term.line = g_term.hist.next;
-	if (status & TERM_WAITING)
-		term_prewrite("> ", 2);
-	else
-		term_prewrite(TERM_PS1, sizeof(TERM_PS1) - 1);
+	term_write_prompt(status);
 	g_term.cursor.x = 0;
 	g_term.cursor.y = 0;
 	return (status & ~TERM_NEWLINE);
@@ -39,9 +37,9 @@ void	term_erase(void)
 {
 	if (g_term.cursor.x > 0)
 	{
-		g_term.cursor.x--;
 		tputs(g_term.caps.c_left, 0, &ft_putchar);
 		tputs(g_term.caps.c_del, 0, &ft_putchar);
-		line_erase(g_term.line, 1);
+		line_erase_at(g_term.line, g_term.cursor.x, 1);
+		g_term.cursor.x--;
 	}
 }
