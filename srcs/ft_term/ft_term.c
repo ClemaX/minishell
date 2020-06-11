@@ -1,6 +1,10 @@
 #include <ft_term.h>
 
-t_term	g_term = (t_term){.pid=0};
+t_term	g_term = (t_term){.pid=0,\
+	.select.start.x=-1U,\
+	.select.start.y=-1U,\
+	.select.end.x=-1U,\
+	.select.end.y=-1U};
 
 static int	handle_status(int status)
 {
@@ -51,6 +55,7 @@ int			term_destroy(void)
 	hist_clear(&g_term.hist);
 	map_clr(&g_term.env);
 	line_clear(&g_term.line);
+	free(g_term.clip.data);
 	if (tcsetattr(0, 0, &g_term.s_ios_bkp) == -1)
 		return (-1);
 	return(0);

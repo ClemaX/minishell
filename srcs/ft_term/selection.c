@@ -60,12 +60,16 @@ void	selection_right(void)
 
 void	selection_clear(void)
 {
-	g_term.select = (t_selection){.start.x=-1, .end.x=-1};
-	if (g_term.line)
+	if (g_term.select.start.x != -1U || g_term.select.end.x != -1U)
 	{
-		tputs(tgoto(g_term.caps.c_move_h, 0, g_term.origin.x), 0, &ft_putchar);
-		tputs(g_term.caps.c_del_line, 0, &ft_putchar);
-		write(1, g_term.line->data,  g_term.line->length);
-		tputs(tgoto(g_term.caps.c_move_h, 0, g_term.origin.x + g_term.cursor.x), 0, &ft_putchar);
+		ft_dprintf(2, "[SELECT] clear\n");
+		g_term.select = (t_selection){.start.x=-1U, .end.x=-1U};
+		if (g_term.line)
+		{
+			tputs(tgoto(g_term.caps.c_move_h, 0, g_term.origin.x), 0, &ft_putchar);
+			tputs(g_term.caps.c_del_line, 0, &ft_putchar);
+			write(1, g_term.line->data,  g_term.line->length);
+			tputs(tgoto(g_term.caps.c_move_h, 0, g_term.origin.x + g_term.cursor.x), 0, &ft_putchar);
+		}
 	}
 }

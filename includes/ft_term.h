@@ -25,11 +25,13 @@
 # define TERM_ERASE		0b0000000010000000
 # define TERM_EOF		0b0000000100000000
 # define TERM_STOP		0b0000001000000000
-# define TERM_CLEAR		0b0000010000000000
-# define TERM_SELECT	0b0000100000000000
+# define TERM_SUSPEND	0b0000010000000000
+# define TERM_CLEAR		0b0000100000000000
+# define TERM_SELECT	0b0001000000000000
+# define TERM_IGNORE	0b0010000000000000
 
 # define TERM_WAITING	(TERM_B_SLASH | TERM_S_QUOTE | TERM_D_QUOTE)
-# define TERM_CONSUME	(TERM_NEWLINE | TERM_CLEAR | TERM_INT | TERM_EOF | TERM_STOP | TERM_ERASE)
+# define TERM_CONSUME	(TERM_NEWLINE | TERM_CLEAR | TERM_INT | TERM_EOF | TERM_STOP | TERM_ERASE | TERM_SUSPEND | TERM_IGNORE)
 
 # define TAKE_FD		1
 # define GIVE_FD		2
@@ -56,6 +58,7 @@ typedef struct	s_caps
 	char	*k_left;
 	char	*k_right;
 	char	*c_del;
+	char	*c_del_n;
 	char	*c_del_line;
 	char	*c_move;
 	char	*c_move_h;
@@ -107,9 +110,9 @@ typedef	struct	s_term
 	t_map			*env;
 	t_line			*line;
 	t_hist			hist;
+	t_line			clip;
 	int				flags;
 	int				fd[2];
-	int				pid;
 	int				st;
 }				t_term;
 
@@ -156,4 +159,7 @@ void			selection_left(void);
 void			selection_right(void);
 void			selection_clear(void);
 
+char			*clip_copy(void);
+char			*clip_cut(void);
+int				clip_paste(void);
 #endif

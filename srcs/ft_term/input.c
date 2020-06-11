@@ -2,9 +2,16 @@
 
 static int	handle_alt_escape(int status)
 {
+	int		ret;
 	char	c[3];
 
-	read(0, c, 3);
+	ret = read(0, c, 3);
+	if (ret == 0)
+		return (status & ~TERM_READING);
+	if (ret == -1)
+		return ((status | TERM_ERROR) & ~TERM_READING);
+	if (ret != 3)
+		return (status);
 	if (c[1] == '2') // SHIFT
 	{
 		if (c[2] == g_term.caps.k_left[2]) // LEFT
@@ -27,10 +34,12 @@ static int	handle_escape(int status)
 	if (ret == 0)
 		return (status & ~TERM_READING);
 	if (ret == -1)
-		return ((status | TERM_ERROR) & ~TERM_READING);
+		return ((status | TERM_ERROR) & ~TERM_READING);\
+	if (ret != 2)
+		return (status);
 	if (c[1] == '1')
 		return (handle_alt_escape(status));
-	else if (status & TERM_SELECT)
+	if (status & TERM_SELECT)
 	{
 		status &= ~TERM_SELECT;
 		selection_clear();
@@ -50,14 +59,36 @@ static int	handle_control(int status, char c)
 {
 	if (c == g_term.s_ios.c_cc[VINTR])
 		return (status | TERM_INT);
-	if (c == g_term.s_ios.c_cc[VERASE])
+	if (c == g_term.s_ios.c_cc[VERASE] || c == 'h' - 'a' + 1)
 		return (status | TERM_ERASE);
 	if (c == g_term.s_ios.c_cc[VEOF])
 		return (status | TERM_EOF);
 	if (c == g_term.s_ios.c_cc[VSTOP])
 		return (status | TERM_STOP);
-	if (c == '\014')
+	if (c == 'l' - 'a' + 1)
 		return (status | TERM_CLEAR);
+	if (!(status & TERM_WAITING)
+	&& (c == '\n' || c == 'j' - 'a' + 1))
+		return (status | TERM_NEWLINE);
+	if (c == g_term.s_ios.c_cc[VSUSP])
+		return (status | TERM_SUSPEND);
+	if (c == 'a' - 'a' + 1)
+		term_start_line();
+	else if (c == 'e' - 'a' + 1)
+		term_end_line();
+	else if (c == 'y' - 'a' + 1)
+		clip_paste();
+	else if (c == 'k' - 'a' + 1)
+		clip_cut();
+	else if (c == 'p' - 'a' + 1)
+		term_up();
+	else if (c == 'n' - 'a' + 1)
+		term_down();
+	if (c <= 26)
+	{
+		ft_dprintf(2, "[PROMPT] ctrl + %c (%d)\n", c + 'a' - 1, c);
+		return (status | TERM_IGNORE);
+	}
 	return (status);
 }
 
@@ -65,8 +96,6 @@ static int	handle_special(int status, char c)
 {
 	if (status & TERM_B_SLASH)
 		return (status & ~TERM_B_SLASH);
-    if (!(status & TERM_WAITING) && c == '\n')
-		status |= TERM_NEWLINE;
 	else if (!(status & TERM_S_QUOTE) && c == '"')
 		status ^= TERM_D_QUOTE;
 	else if (!(status & TERM_D_QUOTE) && c == '\'')

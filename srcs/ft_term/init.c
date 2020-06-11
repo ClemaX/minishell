@@ -9,6 +9,7 @@ static int	optional_caps()
 	err = !(g_term.caps.clear = tgetstr("cl", &area));
 	err |= !(g_term.caps.standout = tgetstr("so", &area));
 	err |= !(g_term.caps.standout_end = tgetstr("se", &area));
+	err |= !(g_term.caps.c_del_n = tgetstr("ec", &area));
 	return (!err);
 }
 
