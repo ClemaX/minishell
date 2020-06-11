@@ -113,7 +113,6 @@ typedef	struct	s_term
 	t_line			clip;
 	int				flags;
 	int				fd[2];
-	int				pid;
 	int				st;
 }				t_term;
 
