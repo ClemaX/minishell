@@ -7,8 +7,11 @@
 # include <unistd.h>
 # include <libft.h>
 # include <term.h>
+#include "fcntl.h"
+#include "sys/stat.h"
 
 # define MAX_ENTRY		1024
+# define BASH_ERROR_CODE 127
 
 # define TERM_PS1		"minish> "
 
@@ -29,6 +32,10 @@
 
 # define TERM_WAITING	(TERM_B_SLASH | TERM_S_QUOTE | TERM_D_QUOTE)
 # define TERM_CONSUME	(TERM_NEWLINE | TERM_CLEAR | TERM_INT | TERM_EOF | TERM_STOP | TERM_ERASE | TERM_SUSPEND | TERM_IGNORE)
+
+# define TAKE_FD		1
+# define GIVE_FD		2
+
 
 typedef struct	s_line
 {
@@ -82,6 +89,15 @@ typedef struct	s_hist
 	// TODO: Remove next
 }				t_hist;
 
+typedef struct  s_pipe
+{
+    int         fd[2];
+    int         w;
+    int         r;
+    int         in;
+    int         out;
+}               t_pipe;
+
 typedef	struct	s_term
 {
 	int				pid;
@@ -95,6 +111,10 @@ typedef	struct	s_term
 	t_line			*line;
 	t_hist			hist;
 	t_line			clip;
+	int				flags;
+	int				fd[2];
+	int				pid;
+	int				st;
 }				t_term;
 
 extern t_term	g_term;
