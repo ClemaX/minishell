@@ -36,7 +36,6 @@
 # define TAKE_FD		1
 # define GIVE_FD		2
 
-
 typedef struct	s_line
 {
 	char			*data;
@@ -122,6 +121,7 @@ int				term_init(const char **envp);
 int				term_destroy(void);
 int				term_prompt(int (*exec)(const char*));
 int				term_input(int status);
+int				input_special(int status, char c);
 
 void			term_interrupt(int signal);
 
@@ -142,7 +142,7 @@ int				term_cancel(void);
 void			term_clear_line(void);
 int				term_new_line(int status);
 void			term_stop(void);
-void			term_erase(void);
+int				term_erase(int status);
 
 void			hist_add(t_hist *hist, t_line *line);
 void			hist_clear(t_hist *hist);

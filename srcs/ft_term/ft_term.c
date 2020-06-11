@@ -19,7 +19,7 @@ static int	handle_status(int status)
 	if (status & TERM_STOP)
 		term_stop();
 	if (status & TERM_ERASE)
-		term_erase();
+		status = term_erase(status);
 	return ((status & (~TERM_CONSUME & ~TERM_NEWLINE)));
 }
 
@@ -36,9 +36,10 @@ int			term_prompt(int (*exec)(const char*))
 		status = term_input(status);
 		if (status & TERM_NEWLINE)
 		{
-			tputs(g_term.caps.insert_end, 0, &ft_putchar);
 			term_end_line();
 			selection_clear();
+			if (!(status & TERM_WAITING))
+			tputs(g_term.caps.insert_end, 0, &ft_putchar);
 			exec(g_term.line->data);
 			tputs(g_term.caps.insert, 0, &ft_putchar);
 		}
