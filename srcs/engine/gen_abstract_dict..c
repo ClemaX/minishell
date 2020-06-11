@@ -14,7 +14,6 @@
     // semicolon has no ch1 or ch2 if there are conditions around
 
 // step 1
-// take the int list like i did in my printf
 t_op        *gen_architecture(int **token_list, t_op *curr)
 {
     t_op    *next;
@@ -28,7 +27,7 @@ t_op        *gen_architecture(int **token_list, t_op *curr)
     next->ch2 = NULL;
     if (**token_list & OPEN_PAR && (curr->type |= PARENTHESIS))
     {
-        gen_architecture(token_list, curr->ch1 = next);
+        (void)gen_architecture(token_list, curr->ch1 = next);
         next = gen_architecture(token_list, NULL);
     }
     if (curr)
@@ -49,7 +48,7 @@ bool        gen_sub_architecture(char **token_list, t_op *curr)
         if (curr->back && (curr->back->type & PIPE || curr->back->type & RDG || curr->back->type & RG
                 || curr->back->type & RDL|| curr->back->type & RL) || curr->back->type & PARENTHESIS)
             curr->ch1 = NULL;
-        else // begin
+        else
         {
             curr->ch1 = ft_strdup(*token_list);
             *token_list = *token_list + 1? *token_list + 1 : NULL;
@@ -104,7 +103,7 @@ bool        gen_sub_architecture(char **token_list, t_op *curr)
     else
     {
         if (curr->type & PARENTHESIS)
-            gen_sub_architecture(token_list, curr->ch1);
+            (void)gen_sub_architecture(token_list, curr->ch1);
         else
             if (!curr->next && !curr->back)
             {
