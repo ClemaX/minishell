@@ -2,6 +2,7 @@
 
 int	input_special(int status, char c)
 {
+	// TODO: Check bidirectional
 	if (status & TERM_B_SLASH)
 		return (status & ~TERM_B_SLASH);
 	if (c == '\n')
