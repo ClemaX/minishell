@@ -26,13 +26,16 @@ int exec(const char *str)
 
 int	main(int ac, const char **av, const char **envp)
 {
-	int		    ret;
-	(void)	    ac;
-	(void)	    av;
+	int		ret;
+	(void)	ac;
+	(void)	av;
 
 	ret = term_init(envp);
 	if (ret == -1)
+	{
+		write(1, "Error while setting up the terminal...\n", 39);
 		return (ret);
+	}
 	ret = term_prompt(&exec);
 	return (ret);
 }

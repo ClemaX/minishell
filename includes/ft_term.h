@@ -13,6 +13,8 @@
 # define MAX_ENTRY		1024
 # define BASH_ERROR_CODE 127
 
+# define TERM_PS1		"minish> "
+
 # define TERM_READING	0b0000000000000001
 # define TERM_ERROR		0b0000000000000010
 # define TERM_B_SLASH	0b0000000000000100
@@ -24,6 +26,7 @@
 # define TERM_EOF		0b0000000100000000
 # define TERM_STOP		0b0000001000000000
 # define TERM_CLEAR		0b0000010000000000
+# define TERM_SELECT	0b0000100000000000
 
 # define TERM_WAITING	(TERM_B_SLASH | TERM_S_QUOTE | TERM_D_QUOTE)
 # define TERM_CONSUME	(TERM_NEWLINE | TERM_CLEAR | TERM_INT | TERM_EOF | TERM_STOP | TERM_ERASE)
@@ -43,6 +46,8 @@ typedef struct	s_line
 
 typedef struct	s_caps
 {
+	char	*insert;
+	char	*insert_end;
 	char	*clear;
 	char	*standout;
 	char	*standout_end;
@@ -57,7 +62,6 @@ typedef struct	s_caps
 	char	*c_up;
 	char	*c_down;
 	char	*c_left;
-	char	*c_left_n;
 	char	*c_right;
 }				t_caps;
 
@@ -66,6 +70,13 @@ typedef struct	s_position
 	unsigned	x;
 	unsigned	y;
 }				t_position;
+
+typedef struct	s_selection
+{
+	t_position	start;
+	t_position	end;
+}				t_selection;
+
 
 typedef struct	s_hist
 {
@@ -91,6 +102,7 @@ typedef	struct	s_term
 	struct termios	s_ios_bkp;
 	t_position		cursor;
 	t_position		origin;
+	t_selection		select;
 	t_caps			caps;
 	t_map			*env;
 	t_line			*line;
@@ -119,7 +131,9 @@ void			term_right(void);
 int				term_prewrite(const char *str, size_t n);
 int 			term_write(const char *str, size_t n);
 void			term_start_line(void);
+void			term_end_line(void);
 void			term_clear_screen(int status);
+void			term_write_prompt(int status);
 
 int				term_cancel(void);
 void			term_clear_line(void);
@@ -132,10 +146,14 @@ void			hist_clear(t_hist *hist);
 void			hist_pop(t_hist *hist);
 void			hist_commit(t_hist *hist, t_line *line);
 
-int				line_append(t_line *line, const char *str, size_t n);
+int				line_insert_at(t_line *line, size_t at, const char *str, size_t n);
 void			line_clear(t_line **line);
-int				line_erase(t_line *line, size_t n);
+int				line_erase_at(t_line *line, size_t at, size_t n);
 t_line			*line_dup(t_line *line);
 t_line			*line_new(size_t size);
+
+void			selection_left(void);
+void			selection_right(void);
+void			selection_clear(void);
 
 #endif
