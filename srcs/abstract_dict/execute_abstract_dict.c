@@ -6,10 +6,10 @@
 - redirection fcts
 - simple cmd to execution fct
 - semicolon in exe fct
-- all builting
 - tokenize fct
 
 DID:
+- all builting
 - store fd in parentheses
 - pipe tale fd, pipe give fd
 - global execution recursive loop
@@ -22,6 +22,7 @@ DID:
 
 NOTES:
 - AND/OR could fail in very specific cases (idk really)
+- un
 */
 
 
