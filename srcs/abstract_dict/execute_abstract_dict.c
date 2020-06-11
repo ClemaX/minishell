@@ -1,15 +1,13 @@
 #include "abstract_dict.h"
-#include "ft_term.h"
-
 
 /* TO DO:
 - redirection fcts
 - simple cmd to execution fct
 - semicolon in exe fct
-- all builting
 - tokenize fct
 
 DID:
+- all builting
 - store fd in parentheses
 - pipe tale fd, pipe give fd
 - global execution recursive loop
@@ -22,6 +20,7 @@ DID:
 
 NOTES:
 - AND/OR could fail in very specific cases (idk really)
+- un
 */
 
 
@@ -94,17 +93,17 @@ int         take_fd(t_op *ad, t_term *t)
 int         builting_not_in_slash_bin(char *name, char **argv, t_term *t)
 {
     if (!ft_strncmp(name, "echo", 5))
-        return (ft_echo()); // false is true
+        return (ft_echo("ac", argv, "envp")); // false is true
     else if (!ft_strncmp(name, "cd", 3))
-        return (ft_cd());
+        return (ft_cd("ac", argv, t));
     else if (!ft_strncmp(name, "pwd", 4))
         return (ft_pwd());
     else if (!ft_strncmp(name, "export", 7))
-        return (ft_export());
+        return (ft_export("ac", argv, t, "name"));
     else if (!ft_strncmp(name, "unset", 6))
-        return (ft_unset());
+        return (ft_unset(t, "name"));
     else if (!ft_strncmp(name, "env", 4))
-        return (ft_env());
+        return (ft_env(t->env));
     else if (!ft_strncmp(name, "exit", 5))
         return (ft_exit());
     return (true);

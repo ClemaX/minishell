@@ -1,7 +1,7 @@
 #include "ft_term.h"
 #include "abstract_dict.h"
 
-int         open_fd(char *name, short std)
+static int  open_fd(char *name, short std)
 {
     int     fd;
 

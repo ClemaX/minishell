@@ -1,4 +1,3 @@
-#include "lexer.h"
 #include "abstract_dict.h"
 
 // step 1) Create a linked list with all the operators <*list_symb_tokens[]> ("&& || | > < >> << ; ()") in order ,managing *next and *back ended by NULL
