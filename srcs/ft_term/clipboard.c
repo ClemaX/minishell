@@ -42,6 +42,7 @@ int		clip_paste(void)
 {
 	if (!g_term.clip.length)
 		return (0);
+	selection_clear();
 	ft_dprintf(2, "[CLIPBD] Paste %ld chars to %s at %d\n", g_term.clip.length, g_term.line->data, g_term.cursor.x);
 	term_write(g_term.clip.data, g_term.clip.length);
 	return (1);
