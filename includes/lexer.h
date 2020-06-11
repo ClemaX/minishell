@@ -36,7 +36,7 @@ typedef struct      s_par
     bool            cond;
 }                   t_par;
 
-typedef struct  s_token
+typedef struct  s_token // delete if char **
 {
 	char			*data;
 	t_token_t		type;

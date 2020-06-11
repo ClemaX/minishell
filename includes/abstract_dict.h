@@ -3,6 +3,7 @@
 
 #include "operators.h"
 #include "builtins.h"
+#include "lexer.h"
 
 t_op        *gen_architecture(int **token_list, t_op *curr);
 bool        gen_sub_architecture(char **token_list, t_op *curr);
