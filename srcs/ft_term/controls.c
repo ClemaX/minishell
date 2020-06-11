@@ -3,7 +3,6 @@
 int		term_cancel(void)
 {
 	selection_clear();
-	write(1, "\n", 1);
 	*g_term.line->data = '\0';
 	g_term.line->length = 0;
 	return (TERM_NEWLINE | TERM_READING);
@@ -17,6 +16,7 @@ void	term_stop(void)
 
 int		term_new_line(int status)
 {
+	term_write_prompt(status);
 	if ((!g_term.hist.next || g_term.line == g_term.hist.next)
 	&& !(g_term.hist.next = line_new(10)))
 		return ((status | TERM_ERROR) & ~TERM_READING);
@@ -27,7 +27,6 @@ int		term_new_line(int status)
 	g_term.hist.next->length = 0;
 	g_term.hist.curr = g_term.hist.next;
 	g_term.line = g_term.hist.next;
-	term_write_prompt(status);
 	g_term.cursor.x = 0;
 	g_term.cursor.y = 0;
 	return (status & ~TERM_NEWLINE);

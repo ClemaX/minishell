@@ -5,19 +5,19 @@ void		token_print(t_token *tokens)
 {
 	while (tokens)
 	{
-		ft_printf("(%d)[%s]", tokens->type, tokens->data);
+		ft_dprintf(2, "(%d)[%s]", tokens->type, tokens->data);
 		tokens = tokens->next;
 		if (tokens)
-			ft_printf(", ");
+			ft_dprintf(2, ", ");
 	}
-	ft_printf("\n");
+	ft_dprintf(2, "\n");
 }
 
 int exec(const char *str)
 {
 	t_token *tokens;
 
-	ft_printf("Input: %s", str);
+	ft_dprintf(2, "Input: %s\n", str);
 	tokens = lexer_tokenize(str);
 	token_print(tokens);
 	token_clear(&tokens);
