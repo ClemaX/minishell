@@ -1,6 +1,10 @@
 #include <ft_term.h>
 
-t_term	g_term = (t_term){.pid=0};
+t_term	g_term = (t_term){.pid=0,\
+	.select.start.x=-1U,\
+	.select.start.y=-1U,\
+	.select.end.x=-1U,\
+	.select.end.y=-1U};
 
 static int	handle_status(int status)
 {
