@@ -83,7 +83,7 @@ static int	handle_control(int status, char c)
 		term_up();
 	else if (c == 'n' - 'a' + 1)
 		term_down();
-	if (c <= 26 && c != '\n')
+	if (c != '\n')
 	{
 		ft_dprintf(2, "[PROMPT] ctrl + %c (%d)\n", c + 'a' - 1, c);
 		return (status | TERM_IGNORE);
@@ -105,6 +105,7 @@ int			term_input(int status)
 		return (handle_escape(status));
 	if (ft_iscntrl(c))
 		return (handle_control(status, c));
+	selection_clear();
 	if (!term_write(&c, 1))
 		return ((status | TERM_ERROR) & ~TERM_READING);
 	return (status);

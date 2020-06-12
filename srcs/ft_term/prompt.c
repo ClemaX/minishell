@@ -16,7 +16,6 @@ int		parse_line(int status)
 
 	status &= ~TERM_WAITING;
 	i = 0;
-	ft_dprintf(2, "before: %d\n", status);
 	while (i < g_term.line->length)
 	{
 		if (status & TERM_B_SLASH)
@@ -27,7 +26,6 @@ int		parse_line(int status)
 			status ^= TERM_S_QUOTE;
 		else if (!(status & TERM_B_SLASH) && g_term.line->data[i] == '\\')
 			status |= TERM_B_SLASH;
-		ft_dprintf(2, "after %c: %d\n", g_term.line->data[i], status);
 		i++;
 	}
 	return (status);
