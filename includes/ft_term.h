@@ -164,4 +164,6 @@ void			selection_clear(void);
 char			*clip_copy(void);
 char			*clip_cut(void);
 int				clip_paste(void);
+void			clip_clear(t_line *clip);
+
 #endif

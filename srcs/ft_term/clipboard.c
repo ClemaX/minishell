@@ -47,3 +47,9 @@ int		clip_paste(void)
 	term_write(g_term.clip.data, g_term.clip.length);
 	return (1);
 }
+
+void	clip_clear(t_line *clip)
+{
+	free(clip->data);
+	clip->data = NULL;
+}
