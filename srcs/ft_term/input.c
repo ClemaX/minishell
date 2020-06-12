@@ -34,7 +34,7 @@ static int	handle_escape(int status)
 	if (ret == 0)
 		return (status & ~TERM_READING);
 	if (ret == -1)
-		return ((status | TERM_ERROR) & ~TERM_READING);\
+		return ((status | TERM_ERROR) & ~TERM_READING);
 	if (ret != 2)
 		return (status);
 	if (c[1] == '1')
@@ -67,9 +67,6 @@ static int	handle_control(int status, char c)
 		return (status | TERM_STOP);
 	if (c == 'l' - 'a' + 1)
 		return (status | TERM_CLEAR);
-	if (!(status & TERM_WAITING)
-	&& (c == '\n' || c == 'j' - 'a' + 1))
-		return (status | TERM_NEWLINE);
 	if (c == g_term.s_ios.c_cc[VSUSP])
 		return (status | TERM_SUSPEND);
 	if (c == 'a' - 'a' + 1)
@@ -84,24 +81,11 @@ static int	handle_control(int status, char c)
 		term_up();
 	else if (c == 'n' - 'a' + 1)
 		term_down();
-	if (c <= 26)
+	if (c <= 26 && c != '\n')
 	{
 		ft_dprintf(2, "[PROMPT] ctrl + %c (%d)\n", c + 'a' - 1, c);
 		return (status | TERM_IGNORE);
 	}
-	return (status);
-}
-
-static int	handle_special(int status, char c)
-{
-	if (status & TERM_B_SLASH)
-		return (status & ~TERM_B_SLASH);
-	else if (!(status & TERM_S_QUOTE) && c == '"')
-		status ^= TERM_D_QUOTE;
-	else if (!(status & TERM_D_QUOTE) && c == '\'')
-		status ^= TERM_S_QUOTE;
-	else if (!(status & TERM_B_SLASH) && c == '\\')
-		status |= TERM_B_SLASH;
 	return (status);
 }
 
@@ -120,8 +104,11 @@ int			term_input(int status)
 	status = handle_control(status, c);
 	if ((status & (TERM_READING | TERM_CONSUME)) == TERM_READING)
 	{
-		status = handle_special(status, c);
+		status = input_special(status, c);
 		if (!(status & TERM_CONSUME) && !term_write(&c, 1))
+			return ((status | TERM_ERROR) & ~TERM_READING);
+		if (status & TERM_WAITING && status & TERM_NEWLINE
+		&& !line_insert_at(g_term.line, g_term.line->length, &c, 1))
 			return ((status | TERM_ERROR) & ~TERM_READING);
 	}
 	return (status);

@@ -6,6 +6,6 @@ void		term_interrupt(int signal)
 	{
 		if (g_term.pid)
 			kill(g_term.pid, SIGINT);
-		write(1, "\n", 1);
+		term_prewrite("\n", 1);
 	}
 }
