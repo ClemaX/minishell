@@ -33,21 +33,3 @@ void	term_down(void)
 		g_term.cursor.x = g_term.hist.curr->length;
 	}
 }
-
-void	term_left(void)
-{
-	if (g_term.cursor.x > 0)
-	{
-		g_term.cursor.x--;
-		tputs(g_term.caps.c_left, 0, &ft_putchar);
-	}
-}
-
-void	term_right(void)
-{
-	if (g_term.cursor.x < g_term.line->length)
-	{
-		g_term.cursor.x++;
-		tputs(g_term.caps.c_right, 0, &ft_putchar);
-	}
-}

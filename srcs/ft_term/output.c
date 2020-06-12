@@ -18,21 +18,6 @@ int		term_write(const char *str, size_t n)
 	return (1);
 }
 
-void	term_start_line(void)
-{
-	tputs(tgoto(g_term.caps.c_move_h, 0, g_term.origin.x), 0, &ft_putchar);
-	g_term.cursor.x = 0;
-}
-
-void	term_end_line(void)
-{
-	if (g_term.line && g_term.line->length)
-	{
-		g_term.cursor.x = g_term.line->length;
-		tputs(tgoto(g_term.caps.c_move_h, 0, g_term.origin.x + g_term.cursor.x), 0, &ft_putchar);
-	}
-}
-
 void	term_clear_line(void)
 {
 	term_start_line();

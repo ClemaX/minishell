@@ -65,10 +65,12 @@ static int	handle_control(int status, char c)
 		return (status | TERM_EOF);
 	if (c == g_term.s_ios.c_cc[VSTOP])
 		return (status | TERM_STOP);
-	if (c == 'l' - 'a' + 1)
-		return (status | TERM_CLEAR);
 	if (c == g_term.s_ios.c_cc[VSUSP])
 		return (status | TERM_SUSPEND);
+	if (c == 'l' - 'a' + 1)
+		return (status | TERM_CLEAR);
+	if (c == '\n')
+		return (status | TERM_NEWLINE);
 	if (c == 'a' - 'a' + 1)
 		term_start_line();
 	else if (c == 'e' - 'a' + 1)
@@ -101,15 +103,9 @@ int			term_input(int status)
 		return ((status | TERM_ERROR) & ~TERM_READING);
 	if (c == '\033')
 		return (handle_escape(status));
-	status = handle_control(status, c);
-	if ((status & (TERM_READING | TERM_CONSUME)) == TERM_READING)
-	{
-		status = input_special(status, c);
-		if (!(status & TERM_CONSUME) && !term_write(&c, 1))
-			return ((status | TERM_ERROR) & ~TERM_READING);
-		if (status & TERM_WAITING && status & TERM_NEWLINE
-		&& !line_insert_at(g_term.line, g_term.line->length, &c, 1))
-			return ((status | TERM_ERROR) & ~TERM_READING);
-	}
+	if (ft_iscntrl(c))
+		return (handle_control(status, c));
+	if (!term_write(&c, 1))
+		return ((status | TERM_ERROR) & ~TERM_READING);
 	return (status);
 }

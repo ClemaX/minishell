@@ -27,24 +27,13 @@ int			term_prompt(int (*exec)(const char*))
 {
 	int	status;
 
+	g_term.exec = exec;
 	status = TERM_READING;
 	if (!term_new_line(status))
 		return (-1);
 	tputs(g_term.caps.insert, 0, &ft_putchar);
 	while (status & TERM_READING)
-	{
-		status = term_input(status);
-		if (status & TERM_NEWLINE)
-		{
-			term_end_line();
-			selection_clear();
-			if (!(status & TERM_WAITING))
-			tputs(g_term.caps.insert_end, 0, &ft_putchar);
-			exec(g_term.line->data);
-			tputs(g_term.caps.insert, 0, &ft_putchar);
-		}
-		status = handle_status(status);
-	}
+		status = handle_status(term_input(status));
 	if (term_destroy() == -1)
 		status |= TERM_ERROR;
 	tputs(g_term.caps.insert_end, 0, &ft_putchar);
