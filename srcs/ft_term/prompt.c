@@ -2,6 +2,8 @@
 
 void	term_write_prompt(int status)
 {
+	if (status & TERM_NEWLINE)
+		term_prewrite("\n", 1);
 	if (status & TERM_WAITING)
 		term_prewrite("> ", 2);
 	else
@@ -35,11 +37,8 @@ int		term_new_line(int status)
 {
 	term_end_line();
 	selection_clear();
-	if (g_term.line)
-	{
-		status = parse_line(status);
+	if (g_term.line && (status = parse_line(status)) & TERM_WAITING)
 		term_write("\n", 1);
-	}
 	term_write_prompt(status);
 	if (!(status & TERM_WAITING))
 	{
