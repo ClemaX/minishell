@@ -12,6 +12,8 @@
 #define RL              64
 #define PARENTHESIS     128
 #define CLOSE_PAR       256
+#define NONE            512
+#define SEMICOLON       1024
 
 typedef struct          s_operator
 {

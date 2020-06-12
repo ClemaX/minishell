@@ -2,8 +2,6 @@
 
 /* TO DO:
 - redirection fcts
-- simple cmd to execution fct
-- semicolon in exe fct
 - tokenize fct
 
 DID:
@@ -14,13 +12,15 @@ DID:
 - redirection take fd, give fd
 - exe and
 - exe or
+- simple cmd to execution fct
+- semicolon in exe fct
 - redirections exe
 - simple cmd exe
 - basic pipe
 
 NOTES:
 - AND/OR could fail in very specific cases (idk really)
-- un
+- delete printf at the end is for debug
 */
 
 int         execute_abstract_dict(t_op *ad, t_term *t)
@@ -54,13 +54,19 @@ int         execute_abstract_dict(t_op *ad, t_term *t)
             t->flags |= GIVE_FD;
         (void)execute_pipe(ad, t);
     }
+    else if (ad->type & SEMICOLON)
+    {
+        if (ad->ch1)
+            execute_cmd(ad->ch1, t);
+        if (ad->ch2)
+            execute_cmd(ad->ch2, t);
+    }
+    else if (ad->type & NONE)
+        execute_cmd(ad->ch1, t);
     else
     {
-        if (ad->ch1 == NULL)
-            ; // something before semicolon or not operator
-        if (ad->ch2 == NULL)
-            ; // something after semicolon or not operator
-        // if the are no null there are no operator (or only semicolon(s))
-    } 
+        ft_printf("Something is wrong here");
+    }
+    
     return(execute_abstract_dict(ad->next, t));
 }
