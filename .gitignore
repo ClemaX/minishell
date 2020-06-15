@@ -1,5 +1,5 @@
 .vscode/
 objs/
 minishell
-debug
+minishell-debug
 err.log

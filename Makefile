@@ -36,6 +36,7 @@ TESTS	= $(addprefix $(TESTSD), main.c error.c test_utils.c value_utils.c		\
 
 ifeq ($(DIST), debug)
 	CFLAGS += -g -DDIST_DEBUG
+	NAME := $(NAME)-debug
 endif
 
 all:			libft $(NAME)
