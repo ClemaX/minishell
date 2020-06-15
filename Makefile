@@ -1,20 +1,31 @@
 NAME	= minishell
 LIBFT	= libft
+DIST	= release
+
 CC		= /usr/bin/gcc
+DBG		= valgrind
+
 SRCDIR	= srcs
-OBJDIR	= objs
+OBJDIR	= objs/$(DIST)
 INCDIR	= includes
+
 CFLAGS	= -Wall -Wextra -Werror
 IFLAGS	= -I$(INCDIR) -I$(LIBFT)/includes
 LFLAGS	= -L$(LIBFT) -lft -lcurses -ltermcap
+
+LOG		= err.log
+
 MAIN	= $(SRCDIR)/main.c
+
 SRCS	= $(addprefix $(SRCDIR)/, 												\
 			$(addprefix ft_term/, ft_term.c init.c signals.c line.c line_edit.c	\
 				history.c input.c output.c prompt.c controls.c					\
 				cursor_line.c cursor_hist.c selection.c clipboard.c)			\
 			$(addprefix lexer/, lexer.c token.c token_types.c))
+
 OBJS	= $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS) $(MAIN))
 OBJDS	= $(addprefix $(OBJDIR)/, ft_term lexer)
+
 HDRS	= $(addprefix $(INCDIR)/, ft_term.h lexer.h)
 
 TESTSD	= tests/srcs/
@@ -23,7 +34,18 @@ TESTS	= $(addprefix $(TESTSD), main.c error.c test_utils.c value_utils.c		\
 			map_test.c path_test.c prompt_test.c lexer_test.c line_tests.c		\
 			tab_utils.c)
 
+ifeq ($(DIST), debug)
+	CFLAGS += -g -DDIST_DEBUG
+endif
+
 all:			libft $(NAME)
+
+debug:			all
+	@echo DBG $(NAME)
+	@$(DBG) ./$(NAME) 2>$(LOG)
+
+log:
+	tail -f $(LOG) 2>&1 | perl -ne 'if (/file truncated/) {system 'clear'; print} else {print}'
 
 libft:
 	make -C $(LIBFT) libft.a CC=$(CC)
