@@ -1,6 +1,6 @@
 NAME	= minishell
 LIBFT	= libft
-DIST	= release
+DIST	= debug
 
 CC		= /usr/bin/gcc
 DBG		= valgrind
