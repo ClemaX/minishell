@@ -96,8 +96,13 @@ bool        gen_sub_architecture(char **token_list, t_op *curr)
             curr->ch1 = ft_strdup(*token_list);
             *token_list = *token_list + 1 ? *token_list + 1 : NULL;
         }
-        curr->ch2 = ft_strdup(*token_list);
-        *token_list = *token_list + 1 ? *token_list + 1 : NULL;
+        if (curr->next && curr->next->type & RDL)
+            curr->ch2 = NULL;
+        else
+        {
+            curr->ch2 = ft_strdup(*token_list);
+            *token_list = *token_list + 1 ? *token_list + 1 : NULL;
+        }
     }
     else
     {

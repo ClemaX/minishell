@@ -33,8 +33,8 @@ int         execute_redirections(t_op *ad, t_term *t)
         }
         (void)close(fd);
     }
-    else
-        (void)redirect_to_fd(ad, t);
+    else if (!(t->flags & GIVE_FD))
+        (void)redirect_to_fd(ad, t); // have to check if i am in << and do stuff
     return (true);
 }
 

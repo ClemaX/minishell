@@ -21,6 +21,7 @@ DID:
 NOTES:
 - AND/OR could fail in very specific cases (idk really)
 - delete printf at the end is for debug
+- have to put to 0 the flags
 */
 
 int         execute_abstract_dict(t_op *ad, t_term *t)
@@ -44,6 +45,8 @@ int         execute_abstract_dict(t_op *ad, t_term *t)
     {
         if (ad->ch1 == NULL)
             t->flags |= TAKE_FD;
+        if (ad->ch2 == NULL)
+            t->flags |= GIVE_FD;
         (void)execute_redirection(ad, t);
     }
     else if (ad->type & PIPE)
@@ -67,6 +70,5 @@ int         execute_abstract_dict(t_op *ad, t_term *t)
     {
         ft_printf("Something is wrong here");
     }
-    
     return(execute_abstract_dict(ad->next, t));
 }
