@@ -30,12 +30,6 @@ int	main(int ac, const char **av, const char **envp)
 	(void)	ac;
 	(void)	av;
 
-	ret = term_init(envp);
-	if (ret == -1)
-	{
-		write(1, "Error while setting up the terminal...\n", 39);
-		return (ret);
-	}
-	ret = term_prompt(&exec);
+	ret = term_prompt(envp, &exec);
 	return (ret);
 }

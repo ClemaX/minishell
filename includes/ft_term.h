@@ -73,6 +73,13 @@ typedef struct	s_position
 	unsigned	y;
 }				t_position;
 
+typedef struct	s_cursor
+{
+	t_position	pos;
+	t_position	origin;
+}				t_cursor;
+
+
 typedef struct	s_selection
 {
 	t_position	start;
@@ -90,20 +97,19 @@ typedef struct	s_hist
 
 typedef struct  s_pipe
 {
-    int         fd[2];
-    int         w;
-    int         r;
-    int         in;
-    int         out;
-}               t_pipe;
+	int			fd[2];
+	int			w;
+	int			r;
+	int			in;
+	int			out;
+}				t_pipe;
 
 typedef	struct	s_term
 {
 	int				pid;
 	struct termios	s_ios;
 	struct termios	s_ios_bkp;
-	t_position		cursor;
-	t_position		origin;
+	t_cursor		cursor;
 	t_selection		select;
 	t_caps			caps;
 	t_map			*env;
@@ -116,34 +122,31 @@ typedef	struct	s_term
 	int				st;
 }				t_term;
 
-extern t_term	g_term;
-
-int				term_init(const char **envp);
-int				term_destroy(void);
-int				term_prompt(int (*exec)(const char*));
-int				term_input(int status);
+int				term_init(t_term *t, const char **envp, int (*exec)(const char*));
+int				term_destroy(t_term *t);
+int				term_prompt(const char **envp, int (*exec)(const char*));
+int				term_input(t_term *t, int status);
 int				input_special(int status, char c);
 
-void			term_interrupt(int signal);
+void			term_up(t_term *t);
+void			term_down(t_term *t);
 
-void			term_up(void);
-void			term_down(void);
+void			term_left(t_term *t);
+void			term_right(t_term *t);
+void			term_start_line(t_term *t);
+void			term_end_line(t_term *t);
 
-void			term_left(void);
-void			term_right(void);
+int				term_prewrite(t_term *t, const char *str, size_t n);
+int 			term_write(t_term *t, const char *str, size_t n);
+void			term_clear_line(t_term *t);
+void			term_clear_screen(t_term *t, int status);
 
-int				term_prewrite(const char *str, size_t n);
-int 			term_write(const char *str, size_t n);
-void			term_start_line(void);
-void			term_end_line(void);
-void			term_clear_screen(int status);
-void			term_write_prompt(int status);
+void			term_write_prompt(t_term *t, int status);
 
-int				term_cancel(void);
-void			term_clear_line(void);
-int				term_new_line(int status);
-void			term_stop(void);
-int				term_erase(int status);
+int				term_cancel(t_term *t);
+int				term_new_line(t_term *t, int status);
+void			term_stop(t_term *t);
+int				term_erase(t_term *t, int status);
 
 void			hist_add(t_hist *hist, t_line *line);
 void			hist_clear(t_hist *hist);
@@ -157,13 +160,13 @@ int				line_insert_at(t_line *line, size_t at, const char *str, size_t n);
 int				line_erase_at(t_line *line, size_t at, size_t n);
 void			line_clear(t_line **line);
 
-void			selection_left(void);
-void			selection_right(void);
-void			selection_clear(void);
+void			selection_left(t_term *t);
+void			selection_right(t_term *t);
+void			selection_clear(t_term *t);
 
-char			*clip_copy(void);
-char			*clip_cut(void);
-int				clip_paste(void);
+char			*clip_copy(t_term *t);
+char			*clip_cut(t_term *t);
+int				clip_paste(t_term *t);
 void			clip_clear(t_line *clip);
 
 #endif

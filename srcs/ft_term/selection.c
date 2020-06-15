@@ -1,75 +1,76 @@
 #include <ft_term.h>
 
-void	highlight(t_selection *select)
+void	highlight(t_term *t)
 {
-	if (select->start.x != -1U && select->end.x != -1U)
+	if (t->select.start.x != -1U && t->select.end.x != -1U)
 	{
-		ft_dprintf(2, "[SELECT] start: %d, end: %d\n", select->start.x, select->end.x);
-		tputs(tgoto(g_term.caps.c_move_h, 0, g_term.origin.x), 0, &ft_putchar);
-		tputs(g_term.caps.c_del_line, 0, &ft_putchar);
-		write(1, g_term.line->data, select->start.x);
-		tputs(g_term.caps.standout, 0, &ft_putchar);
-		write(1, g_term.line->data + select->start.x, select->end.x - select->start.x);
-		tputs(g_term.caps.standout_end, 0, &ft_putchar);
-		write(1, g_term.line->data + select->end.x, g_term.line->length - select->end.x);
-		tputs(tgoto(g_term.caps.c_move_h, 0, g_term.origin.x + g_term.cursor.x), 0, &ft_putchar);
+		ft_dprintf(2, "[SELECT] start: %d, end: %d\n", t->select.start.x, t->select.end.x);
+		tputs(tgoto(t->caps.c_move_h, 0, t->cursor.origin.x), 0, &ft_putchar);
+		tputs(t->caps.c_del_line, 0, &ft_putchar);
+		write(1, t->line->data, t->select.start.x);
+		tputs(t->caps.standout, 0, &ft_putchar);
+		write(1, t->line->data + t->select.start.x, t->select.end.x - t->select.start.x);
+		tputs(t->caps.standout_end, 0, &ft_putchar);
+		write(1, t->line->data + t->select.end.x, t->line->length - t->select.end.x);
+		tputs(tgoto(t->caps.c_move_h, 0, t->cursor.origin.x + t->cursor.pos.x), 0, &ft_putchar);
 	}
 }
 
-void	selection_left(void)
+void	selection_left(t_term *t)
 {
-	if (g_term.cursor.x > 0)
+	if (t->cursor.pos.x > 0)
 	{
-		if (g_term.select.start.x == -1U || g_term.select.end.x == -1U)
+		if (t->select.start.x == -1U || t->select.end.x == -1U)
 		{
-			g_term.select.start.x = g_term.cursor.x;
-			g_term.select.end.x = g_term.cursor.x;
+			t->select.start.x = t->cursor.pos.x;
+			t->select.end.x = t->cursor.pos.x;
 		}
 		else
 		{
-			term_left();
-			if (g_term.select.start.x == g_term.cursor.x + 1)
-				g_term.select.start.x = g_term.cursor.x;
+			term_left(t);
+			if (t->select.start.x == t->cursor.pos.x + 1)
+				t->select.start.x = t->cursor.pos.x;
 			else
-				g_term.select.end.x = g_term.cursor.x;
-			highlight(&g_term.select);
+				t->select.end.x = t->cursor.pos.x;
+			highlight(t);
 		}
 	}
 }
 
-void	selection_right(void)
+void	selection_right(t_term *t)
 {
-	if (g_term.cursor.x < g_term.line->length)
+	if (t->cursor.pos.x < t->line->length)
 	{
-		if (g_term.select.start.x == -1U || g_term.select.end.x == -1U)
+		if (t->select.start.x == -1U || t->select.end.x == -1U)
 		{
-			g_term.select.start.x = g_term.cursor.x;
-			g_term.select.end.x = g_term.cursor.x;
+			t->select.start.x = t->cursor.pos.x;
+			t->select.end.x = t->cursor.pos.x;
 		}
 		else
 		{
-			term_right();
-			if (g_term.select.end.x == g_term.cursor.x - 1)
-				g_term.select.end.x = g_term.cursor.x;
+			term_right(t);
+			if (t->select.end.x == t->cursor.pos.x - 1)
+				t->select.end.x = t->cursor.pos.x;
 			else
-				g_term.select.start.x = g_term.cursor.x;
-			highlight(&g_term.select);
+				t->select.start.x = t->cursor.pos.x;
+			highlight(t);
 		}
 	}
 }
 
-void	selection_clear(void)
+void	selection_clear(t_term *t)
 {
-	if (g_term.select.start.x != -1U || g_term.select.end.x != -1U)
+	if (t->select.start.x != -1U || t->select.end.x != -1U)
 	{
 		ft_dprintf(2, "[SELECT] clear\n");
-		g_term.select = (t_selection){.start.x=-1U, .end.x=-1U};
-		if (g_term.line)
+		t->select.start.x = -1U;
+		t->select.end.x = -1U;
+		if (t->line)
 		{
-			tputs(tgoto(g_term.caps.c_move_h, 0, g_term.origin.x), 0, &ft_putchar);
-			tputs(g_term.caps.c_del_line, 0, &ft_putchar);
-			write(1, g_term.line->data,  g_term.line->length);
-			tputs(tgoto(g_term.caps.c_move_h, 0, g_term.origin.x + g_term.cursor.x), 0, &ft_putchar);
+			tputs(tgoto(t->caps.c_move_h, 0, t->cursor.origin.x), 0, &ft_putchar);
+			tputs(t->caps.c_del_line, 0, &ft_putchar);
+			write(1, t->line->data,  t->line->length);
+			tputs(tgoto(t->caps.c_move_h, 0, t->cursor.origin.x + t->cursor.pos.x), 0, &ft_putchar);
 		}
 	}
 }

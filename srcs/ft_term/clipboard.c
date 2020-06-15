@@ -1,50 +1,47 @@
 #include <ft_term.h>
 
-char	*clip_copy(void)
+char	*clip_copy(t_term *t)
 {
-	if (g_term.select.start.x != -1U && g_term.select.end.x != -1U)
+	if (t->select.start.x != -1U && t->select.end.x != -1U)
 	{
-		free(g_term.clip.data);
-		if (!(g_term.clip.data = ft_substr(g_term.line->data,
-		g_term.select.start.x, g_term.select.end.x)))
+		free(t->clip.data);
+		t->clip.length = t->select.end.x - t->select.start.x;
+		if (!(t->clip.data = ft_substr(t->line->data,
+		t->select.start.x, t->clip.length)))
 			return (NULL);
-		g_term.clip.length = g_term.select.end.x - g_term.select.start.x;
-		g_term.clip.size = g_term.clip.length + 1;
-		g_term.clip.next = NULL;
-		g_term.clip.prev = NULL;
+		t->cursor.pos.x = t->select.start.x;
+		t->clip.size = t->clip.length + 1;
+		t->clip.next = NULL;
+		t->clip.prev = NULL;
 	}
-	return (g_term.clip.data);
+	return (t->clip.data);
 }
 
-char	*clip_cut(void)
+char	*clip_cut(t_term *t)
 {
-	if (g_term.select.start.x != -1U && g_term.select.end.x != -1U)
+	if (t->select.start.x != -1U && t->select.end.x != -1U)
 	{
-		free(g_term.clip.data);
-		g_term.clip.length = g_term.select.end.x - g_term.select.start.x;
-		if (!(g_term.clip.data = ft_substr(g_term.line->data,
-		g_term.select.start.x, g_term.clip.length)))
+		if (!clip_copy(t))
 			return (NULL);
-		g_term.cursor.x = g_term.select.start.x;
-		tputs(tgoto(g_term.caps.c_move_h, 0, g_term.origin.x + g_term.cursor.x), 0, &ft_putchar);
-		tputs(g_term.caps.c_del_n, g_term.clip.length, &ft_putchar);
-		ft_dprintf(2, "[CLIPBD] Cut %ld chars from %s at %d\n", g_term.clip.length, g_term.line->data, g_term.cursor.x);
-		line_erase_at(g_term.line, g_term.cursor.x, g_term.clip.length); // TODO: Undo special characters
-		g_term.clip.size = g_term.clip.length + 1;
-		g_term.clip.next = NULL;
-		g_term.clip.prev = NULL;
-		selection_clear();
+		tputs(tgoto(t->caps.c_move_h, 0, t->cursor.origin.x + t->cursor.pos.x),
+			0, &ft_putchar);
+		tputs(t->caps.c_del_n, t->clip.length, &ft_putchar);
+		ft_dprintf(2, "[CLIPBD] Cut %ld chars from %s at %d\n", t->clip.length,
+			t->line->data, t->cursor.pos.x);
+		line_erase_at(t->line, t->cursor.pos.x, t->clip.length);
+		selection_clear(t);
 	}
-	return (g_term.clip.data);
+	return (t->clip.data);
 }
 
-int		clip_paste(void)
+int		clip_paste(t_term *t)
 {
-	if (!g_term.clip.length)
+	if (!t->clip.length)
 		return (0);
-	selection_clear();
-	ft_dprintf(2, "[CLIPBD] Paste %ld chars to %s at %d\n", g_term.clip.length, g_term.line->data, g_term.cursor.x);
-	term_write(g_term.clip.data, g_term.clip.length);
+	selection_clear(t);
+	ft_dprintf(2, "[CLIPBD] Paste %ld chars to %s at %d\n", t->clip.length,
+		t->line->data, t->cursor.pos.x);
+	term_write(t, t->clip.data, t->clip.length);
 	return (1);
 }
 

@@ -1,6 +1,6 @@
 #include <ft_term.h>
 
-static int	handle_alt_escape(int status)
+static int	handle_alt_escape(t_term *t, int status)
 {
 	int		ret;
 	char	c[3];
@@ -14,10 +14,10 @@ static int	handle_alt_escape(int status)
 		return (status);
 	if (c[1] == '2') // SHIFT
 	{
-		if (c[2] == g_term.caps.k_left[2]) // LEFT
-			selection_left();
-		else if (c[2] == g_term.caps.k_right[2]) // RIGHT
-			selection_right();
+		if (c[2] == t->caps.k_left[2]) // LEFT
+			selection_left(t);
+		else if (c[2] == t->caps.k_right[2]) // RIGHT
+			selection_right(t);
 		return(status | TERM_SELECT);
 	}
 	else if (c[1] == '5') // CONTROL
@@ -25,7 +25,7 @@ static int	handle_alt_escape(int status)
 	return (status);
 }
 
-static int	handle_escape(int status)
+static int	handle_escape(t_term *t, int status)
 {
 	int		ret;
 	char	c[2];
@@ -38,51 +38,51 @@ static int	handle_escape(int status)
 	if (ret != 2)
 		return (status);
 	if (c[1] == '1')
-		return (handle_alt_escape(status));
+		return (handle_alt_escape(t, status));
 	if (status & TERM_SELECT)
 	{
 		status &= ~TERM_SELECT;
-		selection_clear();
+		selection_clear(t);
 	}
-	if (c[1] == g_term.caps.k_up[2])
-		term_up();
-	else if (c[1] == g_term.caps.k_down[2])
-		term_down();
-	else if (c[1] == g_term.caps.k_left[2])
-		term_left();
-	else if (c[1] == g_term.caps.k_right[2])
-		term_right();
+	if (c[1] == t->caps.k_up[2])
+		term_up(t);
+	else if (c[1] == t->caps.k_down[2])
+		term_down(t);
+	else if (c[1] == t->caps.k_left[2])
+		term_left(t);
+	else if (c[1] == t->caps.k_right[2])
+		term_right(t);
 	return (status);
 }
 
-static int	handle_control(int status, char c)
+static int	handle_control(t_term *t, int status, char c)
 {
-	if (c == g_term.s_ios.c_cc[VINTR])
+	if (c == t->s_ios.c_cc[VINTR])
 		return (status | TERM_INT);
-	if (c == g_term.s_ios.c_cc[VERASE] || c == 'h' - 'a' + 1)
+	if (c == t->s_ios.c_cc[VERASE] || c == 'h' - 'a' + 1)
 		return (status | TERM_ERASE);
-	if (c == g_term.s_ios.c_cc[VEOF])
+	if (c == t->s_ios.c_cc[VEOF])
 		return (status | TERM_EOF);
-	if (c == g_term.s_ios.c_cc[VSTOP])
+	if (c == t->s_ios.c_cc[VSTOP])
 		return (status | TERM_STOP);
-	if (c == g_term.s_ios.c_cc[VSUSP])
+	if (c == t->s_ios.c_cc[VSUSP])
 		return (status | TERM_SUSPEND);
 	if (c == 'l' - 'a' + 1)
 		return (status | TERM_CLEAR);
 	if (c == '\n')
 		return (status | TERM_NEWLINE);
 	if (c == 'a' - 'a' + 1)
-		term_start_line();
+		term_start_line(t);
 	else if (c == 'e' - 'a' + 1)
-		term_end_line();
+		term_end_line(t);
 	else if (c == 'y' - 'a' + 1)
-		clip_paste();
+		clip_paste(t);
 	else if (c == 'k' - 'a' + 1)
-		clip_cut();
+		clip_cut(t);
 	else if (c == 'p' - 'a' + 1)
-		term_up();
+		term_up(t);
 	else if (c == 'n' - 'a' + 1)
-		term_down();
+		term_down(t);
 	if (c != '\n')
 	{
 		ft_dprintf(2, "[PROMPT] ctrl + %c (%d)\n", c + 'a' - 1, c);
@@ -91,7 +91,7 @@ static int	handle_control(int status, char c)
 	return (status);
 }
 
-int			term_input(int status)
+int			term_input(t_term *t, int status)
 {
 	int		ret;
 	char	c;
@@ -102,11 +102,11 @@ int			term_input(int status)
 	if (ret == -1)
 		return ((status | TERM_ERROR) & ~TERM_READING);
 	if (c == '\033')
-		return (handle_escape(status));
+		return (handle_escape(t, status));
 	if (ft_iscntrl(c))
-		return (handle_control(status, c));
-	selection_clear();
-	if (!term_write(&c, 1))
+		return (handle_control(t, status, c));
+	selection_clear(t);
+	if (!term_write(t, &c, 1))
 		return ((status | TERM_ERROR) & ~TERM_READING);
 	return (status);
 }

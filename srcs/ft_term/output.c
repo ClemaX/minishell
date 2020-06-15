@@ -1,36 +1,36 @@
 #include <ft_term.h>
 
-int		term_prewrite(const char *str, size_t n)
+int		term_prewrite(t_term *t, const char *str, size_t n)
 {
 	if (write(1, str, n) < 0)
 		return (0);
-	g_term.origin.x = n;
-	g_term.origin.y = 0;
+	t->cursor.origin.x = n;
+	t->cursor.origin.y = 0;
 	return (1);
 }
 
-int		term_write(const char *str, size_t n)
+int		term_write(t_term *t, const char *str, size_t n)
 {
 	if (write(1, str, n) <= 0
-	|| !(line_insert_at(g_term.line, g_term.cursor.x, str, n)))
+	|| !(line_insert_at(t->line,t->cursor.pos.x, str, n)))
 		return (0);
-	g_term.cursor.x += n;
+	t->cursor.pos.x += n;
 	return (1);
 }
 
-void	term_clear_line(void)
+void	term_clear_line(t_term *t)
 {
-	term_start_line();
-	tputs(g_term.caps.c_del_line, 0, &ft_putchar);
+	term_start_line(t);
+	tputs(t->caps.c_del_line, 0, &ft_putchar);
 }
 
-void	term_clear_screen(int status)
+void	term_clear_screen(t_term *t, int status)
 {
-	if (g_term.caps.clear)
+	if (t->caps.clear)
 	{
-		tputs(g_term.caps.clear, 0, &ft_putchar);
-		term_write_prompt(status);
-		write(1, g_term.line->data, g_term.line->length);
-		g_term.cursor.x = g_term.line->length;
+		tputs(t->caps.clear, 0, &ft_putchar);
+		term_write_prompt(t, status);
+		write(1, t->line->data, t->line->length);
+		t->cursor.pos.x = t->line->length;
 	}
 }

@@ -22,54 +22,6 @@ static int	lex_type(int status, char c)
 	return (status);
 }
 
-t_token		*token_new(char *data, t_token_t type)
-{
-	t_token	*new;
-
-	if (!data || !(new = malloc(sizeof(*new))))
-	{
-		// TODO: Free data on error
-		return (NULL);
-	}
-	new->data = data;
-	new->type = type;
-	new->next = NULL;
-	return (new);
-}
-
-t_token		*token_add(t_token **tokens, t_token *new)
-{
-	t_token	*curr;
-
-	if (!new)
-		return (NULL);
-	new->next = NULL;
-	if (*tokens)
-	{
-		curr = *tokens;
-		while (curr->next)
-			curr = curr->next;
-		curr->next = new;
-	}
-	else
-		*tokens = new;
-	return (new);
-}
-
-t_token		*token_clear(t_token **tokens)
-{
-	t_token	*next;
-
-	while (*tokens)
-	{
-		next = (*tokens)->next;
-		free((*tokens)->data);
-		free(*tokens);
-		*tokens = next;
-	}
-	return (*tokens);
-}
-
 t_token		*lexer_tokenize(const char *input)
 {
 	t_token_t	status;
@@ -86,7 +38,8 @@ t_token		*lexer_tokenize(const char *input)
 		while (*input && (status = lex_type(status, *input)) & LEX_TOKEN)
 			input++;
 		if (input != start
-		&& !token_add(&tokens, token_new(ft_substr(start, 0, input - start), TOK_TOKEN)))
+		&& !token_add(&tokens, token_new(
+			ft_substr(start, 0, input - start), TOK_TOKEN)))
 			return (token_clear(&tokens));
 		if (status & LEX_OP)
 		{

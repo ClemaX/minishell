@@ -12,7 +12,7 @@ SRCS	= $(addprefix $(SRCDIR)/, 												\
 			$(addprefix ft_term/, ft_term.c init.c signals.c line.c line_edit.c	\
 				history.c input.c output.c prompt.c controls.c					\
 				cursor_line.c cursor_hist.c selection.c clipboard.c)			\
-			$(addprefix lexer/, lexer.c token_types.c))
+			$(addprefix lexer/, lexer.c token.c token_types.c))
 OBJS	= $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS) $(MAIN))
 OBJDS	= $(addprefix $(OBJDIR)/, ft_term lexer)
 HDRS	= $(addprefix $(INCDIR)/, ft_term.h lexer.h)
