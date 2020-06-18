@@ -36,18 +36,11 @@ static int	fatal_caps(t_caps *caps)
 	return (!err);
 }
 
-int			term_init(t_term *t, const char **envp,
-	int (*exec)(const char*))
+static int	fatal_ios(t_term *t)
 {
 	t_map	*term_type;
 	char	term_buff[MAX_ENTRY];
 
-	t->pid = 0;
-	t->select = (t_selection) {.start.x=-1U, .end.x=-1U};
-	t->clip = (t_line) {.data=NULL, .length=0, .size=0, .prev=NULL, .next=NULL};
-	t->exec = exec;
-	if (!(t->env = map_load(envp)))
-		return (0);
 	if (!(term_type = map_get(t->env, "TERM"))
 	|| !map_set(&t->env, "PS1", TERM_PS1)
 	|| tgetent(term_buff, term_type->value) <= 0
@@ -55,8 +48,22 @@ int			term_init(t_term *t, const char **envp,
 		return (0);
 	t->s_ios_bkp = t->s_ios;
 	t->s_ios.c_lflag &= ~(ICANON | ECHO | ISIG);
-	if (tcsetattr(STDIN_FILENO, TCSANOW, &t->s_ios) == -1
-	|| !fatal_caps(&t->caps))
+	if (tcsetattr(STDIN_FILENO, TCSANOW, &t->s_ios) == -1)
+		return (0);
+	return (1);
+}
+
+int			term_init(t_term *t, const char **envp,
+	int (*exec)(const char*))
+{
+
+	t->pid = 0;
+	t->select = (t_selection) {.start.x=-1U, .end.x=-1U};
+	t->clip = (t_line) {.data=NULL, .length=0, .size=0, .prev=NULL, .next=NULL};
+	t->exec = exec;
+	if (!(t->env = map_load(envp)))
+		return (0);
+	if (!fatal_ios(t) || !fatal_caps(&t->caps))
 	{
 		tcsetattr(0, 0, &t->s_ios_bkp);
 		return (0);
