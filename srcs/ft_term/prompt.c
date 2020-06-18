@@ -33,6 +33,7 @@ int		parse_line(t_term *t, int status)
 	return (status);
 }
 
+// TODO: Refactor and separate line init
 int		term_new_line(t_term *t, int status)
 {
 	term_end_line(t);

@@ -15,12 +15,20 @@ void		token_print(t_token *tokens)
 
 int exec(const char *str)
 {
-	t_token *tokens;
+	t_token	*tokens;
+	t_token	*operators;
 
 	ft_dprintf(2, "Input: %s\n", str);
-	tokens = lexer_tokenize(str);
+	if(!lexer_tokenize(str, &tokens, &operators))
+	{
+		ft_dprintf(2, "Error\n");
+		return (-1);
+	}
 	token_print(tokens);
+	token_print(operators);
 	token_clear(&tokens);
+	token_clear(&operators);
+
 	return (0);
 }
 

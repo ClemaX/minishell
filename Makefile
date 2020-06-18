@@ -1,5 +1,6 @@
 NAME	= minishell
 LIBFT	= libft
+LIBTST	= tests
 DIST	= debug
 
 CC		= /usr/bin/gcc
@@ -8,6 +9,7 @@ DBG		= valgrind
 SRCDIR	= srcs
 OBJDIR	= objs/$(DIST)
 INCDIR	= includes
+TSTDIR	= tests
 
 CFLAGS	= -Wall -Wextra -Werror
 IFLAGS	= -I$(INCDIR) -I$(LIBFT)/includes
@@ -28,12 +30,6 @@ OBJDS	= $(addprefix $(OBJDIR)/, ft_term lexer)
 
 HDRS	= $(addprefix $(INCDIR)/, ft_term.h lexer.h)
 
-TESTSD	= tests/srcs/
-TESTID	= tests/includes/
-TESTS	= $(addprefix $(TESTSD), main.c error.c test_utils.c value_utils.c		\
-			map_test.c path_test.c prompt_test.c lexer_test.c line_tests.c		\
-			tab_utils.c)
-
 ifeq ($(DIST), debug)
 	CFLAGS += -g -DDIST_DEBUG
 	NAME := $(NAME)-debug
@@ -49,9 +45,13 @@ log:
 	tail -f $(LOG) 2>&1 | perl -ne 'if (/file truncated/) {system 'clear'; print} else {print}'
 
 libft:
-	make -C $(LIBFT) libft.a CC=$(CC)
+	make -C $(LIBFT) libft.a CC="$(CC)" CFLAGS="$(CFLAGS)"
+
+libtest:
+	make -C $(LIBTST) libtest.a CC="$(CC)" CFLAGS="$(CFLAGS)"
 
 $(LIBFT)/libft.a: libft
+$(LIBTST)/libtest.a: libtest
 
 $(OBJDS):
 	@echo MK $@
@@ -60,6 +60,12 @@ $(OBJDS):
 $(NAME):		$(OBJDS) $(OBJS) $(LIBFT)/libft.a
 	@echo LINK $(NAME)
 	$(CC) $(OBJS) $(CFLAGS) $(IFLAGS) $(LFLAGS) -o $(NAME)
+
+test:			NAME := $(NAME)-test
+test:			LFLAGS += -Ltests -ltest
+test:			MAIN =
+test:			libtest $(NAME)
+	./$(NAME)
 
 $(OBJDIR):
 	@echo MK $@
@@ -71,12 +77,15 @@ $(OBJDIR)/%.o:	$(SRCDIR)/%.c $(HDRS) Makefile
 
 clean:
 	make -C $(LIBFT) $@
+	make -C $(LIBTST) $@
 	/bin/rm -rf $(OBJDIR)
 
-fclean: 		clean
+fclean:			clean
 	make -C $(LIBFT) $@
-	@echo RM $(NAME) test
-	/bin/rm -f $(NAME) test
+	make -C $(LIBTST) $@
+	@echo RM $(NAME)
+	@echo RM $(NAME)-test
+	/bin/rm -f $(NAME) $(NAME)-test
 	@echo RM test.dSYM
 	/bin/rm -rf test.dSYM
 
@@ -86,15 +95,6 @@ test-dir:		$(OBJDIR)
 	@echo MK $(OBJDIR)/tests
 	mkdir -p $(OBJDIR)/tests
 
-test:			IFLAGS	+=	-I$(TESTID)
-test: 			HDRS	+=	$(addprefix $(TESTID), test.h)
-test:			SRCS	+=	$(TESTS)
-test:			OBJS	=	$(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS))
-test:			CFLAGS	=	-Wall -Wextra -g
-test:			NAME	=	test
-test:			test-dir re
-	./$(NAME)
-
-.PHONY: libft clean fclean
+.PHONY: libft libtest clean fclean
 
 $(VERBOSE).SILENT:

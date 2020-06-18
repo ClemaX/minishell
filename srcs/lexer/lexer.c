@@ -22,13 +22,14 @@ static int	lex_type(int status, char c)
 	return (status);
 }
 
-t_token		*lexer_tokenize(const char *input)
+int			lexer_tokenize(const char *input, t_token **tokens,
+	t_token **operators)
 {
 	t_token_t	status;
 	const char	*start;
-	t_token		*tokens;
 
-	tokens = NULL;
+	*tokens = NULL;
+	*operators = NULL;
 	while (*input)
 	{
 		status = LEX_TOKEN;
@@ -37,16 +38,27 @@ t_token		*lexer_tokenize(const char *input)
 		start = input;
 		while (*input && (status = lex_type(status, *input)) & LEX_TOKEN)
 			input++;
-		if (input != start
-		&& !token_add(&tokens, token_new(
-			ft_substr(start, 0, input - start), TOK_TOKEN)))
-			return (token_clear(&tokens));
+		if (input != start)
+		{
+			if (!token_add(tokens, token_new(
+				ft_substr(start, 0, input - start), TOK_TOKEN)))
+			{
+				token_clear(tokens);
+				token_clear(operators);
+				return (0);
+			}
+		}
 		if (status & LEX_OP)
 		{
-			if (!(token_add(&tokens, parse_token(&input))))
-				return (NULL);
+			if (!token_add(operators, parse_token(&input))
+			|| !token_add(tokens, token_new(ft_strdup(""), TOK_OP)))
+			{
+				token_clear(tokens);
+				token_clear(operators);
+				return (0);
+			}
 			status &= ~LEX_OP;
 		}
 	}
-	return (tokens);
+	return (1);
 }
