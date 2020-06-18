@@ -9,20 +9,20 @@ int         execute_redirections(t_op *ad, t_term *t)
 
         if (ad->type & RG)
         {
-            if ((fd = open(ad->ch2, O_WRONLY | O_CREAT | O_TRUNC,
+            if ((fd = open(((t_token *)ad->ch2)->data, O_WRONLY | O_CREAT | O_TRUNC,
 			        S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)) < 0)
 			    return (-1);
 		    (void)dup2(fd, t->fd[1]);
         }
         else if (ad->type & RL)
         {
-            if ((fd = open(ad->ch2, O_RDONLY)) < 0)
+            if ((fd = open(((t_token *)ad->ch2)->data, O_RDONLY)) < 0)
 			    return (-1);
 		    (void)dup2(fd, t->fd[1]);
         }
         else if (ad->type & RDG)
         {
-            if ((fd = open(ad->ch2, O_WRONLY | O_APPEND | O_CREAT | O_TRUNC,
+            if ((fd = open(((t_token *)ad->ch2)->data, O_WRONLY | O_APPEND | O_CREAT | O_TRUNC,
 		            S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)) < 0)
 			    return (-1);
 		    (void)dup2(fd, t->fd[1]);

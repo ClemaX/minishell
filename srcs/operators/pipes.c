@@ -1,7 +1,7 @@
 #include "abstract_dict.h"
 #include "ft_term.h"
 
-static int  fill(t_pipe p, char *argv, t_term *t)
+static int  fill(t_pipe p, char **argv, t_term *t)
 {
     if (!(t->pid = fork()))
     {
@@ -36,7 +36,7 @@ int         execute_pipe(t_op *ad, t_term *t)
     char    **argv;
 
     (void)pipe(p.fd);
-    if (!(argv = tokenize(ad->ch1)))
+    if (!(argv = token_tab(ad->ch1)))
         return (-1);
     if (!ad->ch1) // take fd
         (void)dup2(p.fd[0], t->fd[1]); // fd write ? sure ?
@@ -48,7 +48,7 @@ int         execute_pipe(t_op *ad, t_term *t)
     while (*argv)
         free((*argv)++);
     free(argv);
-    if (!(argv = tokenize(ad->ch2)))
+    if (!(argv = token_tab(ad->ch2)))
         return (-1);
     p.r = p.fd[0];
     (void)close(p.w);
