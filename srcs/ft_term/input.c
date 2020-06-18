@@ -55,18 +55,10 @@ static int	handle_escape(t_term *t, int status)
 	return (status);
 }
 
-static int	handle_control(t_term *t, int status, char c)
+static int	handle_control_custom(t_term *t, int status, char c)
 {
-	if (c == t->s_ios.c_cc[VINTR])
-		return (status | TERM_INT);
-	if (c == t->s_ios.c_cc[VERASE] || c == 'h' - 'a' + 1)
+	if (c == 'h' - 'a' + 1)
 		return (status | TERM_ERASE);
-	if (c == t->s_ios.c_cc[VEOF])
-		return (status | TERM_EOF);
-	if (c == t->s_ios.c_cc[VSTOP])
-		return (status | TERM_STOP);
-	if (c == t->s_ios.c_cc[VSUSP])
-		return (status | TERM_SUSPEND);
 	if (c == 'l' - 'a' + 1)
 		return (status | TERM_CLEAR);
 	if (c == '\n')
@@ -89,6 +81,21 @@ static int	handle_control(t_term *t, int status, char c)
 		return (status | TERM_IGNORE);
 	}
 	return (status);
+}
+
+static int	handle_control(t_term *t, int status, char c)
+{
+	if (c == t->s_ios.c_cc[VINTR])
+		return (status | TERM_INT);
+	if (c == t->s_ios.c_cc[VERASE])
+		return (status | TERM_ERASE);
+	if (c == t->s_ios.c_cc[VEOF])
+		return (status | TERM_EOF);
+	if (c == t->s_ios.c_cc[VSTOP])
+		return (status | TERM_STOP);
+	if (c == t->s_ios.c_cc[VSUSP])
+		return (status | TERM_SUSPEND);
+	return (handle_control_custom(t, status, c));
 }
 
 int			term_input(t_term *t, int status)
