@@ -37,12 +37,12 @@ int         redirect_to_fd(t_op *ad, t_term *t)
 {
     char    **argv;
 
-    if (!(argv = tokenize(ad->ch1)))
+    if (!(argv = token_tab(ad->ch1)))
         return (-1);
     if (!(t->pid = fork()))
     {
         (void)dup(STDOUT_FILENO);
-        if (open_fd(ad->ch2, ad->type) < 0)
+        if (open_fd(((t_token *)ad->ch2)->data, ad->type) < 0)
             return (-1);
         if (builting_not_in_slash_bin(argv[0], argv + 1, t))
         {

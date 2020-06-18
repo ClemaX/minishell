@@ -19,11 +19,11 @@ int         builting_not_in_slash_bin(char *name, char **argv, t_term *t)
     return (true);
 }
 
-int         execute_cmd(char *data, t_term *t)
+int         execute_cmd(t_token *data, t_term *t)
 {
     char    **argv;
 
-    if (!(argv = tokenize(data)))
+    if (!(argv = token_tab(data)))
         return (-1);
     if (builting_not_in_slash_bin(argv[0], argv + 1, t) && !(t->pid = fork()))
     {
@@ -33,7 +33,7 @@ int         execute_cmd(char *data, t_term *t)
     }
     else if (t->pid < 0)
         return (BASH_ERROR_CODE);
-    while (waitip(t->pid, NULL, 0) < 0)
+    while (waitpid(t->pid, NULL, 0) < 0)
         ;
     t->pid = 0;
     while (*argv)

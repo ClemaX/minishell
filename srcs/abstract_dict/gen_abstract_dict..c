@@ -13,18 +13,18 @@
     // semicolon has no ch1 or ch2 if there are conditions around
 
 // step 1
-t_op        *gen_architecture(int **token_list, t_op *curr)
+t_op        *gen_architecture(t_token *token_list, t_op *curr)
 {
     t_op    *next;
 
-    *token_list = *token_list + 1 ? *token_list + 1 : NULL;
-    if ((**token_list || **token_list & CLOSE_PAR) && !(next = malloc(sizeof(t_op))))
+    token_list = token_list->next; // why i did that first ?
+    if ((token_list || token_list->type & CLOSE_PAR) && !(next = malloc(sizeof(t_op))))
         return (NULL);
     next->type = 0;
     next->back = curr;
     next->ch1 = NULL;
     next->ch2 = NULL;
-    if (**token_list & OPEN_PAR && (curr->type |= PARENTHESIS))
+    if (token_list->type & OPEN_PAR && (curr->type |= PARENTHESIS))
     {
         (void)gen_architecture(token_list, curr->ch1 = next);
         next = gen_architecture(token_list, NULL);
@@ -32,15 +32,15 @@ t_op        *gen_architecture(int **token_list, t_op *curr)
     if (curr)
     {
         ((t_op *)curr)->next = next;
-        ((t_op *)curr)->type |= **token_list;
+        ((t_op *)curr)->type |= token_list->type;
     }
-    return (gen_architecture(*token_list, next));
+    return (gen_architecture(token_list, next));
 }
 
 // step 2
-bool        gen_sub_architecture(char **token_list, t_op *curr)
+bool        gen_sub_architecture(t_token *token_list, t_op *curr)
 {
-    if (*token_list == NULL || !curr)
+    if (!token_list || !token_list->data || !curr)
         return (false);
     if (curr->type & AND || curr->type & OR)
     {
@@ -48,42 +48,24 @@ bool        gen_sub_architecture(char **token_list, t_op *curr)
                 || curr->back->type & RDL|| curr->back->type & RL) || curr->back->type & PARENTHESIS)
             curr->ch1 = NULL;
         else
-        {
-            curr->ch1 = ft_strdup(*token_list);
-            *token_list = *token_list + 1 ? *token_list + 1 : NULL;
-        }
+            curr->ch1 = token_next_cmd(&token_list);
         if (curr->next && (curr->next->type & PIPE || curr->next->type & RDG || curr->next->type & RG
                 || curr->next->type & RDL|| curr->next->type & RL || curr->next->type & PARENTHESIS
                 || curr->next->type & AND || curr->next->type & OR)) // if AND/OR after ch2 = NULL, next->ch1 = the value
             curr->ch2 = NULL;
-        else // endcurr->ch1 = ft_strdup(*token_list);
-            *token_list = *token_list + 1 ? *token_list + 1 : NULL;
-        {
-            curr->ch2 = ft_strdup(*token_list);
-            *token_list = *token_list + 1 ? *token_list + 1 : NULL;
-        }
+        else
+            curr->ch2 = token_next_cmd(&token_list);
     }
     else if (curr->type & PIPE)
     {
         if (curr->back && curr->back->type & PARENTHESIS)
             curr->ch1 = NULL;
-        else if (curr->back && curr->back->type & PIPE)
-        {
-            curr->ch1 = ft_strdup(*token_list);
-            *token_list = *token_list + 1 ? *token_list + 1 : NULL;
-        }
         else
-        {
-            curr->ch1 = ft_strdup(*token_list);
-            *token_list = *token_list + 1 ? *token_list + 1 : NULL;
-        }
+            curr->ch1 = token_next_cmd(&token_list);
         if (curr->next && (curr->next->type & PARENTHESIS || curr->next->type & PIPE))
             curr->ch2 = NULL;
         else
-        {
-            curr->ch2 = ft_strdup(*token_list);
-            *token_list = *token_list + 1 ? *token_list + 1 : NULL;
-        }
+            curr->ch2 = token_next_cmd(&token_list);
     }
     else if (curr->type & RDG || curr->type & RG
             || curr->type & RDL|| curr->type & RL)
@@ -92,34 +74,22 @@ bool        gen_sub_architecture(char **token_list, t_op *curr)
                 curr->back->type & PIPE))
             curr->ch1 = NULL;
         else
-        {
-            curr->ch1 = ft_strdup(*token_list);
-            *token_list = *token_list + 1 ? *token_list + 1 : NULL;
-        }
+            curr->ch1 = token_next_cmd(&token_list);
         if (curr->next && curr->next->type & RDL)
             curr->ch2 = NULL;
         else
-        {
-            curr->ch2 = ft_strdup(*token_list);
-            *token_list = *token_list + 1 ? *token_list + 1 : NULL;
-        }
+            curr->ch2 = token_next_cmd(&token_list);
     }
     else
     {
         if (curr->type & PARENTHESIS)
             (void)gen_sub_architecture(token_list, curr->ch1);
         if (!curr->back)
-        {
-                curr->ch1 = ft_strdup(*token_list);
-                *token_list = *token_list + 1 ? *token_list + 1 : NULL;
-        }
+            curr->ch1 = token_next_cmd(&token_list);
         else
             curr->ch1 = NULL;
         if (!curr->next)
-        {
-                curr->ch2 = ft_strdup(*token_list);
-                *token_list = *token_list + 1 ? *token_list + 1 : NULL;
-        }
+            curr->ch2 = token_next_cmd(&token_list);
         else
             curr->ch2 = NULL;
     }

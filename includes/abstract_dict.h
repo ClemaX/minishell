@@ -4,13 +4,14 @@
 #include "operators.h"
 #include "builtins.h"
 #include "lexer.h"
+#include "sys/wait.h"
 
-t_op        *gen_architecture(int **token_list, t_op *curr);
-bool        gen_sub_architecture(char **token_list, t_op *curr);
+t_op        *gen_architecture(t_token *token_list, t_op *curr);
+bool        gen_sub_architecture(t_token *token_list, t_op *curr);
 int         execute_abstract_dict(t_op *ad, t_term *t);
 
 int         builting_not_in_slash_bin(char *name, char **argv, t_term *t);
-int         execute_cmd(char *data, t_term *t);
+int         execute_cmd(t_token *data, t_term *t);
 int         execute_and(t_op *ad, t_term *t);
 int         execute_or(t_op *ad, t_term *t);
 
