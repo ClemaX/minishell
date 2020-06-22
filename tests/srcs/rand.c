@@ -6,16 +6,16 @@
 /*   By: chamada <chamada@student.le-101.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 17:30:26 by chamada           #+#    #+#             */
-/*   Updated: 2020/06/15 20:55:34 by chamada          ###   ########lyon.fr   */
+/*   Updated: 2020/06/22 16:11:57 by chamada          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <ctype.h>
 
-unsigned int	ft_rand(unsigned int min, unsigned int max)
+unsigned	ft_rand(unsigned min, unsigned max)
 {
-	static unsigned int	rand = 0xACE1U;
+	static unsigned	rand = 0xACE1U;
 
 	if (min == max)
 			return (min);
@@ -26,7 +26,7 @@ unsigned int	ft_rand(unsigned int min, unsigned int max)
 	return (rand);
 }
 
-char			*rand_key(int len)
+char		*rand_key(unsigned len)
 {
 	char	*key;
 	char	c;

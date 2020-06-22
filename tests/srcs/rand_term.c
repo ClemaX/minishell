@@ -1,6 +1,6 @@
 #include <tests.h>
 
-t_term	*rand_term(int line_length)
+t_term	*rand_term(unsigned line_length)
 {
 	static t_term	t;
 

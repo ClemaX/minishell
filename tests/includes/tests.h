@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/14 06:49:04 by chamada           #+#    #+#             */
-/*   Updated: 2020/06/15 21:11:47 by chamada          ###   ########lyon.fr   */
+/*   Updated: 2020/06/22 16:12:36 by chamada          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,19 +37,17 @@
 # define BASE_MINUS	"01234-"
 # define BASE_HEX	"0123456789ABCDEF"
 
-extern t_term	g_term;
-
 int				run_tests(char *label, int (*tests[])(), int iterations);
 
-unsigned int	ft_rand(unsigned int min, unsigned int max);
-char			*rand_key(int len);
-char			*rand_val(int len);
+unsigned		ft_rand(unsigned min, unsigned max);
+char			*rand_key(unsigned len);
+char			*rand_val(unsigned len);
 char			**rand_tab_map(int count, int len);
 
 t_list			*lst_add_front(t_list **list, void *data);
 void			lst_clear(t_list **list);
 
-t_term			*rand_term(int line_length);
+t_term			*rand_term(unsigned line_length);
 void			rand_term_destroy(t_term *t);
 
 #endif
