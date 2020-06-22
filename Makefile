@@ -69,7 +69,7 @@ test:			MAIN =
 test:			libtest $(OBJDS) $(OBJS) $(LIBFT)/libft.a
 	@echo LINK $(NAME)
 	$(CC) $(OBJS) $(CFLAGS) $(IFLAGS) $(LFLAGS) -o $(NAME)
-	./$(NAME)
+	./$(NAME) 2>$(LOG)
 
 $(OBJDIR):
 	@echo MK $@
