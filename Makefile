@@ -5,9 +5,11 @@ DIST	= debug
 
 CC		= /usr/bin/gcc
 DBG		= valgrind
+RM		= /bin/rm
 
 SRCDIR	= srcs
-OBJDIR	= objs/$(DIST)
+BLDDIR	= objs
+OBJDIR	= $(BLDDIR)/$(DIST)
 INCDIR	= includes
 TSTDIR	= tests
 
@@ -64,12 +66,14 @@ $(NAME):		$(OBJDS) $(OBJS) $(LIBFT)/libft.a
 test:			NAME := $(NAME)-test
 test:			LFLAGS += -Ltests -ltest
 test:			MAIN =
-test:			libtest $(NAME)
+test:			libtest $(OBJDS) $(OBJS) $(LIBFT)/libft.a
+	@echo LINK $(NAME)
+	$(CC) $(OBJS) $(CFLAGS) $(IFLAGS) $(LFLAGS) -o $(NAME)
 	./$(NAME)
 
 $(OBJDIR):
 	@echo MK $@
-	mkdir -p $@
+	@mkdir -p $@
 
 $(OBJDIR)/%.o:	$(SRCDIR)/%.c $(HDRS) Makefile
 	@echo CC $<
@@ -78,22 +82,23 @@ $(OBJDIR)/%.o:	$(SRCDIR)/%.c $(HDRS) Makefile
 clean:
 	make -C $(LIBFT) $@
 	make -C $(LIBTST) $@
-	/bin/rm -rf $(OBJDIR)
+	@echo RM $(BLDDIR)
+	@$(RM) -rf $(BLDDIR)
 
 fclean:			clean
 	make -C $(LIBFT) $@
 	make -C $(LIBTST) $@
 	@echo RM $(NAME)
 	@echo RM $(NAME)-test
-	/bin/rm -f $(NAME) $(NAME)-test
+	@$(RM) -f $(NAME) $(NAME)-test
 	@echo RM test.dSYM
-	/bin/rm -rf test.dSYM
+	@$(RM) -rf test.dSYM
 
 re:				fclean all
 
 test-dir:		$(OBJDIR)
 	@echo MK $(OBJDIR)/tests
-	mkdir -p $(OBJDIR)/tests
+	@mkdir -p $(OBJDIR)/tests
 
 .PHONY: libft libtest clean fclean
 
