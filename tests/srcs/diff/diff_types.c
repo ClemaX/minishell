@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 17:30:53 by chamada           #+#    #+#             */
-/*   Updated: 2020/05/21 19:52:41 by chamada          ###   ########lyon.fr   */
+/*   Updated: 2020/06/22 16:07:24 by chamada          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int		diff_s(const char *label, const char *got, const char *expected)
 	int	diff;
 
 	if ((diff = strcmp(got, expected)))
-		printf("%s: %s: %s, expected: %s",
+		printf("\n%s: %s: %s, expected: %s ",
 			RED"DIFF"RESET, label, got, expected);
 	return (diff != 0);
 }
@@ -29,7 +29,7 @@ int		diff_p(const char *label, void *got, void *expected)
 {
 	if (got != expected)
 	{
-		printf("%s: %s: %p, expected: %p",
+		printf("\n%s: %s: %p, expected: %p ",
 			RED"DIFF"RESET, label, got, expected);
 		return (1);
 	}
@@ -40,7 +40,7 @@ int		diff_i(const char *label, int got, int expected)
 {
 	if (got != expected)
 	{
-		printf("%s: %s: %d, expected: %d",
+		printf("\n%s: %s: %d, expected: %d ",
 			RED"DIFF"RESET, label, got, expected);
 		return (1);
 	}

@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/09 17:10:31 by chamada           #+#    #+#             */
-/*   Updated: 2020/05/21 19:53:00 by chamada          ###   ########lyon.fr   */
+/*   Updated: 2020/06/22 16:07:31 by chamada          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int		diff_size(const char *label, size_t got, size_t expected)
 {
 	if (got != expected)
 	{
-		printf("%s: %s: %zu, expected: %zu",
+		printf("\n%s: %s: %zu, expected: %zu ",
 			RED"DIFF"RESET, label, got, expected);
 		return (1);
 	}
@@ -30,7 +30,7 @@ int		diff_ssize(const char *label, ssize_t got, ssize_t expected)
 {
 	if (got != expected)
 	{
-		printf("%s: %s: %zd, expected: %zd",
+		printf("\n%s: %s: %zd, expected: %zd ",
 			RED"DIFF"RESET, label, got, expected);
 		return (1);
 	}
