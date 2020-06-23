@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/26 16:34:23 by chamada           #+#    #+#             */
-/*   Updated: 2020/06/15 21:08:43 by chamada          ###   ########lyon.fr   */
+/*   Updated: 2020/06/23 11:56:54 by chamada          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int		run_tests(char *label, int (*tests[])(void), int iterations)
 	int i;
 	int test_i;
 
-	printf("%s %*s\t",
+	printf("\r%s %*s\t",
 		BULLET, LBL_FW, label);
 	test_i = 0;
 	err = 0;
