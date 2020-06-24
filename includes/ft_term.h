@@ -106,6 +106,7 @@ typedef struct  s_pipe
 
 typedef	struct	s_term
 {
+	const char		*name;
 	int				pid;
 	struct termios	s_ios;
 	struct termios	s_ios_bkp;
@@ -124,7 +125,7 @@ typedef	struct	s_term
 
 int				term_init(t_term *t, const char **envp, int (*exec)(const char*));
 int				term_destroy(t_term *t);
-int				term_prompt(const char **envp, int (*exec)(const char*));
+int				term_prompt(int ac, const char **av, const char **envp, int (*exec)(const char*));
 int				term_input(t_term *t, int status);
 int				input_special(int status, char c);
 

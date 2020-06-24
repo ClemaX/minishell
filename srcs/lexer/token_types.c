@@ -8,9 +8,9 @@ static bool parse_simple_tokens(t_token *new, const char **txt)
 	if (*txt[0] == ';' && ft_strlcpy(new->data, *txt, 1) && (*txt)++)
 		new->type = T_SEM;
 	else if (*txt[0] == '(' && ft_strlcpy(new->data, *txt, 1) && (*txt)++)
-		new->type = OPEN_PAR;
+		new->type = T_OPEN_PAR;
 	else if (*txt[0] == ')' && ft_strlcpy(new->data, *txt, 1) && (*txt)++)
-		new->type = CLOSE_PAR;
+		new->type = T_CLOSE_PAR;
 	else
 		return (false);
 	return (true);

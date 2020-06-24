@@ -13,20 +13,19 @@ size_t		token_count(t_token *tokens)
 	return (count);
 }
 
-char		**token_tab(t_token *tokens)
+const char	**token_tab(t_token *tokens, int *n)
 {
 	const int	count = token_count(tokens);
-	char		**tab;
+	const char	**tab;
 	t_token		*next;
-	int			i;
 
 	if (!(tab = malloc(sizeof(*tab) * (count + 1))))
 		return (NULL);
-	i = 0;
+	*n = 0;
 	while (tokens)
 	{
 		next = tokens->next;
-		tab[i++] = tokens->data;
+		tab[(*n)++] = tokens->data;
 		free(tokens);
 		tokens = next;
 	}
@@ -38,7 +37,7 @@ t_token		*token_next_cmd(t_token **tokens)
 	t_token	*start;
 	t_token *next;
 
-	if (start = *tokens)
+	if ((start = *tokens))
 	{
 		while ((next = (*tokens)->next) && next->type == TOK_TOKEN)
 			*tokens = next;

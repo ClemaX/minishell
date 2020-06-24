@@ -16,8 +16,8 @@
 # define TOK_TOKEN		0b0001
 # define TOK_OP			0b0010
 
-#define OPEN_PAR		1
-#define CLOSE_PAR		2
+#define T_OPEN_PAR		1
+#define T_CLOSE_PAR		2
 #define T_AND			4
 #define T_OR			8
 #define T_PIPE			16
@@ -55,6 +55,6 @@ t_token			*token_add(t_token **tokens, t_token *new);
 t_token			*token_clear(t_token **tokens);
 
 t_token			*token_next_cmd(t_token **tokens);
-char			**token_tab(t_token *tokens);
+const char		**token_tab(t_token *tokens, int *n);
 
 #endif

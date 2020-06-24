@@ -1,17 +1,19 @@
 #include "abstract_dict.h"
 
-int         builting_not_in_slash_bin(char *name, char **argv, t_term *t)
+int         builting_not_in_slash_bin(int ac, const char **argv, t_term *t)
 {
+    const char *name = argv[0];
+
     if (!ft_strncmp(name, "echo", 5))
-        return (ft_echo("ac", argv, "envp")); // false is true
+        return (ft_echo(ac, argv)); // false is true
     else if (!ft_strncmp(name, "cd", 3))
-        return (ft_cd("ac", argv, t));
+        return (ft_cd(ac, argv, t));
     else if (!ft_strncmp(name, "pwd", 4))
         return (ft_pwd());
     else if (!ft_strncmp(name, "export", 7))
-        return (ft_export("ac", argv, t, "name"));
+        return (ft_export(ac, argv, t));
     else if (!ft_strncmp(name, "unset", 6))
-        return (ft_unset(t, "name"));
+        return (ft_unset(ac, argv, t));
     else if (!ft_strncmp(name, "env", 4))
         return (ft_env(t->env));
     else if (!ft_strncmp(name, "exit", 5))
@@ -21,14 +23,15 @@ int         builting_not_in_slash_bin(char *name, char **argv, t_term *t)
 
 int         execute_cmd(t_token *data, t_term *t)
 {
-    char    **argv;
+    const char	**argv;
+	int			ac;
 
-    if (!(argv = token_tab(data)))
+    if (!(argv = token_tab(data, &ac)))
         return (-1);
-    if (builting_not_in_slash_bin(argv[0], argv + 1, t) && !(t->pid = fork()))
+    if (builting_not_in_slash_bin(ac, argv, t) && !(t->pid = fork()))
     {
-        t->st += execve(get_path(argv[0]), argv + 1, t->env);
-        ft_printf("execve returned! errno is [%d]\n", argv[0]); // name or errno ?
+        // TODO: t->st += execve(get_path(argv, t->env));
+        ft_printf("execve returned! name is [%s]\n", argv[0]); // name or errno ?
 		return (false);
     }
     else if (t->pid < 0)
@@ -36,8 +39,6 @@ int         execute_cmd(t_token *data, t_term *t)
     while (waitpid(t->pid, NULL, 0) < 0)
         ;
     t->pid = 0;
-    while (*argv)
-        free((*argv)++);
     free(argv);
     return (true);
 }

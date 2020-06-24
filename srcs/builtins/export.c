@@ -13,7 +13,7 @@ int	print_env(t_map *map)
 	return (0);
 }
 
-int	ft_export(int ac, char **av, t_term *t, char *name)
+int	ft_export(int ac, const char **av, t_term *t)
 {
 	t_map	*var;
 
@@ -26,12 +26,12 @@ int	ft_export(int ac, char **av, t_term *t, char *name)
 	{
 		while (ac-- > 1)
 		{
-			if (!key_check(av[ac]))
+			/* if (!key_check(av[ac]))
 			{
 				ft_printf("%s: %s `%s' : not a valid identifier\n",
-					name, av[0], av[ac]);
+					t->name, av[0], av[ac]);
 				return (1);
-			}
+			} */
 			if ((var = map_get(t->env, av[ac])))
 			{
 				if (!map_set(&t->env, var->key, var->value))

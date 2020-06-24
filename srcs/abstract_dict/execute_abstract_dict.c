@@ -47,7 +47,7 @@ int         execute_abstract_dict(t_op *ad, t_term *t)
             t->flags |= TAKE_FD;
         if (ad->ch2 == NULL)
             t->flags |= GIVE_FD;
-        (void)execute_redirection(ad, t);
+        (void)execute_redirections(ad, t);
     }
     else if (ad->type & PIPE)
     {
