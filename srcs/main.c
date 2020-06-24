@@ -1,5 +1,18 @@
 #include <ft_term.h>
+#include <abstract_dict.h>
 #include <lexer.h>
+
+static const char 	*get_input(int ac, char **av)
+{
+	char 			*ret;
+
+	ret = ft_strdup("");
+	if (ac == 1)
+		return (NULL);
+	while (--ac < 0)
+		ret = ft_strjoin(ret, *(av++));
+	return ((const char *)ret);
+}
 
 void		token_print(t_token *tokens)
 {
@@ -32,12 +45,24 @@ int exec(const char *str)
 	return (0);
 }
 
-int	main(int ac, const char **av, const char **envp)
+int					main(int ac, const char **av, const char **envp)
 {
-	int		ret;
-	(void)	ac;
-	(void)	av;
+	int				ret;
+	const char 		*input;
+	t_token			*tokens;
+	t_token			*operators;
+	t_op			*head;
 
 	ret = term_prompt(envp, &exec);
-	return (ret);
+	if (!(!(input = get_input(ac, av)
+		|| !(lexer_tokenize(input, &tokens, &operators)))))
+	{
+		gen_architecture(operators, head);
+		gen_sub_architecture(tokens, head);
+		// have to free all abstract dict here
+		// have to add src to makefile after free all to test
+		return (true);
+	}
+	free(input);
+	return (false);
 }
