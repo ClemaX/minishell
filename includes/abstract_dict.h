@@ -21,4 +21,6 @@ int		execute_redirections(t_op *ad, t_term *t);
 int		give_fd(t_op *ad, t_term *t, bool index);
 int		take_fd(t_op *ad, t_term *t);
 
+const char	*get_path(const char *name);
+
 #endif

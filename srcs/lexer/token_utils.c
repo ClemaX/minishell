@@ -7,6 +7,7 @@ size_t		token_count(t_token *tokens)
 	count = 0;
 	while (tokens)
 	{
+		//ft_printf("token count [%p]\n", tokens);
 		count++;
 		tokens = tokens->next;
 	}
@@ -26,7 +27,7 @@ const char	**token_tab(t_token *tokens, int *n)
 	{
 		next = tokens->next;
 		tab[(*n)++] = tokens->data;
-		free(tokens);
+		//free(tokens);
 		tokens = next;
 	}
 	return (tab);

@@ -17,35 +17,41 @@ t_op        *gen_architecture(t_token *token_list, t_op *curr)
 {
     t_op    *next;
 
-    token_list = token_list->next; // why i did that first ?
-    if ((token_list || token_list->type & CLOSE_PAR) && !(next = malloc(sizeof(t_op))))
+    //token_list = token_list->next; // why i did that first ?
+    if (!token_list || token_list->type & CLOSE_PAR || !(next = malloc(sizeof(t_op))))
         return (NULL);
     next->type = 0;
     next->back = curr;
     next->ch1 = NULL;
     next->ch2 = NULL;
-    if (token_list->type & T_OPEN_PAR && (curr->type |= PARENTHESIS))
+    if (token_list->type & PARENTHESIS && (curr->type |= PARENTHESIS))
     {
-        (void)gen_architecture(token_list, curr->ch1 = next);
+        (void)gen_architecture(token_list->next, curr->ch1 = next);
         next = gen_architecture(token_list, NULL);
     }
     if (curr)
     {
         ((t_op *)curr)->next = next;
         ((t_op *)curr)->type |= token_list->type;
+		ft_printf("[type in gen arch is %d]\n", curr->type);
     }
-    return (gen_architecture(token_list, next));
+    return (gen_architecture(token_list->next, next));
 }
 
 // step 2
 bool        gen_sub_architecture(t_token *token_list, t_op *curr)
 {
-    if (!token_list || !token_list->data || !curr)
+    if (!token_list || !token_list->data || !curr->type)
+	{
         return (false);
+	}
+		ft_printf("[op type sub arch is %d]\n", curr->type);
+		ft_printf("[token data in sub arch is %s]\n", token_list->data);
+
     if (curr->type & AND || curr->type & OR)
     {
-        if ((curr->back && (curr->back->type & PIPE || curr->back->type & RDG || curr->back->type & RG
-                || curr->back->type & RDL|| curr->back->type & RL)) || curr->back->type & PARENTHESIS)
+        if (curr->back && (curr->back->type & PIPE || curr->back->type & RDG || curr->back->type & RG
+                || curr->back->type & RDL|| curr->back->type & RL || curr->back->type & PARENTHESIS))
             curr->ch1 = NULL;
         else
             curr->ch1 = token_next_cmd(&token_list);
@@ -55,6 +61,12 @@ bool        gen_sub_architecture(t_token *token_list, t_op *curr)
             curr->ch2 = NULL;
         else
             curr->ch2 = token_next_cmd(&token_list);
+		// tests 
+		//if (curr->ch1)
+		//	ft_printf("[test ch1: %s]\n", ((t_token *)curr->ch1)->data);
+		//if (curr->ch2)
+		//	ft_printf("[test ch2: %s]\n", ((t_token *)curr->ch2)->data);
+		// end tests
     }
     else if (curr->type & PIPE)
     {
@@ -83,17 +95,20 @@ bool        gen_sub_architecture(t_token *token_list, t_op *curr)
     else
     {
         if (curr->type & PARENTHESIS)
+		{
             (void)gen_sub_architecture(token_list, curr->ch1);
+		}
+		ft_printf("back [%p]\n", curr->back);
         if (!curr->back)
             curr->ch1 = token_next_cmd(&token_list);
         else
             curr->ch1 = NULL;
-        if (!curr->next)
+        if (!curr->next->type) // can segfault
             curr->ch2 = token_next_cmd(&token_list);
         else
             curr->ch2 = NULL;
     }
-    if (curr->next)
+    if (curr->next && ((t_op *)curr->next)->type)
         return (gen_sub_architecture(token_list, curr->next));
     return (true);
 }

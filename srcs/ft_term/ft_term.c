@@ -17,7 +17,7 @@ static int	handle_status(t_term *t, int status)
 	return ((status & (~TERM_CONSUME & ~TERM_NEWLINE)));
 }
 
-int			term_prompt(int ac, const char **av, const char **envp, int (*exec)(const char*))
+int			term_prompt(int ac, const char **av, const char **envp, int (*exec)(const char*, t_term*))
 {
 	(void)	ac;
 	int		status;

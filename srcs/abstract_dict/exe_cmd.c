@@ -1,5 +1,15 @@
 #include "abstract_dict.h"
 
+const char	*get_path(const char *name)
+{
+	char	*pth;
+
+	pth = ft_strdup("/usr/bin/");
+	name = ft_strjoin(pth, name);
+	free(pth);
+	return (name);
+}
+
 int         builting_not_in_slash_bin(int ac, const char **argv, t_term *t)
 {
     const char *name = argv[0];
@@ -23,22 +33,27 @@ int         builting_not_in_slash_bin(int ac, const char **argv, t_term *t)
 
 int         execute_cmd(t_token *data, t_term *t)
 {
-    const char	**argv;
+	ft_printf("[data %p]\n", data);
+	ft_printf("exe cmd\n");
+    char		**argv;
 	int			ac;
 
-    if (!(argv = token_tab(data, &ac)))
+    if (!(argv = (char **)token_tab(data, &ac)))
         return (-1);
-    if (builting_not_in_slash_bin(ac, argv, t) && !(t->pid = fork()))
+    if ((t->st = builting_not_in_slash_bin(ac, (const char **)argv, t)))
     {
-        // TODO: t->st += execve(get_path(argv, t->env));
-        ft_printf("execve returned! name is [%s]\n", argv[0]); // name or errno ?
-		return (false);
-    }
-    else if (t->pid < 0)
-        return (BASH_ERROR_CODE);
-    while (waitpid(t->pid, NULL, 0) < 0)
-        ;
-    t->pid = 0;
+		if (!(t->pid = fork()))
+		{
+        	//t->st = execve(get_path(argv[0]), argv + 1,t->env);
+        	ft_printf("execve returned! name is [%s]\n", argv[0]); // name or errno ?
+			return (false);
+		}
+    	else if (t->pid < 0)
+        	return (BASH_ERROR_CODE);
+    	while (waitpid(t->pid, NULL, 0) < 0)
+        	;
+    	t->pid = 0;
+	}
     free(argv);
     return (true);
 }
@@ -54,6 +69,8 @@ int         execute_and(t_op *ad, t_term *t)
             return (false);
         (void)execute_cmd(ad->ch2, t);
     }
+	else if (ad->ch1)
+		(void)execute_cmd(ad->ch1, t);
     return (true);
 }
 
@@ -63,10 +80,14 @@ int         execute_or(t_op *ad, t_term *t)
         return (false);
     if (ad->ch1 && ad->ch2)
     {
+		if (!t->st)
+            return (false);
         (void)execute_cmd(ad->ch1, t);
         if (!t->st)
             return (false);
         (void)execute_cmd(ad->ch2, t);
     }
+	else if (ad->ch1 && t->st)
+		(void)execute_cmd(ad->ch1, t);
     return (true);
 }
