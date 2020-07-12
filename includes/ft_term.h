@@ -98,8 +98,8 @@ typedef struct	s_hist
 typedef struct  s_pipe
 {
 	int			fd[2];
-	int			w;
-	int			r;
+	int			fd_read;
+	int			fd_write;
 	int			in;
 	int			out;
 }				t_pipe;

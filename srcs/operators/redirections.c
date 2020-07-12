@@ -44,7 +44,7 @@ int         redirect_to_fd(t_op *ad, t_term *t)
     if (!(t->pid = fork()))
     {
 		ft_printf("Redirection forks and don't wait correctly the fork\n");
-        (void)dup(STDOUT_FILENO);
+        //(void)dup(STDOUT_FILENO);
         if (open_fd(((t_token *)ad->ch2)->data, ad->type) < 0)
             return (-1);
         if (builting_not_in_slash_bin(ac, argv, t))
@@ -55,10 +55,11 @@ int         redirect_to_fd(t_op *ad, t_term *t)
         }
     }
     else if (t->pid < 0)
+	{
         return (t->st = BASH_ERROR_CODE);
-    //while (waitpid(t->pid, NULL, 0) <= 0)
-    //    ;
-	while (wait(NULL) > 0);
+	}
+	while (waitpid(t->pid, NULL, 0) <= 0)
+        ;
     t->pid = 0;
     free(argv);
     return (true);

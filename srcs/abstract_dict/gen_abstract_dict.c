@@ -107,13 +107,13 @@ bool        gen_sub_architecture(t_token *token_list, t_op *curr)
             curr->ch2 = token_next_cmd(&token_list);
         else
             curr->ch2 = NULL;
-		// tests 
-		if (curr->ch1)
-			ft_printf("[test ch1: %s]\n", ((t_token *)curr->ch1)->data);
-		if (curr->ch2)
-			ft_printf("[test ch2: %s]\n", ((t_token *)curr->ch2)->data);
-		// end tests
     }
+		// tests 
+	if (curr->ch1)
+		ft_printf("[test ch1: %s]\n", ((t_token *)curr->ch1)->data);
+	if (curr->ch2)
+		ft_printf("[test ch2: %s]\n", ((t_token *)curr->ch2)->data);
+		// end tests
     if (curr->next /*&& ((t_op *)curr->next)->type*/)
         return (gen_sub_architecture(token_list, curr->next));
     return (true);
