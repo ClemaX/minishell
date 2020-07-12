@@ -4,6 +4,7 @@
 
 static bool parse_simple_tokens(t_token *new, const char **txt)
 {
+	ft_printf("parse :[%c]\n", *txt[0]);
 	if (!(new->data = malloc(sizeof(char) * 1 + 1)) && !(new->data[1] = 0))
 		return (false);
 	if (*txt[0] == ';' && ft_strlcpy(new->data, *txt, 1) && (*txt)++)
