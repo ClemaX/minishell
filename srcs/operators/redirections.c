@@ -1,5 +1,5 @@
-#include "ft_term.h"
-#include "abstract_dict.h"
+#include <ft_term.h>
+#include <abstract_dict.h>
 
 static int  open_fd(char *name, short std)
 {
@@ -35,29 +35,32 @@ static int  open_fd(char *name, short std)
 
 int         redirect_to_fd(t_op *ad, t_term *t)
 {
-    char    **argv;
+    const char	**argv;
+	int			ac;
 
-    if (!(argv = token_tab(ad->ch1)))
+	
+    if (!(argv = token_tab(ad->ch1, &ac)))
         return (-1);
     if (!(t->pid = fork()))
     {
-        (void)dup(STDOUT_FILENO);
+		ft_printf("Redirection forks and don't wait correctly the fork\n");
+        //(void)dup(STDOUT_FILENO);
         if (open_fd(((t_token *)ad->ch2)->data, ad->type) < 0)
             return (-1);
-        if (builting_not_in_slash_bin(argv[0], argv + 1, t))
+        if (builting_not_in_slash_bin(ac, argv, t))
         {
-            t->st += execve(get_path(argv[0]), argv + 1, t->env);
-            ft_printf("execve returned! errno is [%d]\n", argv[0]); // name or errno ?
+            // TODO: t->st += execve(get_path(argv[0]), argv + 1, t->env);
+            ft_printf("execve returned! errno is [%s]\n", argv[0]); // name or errno ?
 		    return (true);
         }
     }
     else if (t->pid < 0)
+	{
         return (t->st = BASH_ERROR_CODE);
-    while (waitpid(t->pid, NULL, 0) <= 0)
+	}
+	while (waitpid(t->pid, NULL, 0) <= 0)
         ;
     t->pid = 0;
-    while (*argv)
-        free((*argv)++);
     free(argv);
     return (true);
 }

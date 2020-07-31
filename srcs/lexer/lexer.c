@@ -30,6 +30,7 @@ int			lexer_tokenize(const char *input, t_token **tokens,
 
 	*tokens = NULL;
 	*operators = NULL;
+	ft_printf("[input is %s]\n", input);
 	while (*input)
 	{
 		status = LEX_TOKEN;
@@ -60,5 +61,13 @@ int			lexer_tokenize(const char *input, t_token **tokens,
 			status &= ~LEX_OP;
 		}
 	}
+	if (!*operators && !(*operators = token_new(ft_strdup(""), 512))) // type none
+	{
+		token_clear(tokens);
+		token_clear(operators);
+		return (0);
+	}
+	ft_printf("[addr of op: %p]\n", *operators);
+	ft_printf("[addr of data: %p]\n", *tokens);
 	return (1);
 }

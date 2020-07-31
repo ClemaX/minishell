@@ -1,17 +1,18 @@
 #include "builtins.h"
 
-int	ft_unset(t_term *t, char *name)
+int	ft_unset(int ac, const char **av, t_term *t)
 {
-	while (cmd->ac-- > 1) // to do 
+	// TODO: glob env
+	while (ac-- > 1)
 	{
-		if (!key_check(cmd->av[cmd->ac]))
+		/* if (!key_check(av[ac]))
 		{
 			ft_printf("%s: %s `%s' : not a valid identifier\n",
-				name, cmd->av[0], cmd->av[cmd->ac]);
+				t->name, av[0], av[ac]);
 			return (1);
-		}
-		cmd->env = map_del(cmd->env, cmd->av[cmd->ac]);
-		cmd->glob_env = map_del(cmd->glob_env, cmd->av[cmd->ac]);
+		} */
+		t->env = map_del(t->env, av[ac]);
+		//glob_env = map_del(cmd->glob_env, cmd->av[cmd->ac]);
 	}
 	return (0);
 

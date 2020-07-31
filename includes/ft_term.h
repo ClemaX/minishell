@@ -98,14 +98,15 @@ typedef struct	s_hist
 typedef struct  s_pipe
 {
 	int			fd[2];
-	int			w;
-	int			r;
+	int			fd_read;
+	int			fd_write;
 	int			in;
 	int			out;
 }				t_pipe;
 
 typedef	struct	s_term
 {
+	const char		*name;
 	int				pid;
 	struct termios	s_ios;
 	struct termios	s_ios_bkp;
@@ -116,15 +117,15 @@ typedef	struct	s_term
 	t_line			*line;
 	t_hist			hist;
 	t_line			clip;
-	int				(*exec)(const char*);
+	int				(*exec)(const char*, struct s_term*);
 	int				flags;
 	int				fd[2];
 	int				st;
 }				t_term;
 
-int				term_init(t_term *t, const char **envp, int (*exec)(const char*));
+int				term_init(t_term *t, const char **envp, int (*exec)(const char*, t_term*));
 int				term_destroy(t_term *t);
-int				term_prompt(const char **envp, int (*exec)(const char*));
+int				term_prompt(int ac, const char **av, const char **envp, int (*exec)(const char*, t_term*));
 int				term_input(t_term *t, int status);
 int				input_special(int status, char c);
 

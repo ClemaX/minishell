@@ -46,7 +46,7 @@ int		term_new_line(t_term *t, int status)
 		if (t->line)
 		{
 			tputs(t->caps.insert_end, 0, &ft_putchar);
-			t->exec(t->line->data);
+			t->exec(t->line->data, t);
 			tputs(t->caps.insert, 0, &ft_putchar);
 		}
 		if ((!t->hist.next || t->line == t->hist.next)

@@ -13,7 +13,7 @@ OBJDIR	= $(BLDDIR)/$(DIST)
 INCDIR	= includes
 TSTDIR	= tests
 
-CFLAGS	= -Wall -Wextra -Werror
+CFLAGS	= -Wall -Wextra -Werror -g3 -fsanitize=address
 IFLAGS	= -I$(INCDIR) -I$(LIBFT)/includes
 LFLAGS	= -L$(LIBFT) -lft -lcurses -ltermcap
 
@@ -25,10 +25,17 @@ SRCS	= $(addprefix $(SRCDIR)/, 												\
 			$(addprefix ft_term/, ft_term.c init.c signals.c line.c line_edit.c	\
 				history.c input.c output.c prompt.c controls.c					\
 				cursor_line.c cursor_hist.c selection.c clipboard.c)			\
-			$(addprefix lexer/, lexer.c token.c token_types.c))
+			$(addprefix lexer/, lexer.c token.c token_types.c token_utils.c)	\
+			$(addprefix abstract_dict/, exe_cmd.c exe_redirection.c				\
+				execute_abstract_dict.c free_abstract_dict.c					\
+				gen_abstract_dict.c)											\
+			$(addprefix builtins/, cd.c echo.c env.c exit.c export.c pwd.c		\
+				unset.c)														\
+			$(addprefix operators/, pipes.c redirections.c)						\
+		)
 
 OBJS	= $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS) $(MAIN))
-OBJDS	= $(addprefix $(OBJDIR)/, ft_term lexer)
+OBJDS	= $(addprefix $(OBJDIR)/, ft_term lexer abstract_dict builtins operators)
 
 HDRS	= $(addprefix $(INCDIR)/, ft_term.h lexer.h)
 

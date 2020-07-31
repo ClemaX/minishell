@@ -54,13 +54,14 @@ static int	fatal_ios(t_term *t)
 }
 
 int			term_init(t_term *t, const char **envp,
-	int (*exec)(const char*))
+	int (*exec)(const char*, t_term*))
 {
 
 	t->pid = 0;
 	t->select = (t_selection) {.start.x=-1U, .end.x=-1U};
 	t->clip = (t_line) {.data=NULL, .length=0, .size=0, .prev=NULL, .next=NULL};
 	t->exec = exec;
+	t->st = -1;
 	if (!(t->env = map_load(envp)))
 		return (0);
 	if (!fatal_ios(t) || !fatal_caps(&t->caps))

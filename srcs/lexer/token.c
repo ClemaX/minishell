@@ -38,6 +38,7 @@ t_token		*token_clear(t_token **tokens)
 {
 	t_token	*next;
 
+	//ft_printf("token clear ? %p\n", *tokens);
 	while (*tokens)
 	{
 		next = (*tokens)->next;

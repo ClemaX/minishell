@@ -64,4 +64,5 @@ int         take_fd(t_op *ad, t_term *t)
     (void)dup2(p.fd[1], t->fd[1]);
     (void)give_fd(ad, t, 0);
     (void)dup2(p.fd[0], t->fd[0]);// no fcking idea if this ll work
+	return (0);
 }

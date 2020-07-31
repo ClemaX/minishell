@@ -16,17 +16,6 @@
 # define TOK_TOKEN		0b0001
 # define TOK_OP			0b0010
 
-#define OPEN_PAR		1
-#define CLOSE_PAR		2
-#define T_AND			4
-#define T_OR			8
-#define T_PIPE			16
-#define T_DGRAT			32
-#define T_DLESS			64
-#define T_GRAT			128
-#define T_LESS			256
-#define T_SEM			512
-
 typedef short	t_token_t;
 
 
@@ -55,6 +44,6 @@ t_token			*token_add(t_token **tokens, t_token *new);
 t_token			*token_clear(t_token **tokens);
 
 t_token			*token_next_cmd(t_token **tokens);
-char			**token_tab(t_token *tokens);
+const char		**token_tab(t_token *tokens, int *n);
 
 #endif

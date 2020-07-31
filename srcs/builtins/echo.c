@@ -1,12 +1,12 @@
 #include "builtins.h"
 
-int	ft_echo(int ac, char **argv, char **envp)
+int	ft_echo(int ac, const char **argv)
 {
 	char	opt;
 	short	arg;
-	char	**env;
+//	char	**env;
 
-	env = envp;
+// TODO:	env = envp;
 	arg = 1;
 	opt = 0;
 	if (ac > 1)
