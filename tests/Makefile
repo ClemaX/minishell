@@ -12,10 +12,12 @@ HEADRS	=		$(addprefix $(INCDIR)/, diff.h tests.h units.h)
 
 SRCS	=		$(addprefix $(SRCDIR)/,										\
 			$(addprefix diff/diff_, bool.c sizes.c types.c)					\
-			$(addprefix units/test_, clipboard.c)							\
+			$(addprefix units/,												\
+				$(addprefix clipboard/, copy.c cut.c paste.c)				\
+			)																\
 			main.c rand_term.c rand.c utils.c)
 
-OBJDS	=		$(addprefix $(OBJDIR)/,	diff units)
+OBJDS	=		$(addprefix $(OBJDIR)/,	diff $(addprefix units/, clipboard))
 
 OBJS	=		$(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS))
 
