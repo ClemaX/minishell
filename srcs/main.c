@@ -2,6 +2,23 @@
 #include <abstract_dict.h>
 #include <lexer.h>
 
+void		print_abstract_dict(t_op *head)
+{
+	while (head && head->type)
+	{
+		// simplyfied version, can t print complex abstract dicts
+			ft_printf("<print_abstract_dict> HEAD ADDR IS: %p\n", (t_op *)head); 
+			ft_printf("<print_abstract_dict> HEAD TYPE IS: %d\n", ((t_op *)head)->type);
+		if (head->ch1)
+		{
+			ft_printf("<print_abstract_dict> GOES TO CH1\n");
+			head = (t_op *)head->ch1;
+		}
+		else
+			head = head->next;
+	}
+}
+
 void		token_print(t_token *tokens)
 {
 	while (tokens)
@@ -34,6 +51,7 @@ int exec(const char *str, t_term *t)
 	head->type = 0;
 	head->back = NULL;
 	(void)gen_architecture(operators, head);
+	//print_abstract_dict(head);
 	(void)gen_sub_architecture(tokens, head);
 	t->st = -1;
 
