@@ -5,7 +5,12 @@ char	*clip_copy(t_term *t)
 	if (t->select.start.x != -1U && t->select.end.x != -1U)
 	{
 		free(t->clip.data);
+		t->clip.data = NULL;
 		t->clip.length = t->select.end.x - t->select.start.x;
+		if (!t->clip.length)
+			return (NULL);
+		ft_dprintf(2, "[CLIPBD] Copy %ld chars from %s at %d\n", t->clip.length,
+			t->line->data, t->cursor.pos.x);
 		if (!(t->clip.data = ft_substr(t->line->data,
 		t->select.start.x, t->clip.length)))
 			return (NULL);
@@ -28,6 +33,7 @@ char	*clip_cut(t_term *t)
 		tputs(t->caps.c_del_n, t->clip.length, &ft_putchar);
 		ft_dprintf(2, "[CLIPBD] Cut %ld chars from %s at %d\n", t->clip.length,
 			t->line->data, t->cursor.pos.x);
+		// TODO: Fix line_erase_at with full line
 		line_erase_at(t->line, t->cursor.pos.x, t->clip.length);
 		selection_clear(t);
 	}
