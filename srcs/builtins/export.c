@@ -13,7 +13,7 @@ int	print_env(t_map *map)
 	return (0);
 }
 
-int	ft_export(int ac, const char **av, t_term *t)
+int	ft_export(int ac, char **av, t_term *t)
 {
 	t_map	*var;
 

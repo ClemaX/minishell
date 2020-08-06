@@ -1,7 +1,7 @@
 #include "abstract_dict.h"
 #include "ft_term.h"
 
-static int  fill(int ac, const char **argv, t_pipe *p, t_term *t)
+static int  fill(int ac, char **argv, t_pipe *p, t_term *t)
 {
 	(void)argv;
 	(void)ac;
@@ -34,7 +34,7 @@ static int  fill(int ac, const char **argv, t_pipe *p, t_term *t)
 int         execute_pipe(t_op *ad, t_term *t)
 {
     t_pipe		p;
-    const char	**argv;
+    char		**argv;
     int			ac;
 
 	ft_printf("PIPE EXECUTION\n");
@@ -49,7 +49,7 @@ int         execute_pipe(t_op *ad, t_term *t)
     //p.out = ad->ch1 ? 0 : 1;
 	p.in = 0;
 	p.out = 1;
-    (void)fill(ac, argv, &p, t);	
+    (void)fill(ac, argv, &p, t);
 	free(argv);
     if (!(argv = token_tab(ad->ch2, &ac)))
 	{
@@ -60,7 +60,7 @@ int         execute_pipe(t_op *ad, t_term *t)
 	p.fd_read = p.fd[0];
 	close(p.fd_write);
 	fill(ac, argv, &p, t);
-	
+
 	close(p.fd_write);
 	close(p.fd_read);
 	// before fill

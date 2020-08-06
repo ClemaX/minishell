@@ -30,7 +30,7 @@ int			lexer_tokenize(const char *input, t_token **tokens,
 
 	*tokens = NULL;
 	*operators = NULL;
-	ft_printf("[input is %s]\n", input);
+	ft_dprintf(2, "[input is %s]\n", input);
 	while (*input)
 	{
 		status = LEX_TOKEN;
@@ -67,7 +67,7 @@ int			lexer_tokenize(const char *input, t_token **tokens,
 		token_clear(operators);
 		return (0);
 	}
-	ft_printf("[addr of op: %p]\n", *operators);
-	ft_printf("[addr of data: %p]\n", *tokens);
+	ft_dprintf(2, "[addr of op: %p]\n", *operators);
+	ft_dprintf(2, "[addr of data: %p]\n", *tokens);
 	return (1);
 }

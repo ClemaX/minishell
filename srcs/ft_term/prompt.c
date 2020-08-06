@@ -40,7 +40,6 @@ int		term_new_line(t_term *t, int status)
 	selection_clear(t);
 	if (t->line && (status = parse_line(t, status)) & TERM_WAITING)
 		term_write(t, "\n", 1);
-	term_write_prompt(t, status);
 	if (!(status & TERM_WAITING))
 	{
 		if (t->line)
@@ -62,5 +61,6 @@ int		term_new_line(t_term *t, int status)
 		t->cursor.pos.x = 0;
 		t->cursor.pos.y = 0;
 	}
+	term_write_prompt(t, status);
 	return (status & ~TERM_NEWLINE);
 }

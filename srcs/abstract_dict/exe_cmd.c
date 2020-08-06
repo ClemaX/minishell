@@ -1,16 +1,51 @@
 #include "abstract_dict.h"
+#include <limits.h>
 
-const char	*get_path(const char *name)
+static
+
+char		*path_cat(const char *a, const char *b)
 {
-	char	*pth;
+	const size_t	len = ft_strlen(a) + ft_strlen(b) + 1;
+	char			*cat;
+	char			*c;
 
-	pth = ft_strdup("/usr/bin/");
-	name = ft_strjoin(pth, name);
-	free(pth);
-	return (name);
+	if (len > PATH_MAX || !(cat = ft_calloc(len + 1, sizeof(*cat))))
+		return (NULL);
+	c = cat;
+	while (*a)
+		*c++ = *a++;
+	*c++ = '/';
+	while (*b)
+		*c++ = *b++;
+	return (cat);
 }
 
-int         builting_not_in_slash_bin(int ac, const char **argv, t_term *t)
+char		*path_get(const char *name, const char *path)
+{
+	char		**paths;
+	char		*join;
+	struct stat	s;
+	int			i;
+
+	if (!name || !*name || !(paths = ft_split(path, ':')))
+		return (NULL);
+	i = 0;
+	while (paths[i])
+	{
+		if (!(join = path_cat(paths[i++], name)))
+			return (strs_unload(paths));
+		if (stat(join, &s) == 0 && s.st_mode & S_IXUSR)
+		{
+			strs_unload(paths);
+			return (join);
+		}
+		free(join);
+	}
+	strs_unload(paths);
+	return (NULL);
+}
+
+int         builting_not_in_slash_bin(int ac, char** argv, t_term *t)
 {
     const char *name = argv[0];
 
@@ -33,28 +68,47 @@ int         builting_not_in_slash_bin(int ac, const char **argv, t_term *t)
 
 int         execute_cmd(t_token *data, t_term *t)
 {
-	ft_printf("[data %p]\n", data);
-	ft_printf("exe cmd\n");
-    char		**argv;
-	int			ac;
+	ft_dprintf(2, "[data %p]\n", data);
+	ft_dprintf(2, "exe cmd\n");
+	char	**envp;
+    char	**argv;
+	char	*path;
+	int		ac;
 
-    if (!(argv = (char **)token_tab(data, &ac)))
+    if (!(argv = token_tab(data, &ac)))
         return (-1);
-    if ((t->st = builting_not_in_slash_bin(ac, (const char **)argv, t)))
+    if ((t->st = builting_not_in_slash_bin(ac, argv, t)))
     {
+		if (!(envp = map_export(t->env)))
+		{
+			ft_dprintf(2, "could not export environment!");
+			free((char**)argv);
+			return (false);
+		}
+		if (!(path = path_get(argv[0], (map_get(t->env, "PATH")->value))))
+		{
+			ft_dprintf(2, "path not found! name is [%s]\n", argv[0]);
+			free((char**)argv);
+			return (false);
+		}
 		if (!(t->pid = fork()))
 		{
-        	//t->st = execve(get_path(argv[0]), argv + 1,t->env);
-        	ft_printf("execve returned! name is [%s]\n", argv[0]); // name or errno ?
+
+        	t->st = execve(path, argv, envp);
+        	ft_dprintf(2, "execve returned! name is [%s] [%d]\n", argv[0], t->st); // name or errno ?
 			return (false);
 		}
     	else if (t->pid < 0)
         	return (BASH_ERROR_CODE);
     	while (waitpid(t->pid, NULL, 0) < 0)
         	;
+		// Free allocated variables
+		free((char**)argv);
+		free(envp);
+		free(path);
     	t->pid = 0;
 	}
-    free(argv);
+    free((char**)argv);
     return (true);
 }
 

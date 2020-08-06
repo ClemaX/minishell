@@ -1,6 +1,6 @@
 #include "builtins.h"
 
-int	ft_echo(int ac, const char **argv)
+int	ft_echo(int ac, char **argv)
 {
 	char	opt;
 	short	arg;

@@ -14,11 +14,11 @@ size_t		token_count(t_token *tokens)
 	return (count);
 }
 
-const char	**token_tab(t_token *tokens, int *n)
+char**		token_tab(t_token *tokens, int *n)
 {
-	const int	count = token_count(tokens);
-	const char	**tab;
-	t_token		*next;
+	const int			count = token_count(tokens);
+	char				**tab;
+	t_token				*next;
 
 	if (!(tab = malloc(sizeof(*tab) * (count + 1))))
 		return (NULL);

@@ -13,7 +13,7 @@ OBJDIR	= $(BLDDIR)/$(DIST)
 INCDIR	= includes
 TSTDIR	= tests
 
-CFLAGS	= -Wall -Wextra -Werror -g3 -fsanitize=address
+CFLAGS	= -Wall -Wextra -Werror -g3# -fsanitize=address
 IFLAGS	= -I$(INCDIR) -I$(LIBFT)/includes
 LFLAGS	= -L$(LIBFT) -lft -lcurses -ltermcap
 

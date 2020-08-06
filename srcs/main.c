@@ -36,8 +36,10 @@ int exec(const char *str, t_term *t)
 	(void)gen_architecture(operators, head);
 	(void)gen_sub_architecture(tokens, head);
 	t->st = -1;
-	(void)execute_abstract_dict(head, t);
 
+	tcsetattr(0, 0, &t->s_ios_bkp);
+	(void)execute_abstract_dict(head, t);
+	tcsetattr(0, 0, &t->s_ios);
 
 	token_clear(&tokens);
 	token_clear(&operators);

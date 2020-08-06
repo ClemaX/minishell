@@ -35,10 +35,10 @@ static int  open_fd(char *name, short std)
 
 int         redirect_to_fd(t_op *ad, t_term *t)
 {
-    const char	**argv;
-	int			ac;
+    char	**argv;
+	int		ac;
 
-	
+
     if (!(argv = token_tab(ad->ch1, &ac)))
         return (-1);
     if (!(t->pid = fork()))

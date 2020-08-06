@@ -1,6 +1,6 @@
 #include "builtins.h"
 
-int		ft_cd(int ac, const char **argv, t_term *t)
+int		ft_cd(int ac, char **argv, t_term *t)
 {
 	char	path[PATH_MAX];
 	char	cwd[PATH_MAX];

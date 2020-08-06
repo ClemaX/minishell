@@ -9,7 +9,7 @@
     // - for practical reasons, if && or || has an after or before a operator object the correspondent ch (ch1 or ch2) will
         // be NULL and the conecxion will be done by the next (not woks in back or only AND/OR yes for the others)
     // ch2 of redirection is always a text token
-    // parentheses recursively create another step1 and then step 
+    // parentheses recursively create another step1 and then step
     // semicolon has no ch1 or ch2 if there are conditions around
 
 // step 1
@@ -33,7 +33,7 @@ t_op        *gen_architecture(t_token *token_list, t_op *curr)
     {
         ((t_op *)curr)->next = next;
         ((t_op *)curr)->type |= token_list->type;
-		ft_printf("[type in gen arch is %d]\n", curr->type);
+		ft_dprintf(2, "[type in gen arch is %d]\n", curr->type);
     }
     return (gen_architecture(token_list->next, next));
 }
@@ -45,8 +45,8 @@ bool        gen_sub_architecture(t_token *token_list, t_op *curr)
 	{
         return (false);
 	}
-		ft_printf("[op type sub arch is %d]\n", curr->type);
-		ft_printf("[token data in sub arch is %s]\n", token_list->data);
+		ft_dprintf(2, "[op type sub arch is %d]\n", curr->type);
+		ft_dprintf(2, "[token data in sub arch is %s]\n", token_list->data);
 
     if (curr->type & AND || curr->type & OR)
     {
@@ -61,11 +61,11 @@ bool        gen_sub_architecture(t_token *token_list, t_op *curr)
             curr->ch2 = NULL;
         else
             curr->ch2 = token_next_cmd(&token_list);
-		// tests 
+		// tests
 		//if (curr->ch1)
-		//	ft_printf("[test ch1: %s]\n", ((t_token *)curr->ch1)->data);
+		//	ft_dprintf(2, "[test ch1: %s]\n", ((t_token *)curr->ch1)->data);
 		//if (curr->ch2)
-		//	ft_printf("[test ch2: %s]\n", ((t_token *)curr->ch2)->data);
+		//	ft_dprintf(2, "[test ch2: %s]\n", ((t_token *)curr->ch2)->data);
 		// end tests
     }
     else if (curr->type & PIPE)
@@ -98,7 +98,7 @@ bool        gen_sub_architecture(t_token *token_list, t_op *curr)
 		{
             (void)gen_sub_architecture(token_list, curr->ch1);
 		}
-		ft_printf("back [%p]\n", curr->back);
+		ft_dprintf(2, "back [%p]\n", curr->back);
         if (!curr->back || (curr->back && curr->type & SEMICOLON))
             curr->ch1 = token_next_cmd(&token_list);
         else
@@ -108,11 +108,11 @@ bool        gen_sub_architecture(t_token *token_list, t_op *curr)
         else
             curr->ch2 = NULL;
     }
-		// tests 
+		// tests
 	if (curr->ch1)
-		ft_printf("[test ch1: %s]\n", ((t_token *)curr->ch1)->data);
+		ft_dprintf(2, "[test ch1: %s]\n", ((t_token *)curr->ch1)->data);
 	if (curr->ch2)
-		ft_printf("[test ch2: %s]\n", ((t_token *)curr->ch2)->data);
+		ft_dprintf(2, "[test ch2: %s]\n", ((t_token *)curr->ch2)->data);
 		// end tests
     if (curr->next /*&& ((t_op *)curr->next)->type*/)
         return (gen_sub_architecture(token_list, curr->next));
