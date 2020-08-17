@@ -103,7 +103,6 @@ int         execute_cmd(t_token *data, t_term *t)
     	while (waitpid(t->pid, NULL, 0) < 0)
         	;
 		// Free allocated variables
-		free((char**)argv);
 		free(envp);
 		free(path);
     	t->pid = 0;
