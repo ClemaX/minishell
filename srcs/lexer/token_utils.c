@@ -30,6 +30,7 @@ char**		token_tab(t_token *tokens, int *n)
 		//free(tokens);
 		tokens = next;
 	}
+	tab[*n] = NULL;
 	return (tab);
 }
 
