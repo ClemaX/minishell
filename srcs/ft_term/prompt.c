@@ -5,11 +5,7 @@ void	term_write_prompt(t_term *t, int status)
 	if (status & TERM_WAITING)
 		term_prewrite(t, "> ", 2);
 	else
-	{
-		if (status & TERM_NEWLINE)
-			term_prewrite(t, "\n", 1);
 		term_prewrite(t, TERM_PS1, sizeof(TERM_PS1) - 1);
-	}
 }
 
 int		parse_line(t_term *t, int status)
@@ -45,6 +41,7 @@ int		term_new_line(t_term *t, int status)
 		if (t->line)
 		{
 			tputs(t->caps.insert_end, 0, &ft_putchar);
+			write(1, "\n", 1);
 			t->exec(t->line->data, t);
 			tputs(t->caps.insert, 0, &ft_putchar);
 		}

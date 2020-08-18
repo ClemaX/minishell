@@ -23,7 +23,8 @@ int			term_prompt(int ac, const char **av, const char **envp, int (*exec)(const 
 	int		status;
 	t_term	term;
 
-	term.name = av[0];
+	if (!(term.name = ft_basename(av[0])))
+		return (-1);
 	status = TERM_READING;
 	if (!term_init(&term, envp, exec) || !term_new_line(&term, status))
 		return (-1);
@@ -42,6 +43,7 @@ int			term_destroy(t_term *t)
 	map_clr(&t->env);
 	line_clear(&t->line);
 	clip_clear(&t->clip);
+	free(t->name);
 	if (tcsetattr(0, 0, &t->s_ios_bkp) == -1)
 		return (-1);
 	return(0);

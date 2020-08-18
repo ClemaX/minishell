@@ -106,7 +106,7 @@ typedef struct  s_pipe
 
 typedef	struct	s_term
 {
-	const char		*name;
+	char			*name;
 	int				pid;
 	struct termios	s_ios;
 	struct termios	s_ios_bkp;

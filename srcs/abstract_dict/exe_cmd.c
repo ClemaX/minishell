@@ -85,18 +85,20 @@ int         execute_cmd(t_token *data, t_term *t)
 			free((char**)argv);
 			return (false);
 		}
-		if (!(path = path_get(argv[0], (map_get(t->env, "PATH")->value))))
+		if (!(path = path_get(argv[0], map_get(t->env, "PATH")->value)))
 		{
 			ft_dprintf(2, "path not found! name is [%s]\n", argv[0]);
+			ft_printf("%s: %s: command not found\n", t->name, argv[0]);
 			free((char**)argv);
-			return (false);
+			free(envp);
+			return (BASH_ERROR_CODE);
 		}
 		if (!(t->pid = fork()))
 		{
 
         	t->st = execve(path, argv, envp);
         	ft_dprintf(2, "execve returned! name is [%s] [%d]\n", argv[0], t->st); // name or errno ?
-			return (false);
+			return (BASH_ERROR_CODE);
 		}
     	else if (t->pid < 0)
         	return (BASH_ERROR_CODE);
@@ -107,7 +109,7 @@ int         execute_cmd(t_token *data, t_term *t)
 		free(path);
     	t->pid = 0;
 	}
-    free((char**)argv);
+	free((char**)argv);
     return (true);
 }
 
