@@ -58,8 +58,9 @@ int			term_init(t_term *t, const char **envp,
 {
 
 	t->pid = 0;
-	t->select = (t_selection) {.start.x=-1U, .end.x=-1U};
-	t->clip = (t_line) {.data=NULL, .length=0, .size=0, .prev=NULL, .next=NULL};
+	t->cursor = (t_cursor){.origin={.x=0, .y=0}, .pos={.x=0, .y=0}};
+	t->select = (t_selection){.start.x=-1U, .end.x=-1U};
+	t->clip = (t_line){.data=NULL, .length=0, .size=0, .prev=NULL, .next=NULL};
 	t->exec = exec;
 	t->st = -1;
 	if (!(t->env = map_load(envp)))
