@@ -45,24 +45,26 @@ char		*path_get(const char *name, const char *path)
 	return (NULL);
 }
 
-int			builting_not_in_slash_bin(int ac, char** argv, t_term *t)
+int			builtin(int ac, char** argv, t_term *t)
 {
 	const char *name = argv[0];
 
 	if (!ft_strncmp(name, "echo", 5))
-		return (ft_echo(ac, argv)); // false is true
+		t->st = ft_echo(ac, argv); // false is true
 	else if (!ft_strncmp(name, "cd", 3))
-		return (ft_cd(ac, argv, t));
+		t->st = ft_cd(ac, argv, t);
 	else if (!ft_strncmp(name, "pwd", 4))
-		return (ft_pwd());
+		t->st = ft_pwd();
 	else if (!ft_strncmp(name, "export", 7))
-		return (ft_export(ac, argv, t));
+		t->st = ft_export(ac, argv, t);
 	else if (!ft_strncmp(name, "unset", 6))
-		return (ft_unset(ac, argv, t));
+		t->st = ft_unset(ac, argv, t);
 	else if (!ft_strncmp(name, "env", 4))
-		return (ft_env(t->env));
+		t->st = ft_env(t->env);
 	else if (!ft_strncmp(name, "exit", 5))
-		return (ft_exit(t));
+		t->st = ft_exit(t);
+	else
+		return (false);
 	return (true);
 }
 
@@ -77,7 +79,7 @@ int			execute_cmd(t_token *data, t_term *t)
 
 	if (!(argv = token_tab(data, &ac)))
 		return (-1);
-	if ((t->st = builting_not_in_slash_bin(ac, argv, t)))
+	if (!builtin(ac, argv, t))
 	{
 		if (!(envp = map_export(t->env)))
 		{
@@ -101,9 +103,12 @@ int			execute_cmd(t_token *data, t_term *t)
 			return (false);
 		}
 		else if (t->pid < 0)
-			return (BASH_ERROR_CODE);
-		while (waitpid(t->pid, NULL, 0) < 0)
+			return (false);
+		while (waitpid(t->pid, &t->st, 0) < 0)
 			;
+		if (WIFEXITED(t->st))
+			t->st = WEXITSTATUS(t->st);
+		ft_dprintf(2, "child exited with status %d\n", t->st);
 		// Free allocated variables
 		free(envp);
 		free(path);

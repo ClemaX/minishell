@@ -7,5 +7,5 @@ int		ft_exit(t_term *t)
 	tputs(t->caps.insert_end, 0, &ft_putchar);
 	ft_dprintf(2, "exiting with status code %d", t->st);
 	exit(t->st);
-	return (0);
+	return (t->st);
 }

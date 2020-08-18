@@ -13,7 +13,7 @@ static int  fill(int ac, char **argv, t_pipe *p, t_term *t)
 			dup2(p->fd_read, STDIN_FILENO);
 		if (p->out)
 			dup2(p->fd_write, STDOUT_FILENO);
-		if (builting_not_in_slash_bin(ac, argv, t))
+		if (!builtin(ac, argv, t))
     	{
         	// TODO: t->st += execve(get_path(argv, t->env);
         	ft_printf("execve returned! errno is [%s]\n", argv[0]); // name or errno ?
@@ -22,7 +22,8 @@ static int  fill(int ac, char **argv, t_pipe *p, t_term *t)
     }
     else if (t->pid < 0)
 	{
-        return (t->st = BASH_ERROR_CODE);
+		t->st = BASH_ERROR_CODE;
+        return (false);
 	}
 	while (wait(NULL) > 0)
 		;
