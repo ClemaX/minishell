@@ -54,18 +54,18 @@ int	unit_clip_copy_part(void)
 	int						diff;
 
 	t = rand_term(line_len);
-	t->select = (t_selection){.start.x=0, .end.x=line_len/2};
+	t->select = (t_selection){.start.x=0U, .end.x=line_len/2};
 	if (!(expected = ft_substr(t->line->data, t->select.start.x,
 		t->select.end.x - t->select.start.x)))
 	{
 		perror("Error");
-		return (1);
+		return (0);
 	}
 	if (!(got = clip_copy(t)))
 	{
 		free(expected);
 		perror("Error");
-		return (1);
+		return (0);
 	}
 	diff = diff_s("partial selection return", got, expected);
 	return (!diff);

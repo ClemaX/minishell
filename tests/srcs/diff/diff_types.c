@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.le-101.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 17:30:53 by chamada           #+#    #+#             */
-/*   Updated: 2020/06/22 16:07:24 by chamada          ###   ########lyon.fr   */
+/*   Updated: 2020/08/18 15:43:42 by chamada          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,13 @@
 
 int		diff_s(const char *label, const char *got, const char *expected)
 {
-	int	diff;
+	int								diff;
+	static const char				*null_str = "(null)";
 
+	if (!got)
+		got = null_str;
+	if (!expected)
+		expected = null_str;
 	if ((diff = strcmp(got, expected)))
 		printf("\n%s: %s: %s, expected: %s ",
 			RED"DIFF"RESET, label, got, expected);

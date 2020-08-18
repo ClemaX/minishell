@@ -30,7 +30,7 @@ void	rand_term_destroy(t_term *t)
 		free(t->clip.data);
 		ft_bzero(&t->clip, sizeof(t->clip));
 	}
+	ft_bzero(t, sizeof(*t));
 	t->select = (t_selection){.start = {.x = -1U, .y = -1U},\
 		.end = {.x = -1U, .y = -1U}};
-	ft_bzero(t, sizeof(*t));
 }
