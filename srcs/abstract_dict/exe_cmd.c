@@ -45,40 +45,40 @@ char		*path_get(const char *name, const char *path)
 	return (NULL);
 }
 
-int         builting_not_in_slash_bin(int ac, char** argv, t_term *t)
+int			builting_not_in_slash_bin(int ac, char** argv, t_term *t)
 {
-    const char *name = argv[0];
+	const char *name = argv[0];
 
-    if (!ft_strncmp(name, "echo", 5))
-        return (ft_echo(ac, argv)); // false is true
-    else if (!ft_strncmp(name, "cd", 3))
-        return (ft_cd(ac, argv, t));
-    else if (!ft_strncmp(name, "pwd", 4))
-        return (ft_pwd());
-    else if (!ft_strncmp(name, "export", 7))
-        return (ft_export(ac, argv, t));
-    else if (!ft_strncmp(name, "unset", 6))
-        return (ft_unset(ac, argv, t));
-    else if (!ft_strncmp(name, "env", 4))
-        return (ft_env(t->env));
-    else if (!ft_strncmp(name, "exit", 5))
-        return (ft_exit());
-    return (true);
+	if (!ft_strncmp(name, "echo", 5))
+		return (ft_echo(ac, argv)); // false is true
+	else if (!ft_strncmp(name, "cd", 3))
+		return (ft_cd(ac, argv, t));
+	else if (!ft_strncmp(name, "pwd", 4))
+		return (ft_pwd());
+	else if (!ft_strncmp(name, "export", 7))
+		return (ft_export(ac, argv, t));
+	else if (!ft_strncmp(name, "unset", 6))
+		return (ft_unset(ac, argv, t));
+	else if (!ft_strncmp(name, "env", 4))
+		return (ft_env(t->env));
+	else if (!ft_strncmp(name, "exit", 5))
+		return (ft_exit(t));
+	return (true);
 }
 
-int         execute_cmd(t_token *data, t_term *t)
+int			execute_cmd(t_token *data, t_term *t)
 {
 	ft_dprintf(2, "[data %p]\n", data);
 	ft_dprintf(2, "exe cmd\n");
 	char	**envp;
-    char	**argv;
+	char	**argv;
 	char	*path;
 	int		ac;
 
-    if (!(argv = token_tab(data, &ac)))
-        return (-1);
-    if ((t->st = builting_not_in_slash_bin(ac, argv, t)))
-    {
+	if (!(argv = token_tab(data, &ac)))
+		return (-1);
+	if ((t->st = builting_not_in_slash_bin(ac, argv, t)))
+	{
 		if (!(envp = map_export(t->env)))
 		{
 			ft_dprintf(2, "could not export environment!");
@@ -91,58 +91,58 @@ int         execute_cmd(t_token *data, t_term *t)
 			ft_printf("%s: %s: command not found\n", t->name, argv[0]);
 			free((char**)argv);
 			free(envp);
-			return (BASH_ERROR_CODE);
+			t->st = BASH_ERROR_CODE;
+			return (false);
 		}
 		if (!(t->pid = fork()))
 		{
-
-        	t->st = execve(path, argv, envp);
-        	ft_dprintf(2, "execve returned! name is [%s] [%d]\n", argv[0], t->st); // name or errno ?
-			return (BASH_ERROR_CODE);
+			t->st = execve(path, argv, envp);
+			ft_dprintf(2, "execve returned! name is [%s] [%d]\n", argv[0], t->st); // name or errno ?
+			return (false);
 		}
-    	else if (t->pid < 0)
-        	return (BASH_ERROR_CODE);
-    	while (waitpid(t->pid, NULL, 0) < 0)
-        	;
+		else if (t->pid < 0)
+			return (BASH_ERROR_CODE);
+		while (waitpid(t->pid, NULL, 0) < 0)
+			;
 		// Free allocated variables
 		free(envp);
 		free(path);
-    	t->pid = 0;
+		t->pid = 0;
 	}
 	free((char**)argv);
-    return (true);
+	return (true);
 }
 
-int         execute_and(t_op *ad, t_term *t)
+int			execute_and(t_op *ad, t_term *t)
 {
-    if (ad->ch1 == NULL && t->st)
-        return (false);
-    if (ad->ch1 && ad->ch2)
-    {
-        (void)execute_cmd(ad->ch1, t);
-        if (t->st)
-            return (false);
-        (void)execute_cmd(ad->ch2, t);
-    }
+	if (ad->ch1 == NULL && t->st)
+		return (false);
+	if (ad->ch1 && ad->ch2)
+	{
+		(void)execute_cmd(ad->ch1, t);
+		if (t->st)
+			return (false);
+		(void)execute_cmd(ad->ch2, t);
+	}
 	else if (ad->ch1)
 		(void)execute_cmd(ad->ch1, t);
-    return (true);
+	return (true);
 }
 
 int         execute_or(t_op *ad, t_term *t)
 {
-    if (ad->ch1 == NULL && !t->st)
-        return (false);
-    if (ad->ch1 && ad->ch2)
-    {
+	if (ad->ch1 == NULL && !t->st)
+		return (false);
+	if (ad->ch1 && ad->ch2)
+	{
 		if (!t->st)
-            return (false);
-        (void)execute_cmd(ad->ch1, t);
-        if (!t->st)
-            return (false);
-        (void)execute_cmd(ad->ch2, t);
-    }
+			return (false);
+		(void)execute_cmd(ad->ch1, t);
+		if (!t->st)
+			return (false);
+		(void)execute_cmd(ad->ch2, t);
+	}
 	else if (ad->ch1 && t->st)
 		(void)execute_cmd(ad->ch1, t);
-    return (true);
+	return (true);
 }

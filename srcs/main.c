@@ -7,7 +7,7 @@ void		print_abstract_dict(t_op *head)
 	while (head && head->type)
 	{
 		// simplyfied version, can t print complex abstract dicts
-			ft_printf("<print_abstract_dict> HEAD ADDR IS: %p\n", (t_op *)head); 
+			ft_printf("<print_abstract_dict> HEAD ADDR IS: %p\n", (t_op *)head);
 			ft_printf("<print_abstract_dict> HEAD TYPE IS: %d\n", ((t_op *)head)->type);
 		if (head->ch1)
 		{
@@ -53,7 +53,6 @@ int exec(const char *str, t_term *t)
 	(void)gen_architecture(operators, head);
 	//print_abstract_dict(head);
 	(void)gen_sub_architecture(tokens, head);
-	t->st = -1;
 
 	tcsetattr(0, 0, &t->s_ios_bkp);
 	(void)execute_abstract_dict(head, t);
