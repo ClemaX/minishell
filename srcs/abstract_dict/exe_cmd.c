@@ -3,7 +3,7 @@
 
 static
 
-char		*path_cat(const char *a, const char *b)
+char	*path_cat(const char *a, const char *b)
 {
 	const size_t	len = ft_strlen(a) + ft_strlen(b) + 1;
 	char			*cat;
@@ -20,7 +20,7 @@ char		*path_cat(const char *a, const char *b)
 	return (cat);
 }
 
-char		*path_get(const char *name, const char *path)
+char	*path_get(const char *name, const char *path)
 {
 	char		**paths;
 	char		*join;
@@ -45,7 +45,7 @@ char		*path_get(const char *name, const char *path)
 	return (NULL);
 }
 
-int			builtin(int ac, char** argv, t_term *t)
+int		builtin(int ac, char** argv, t_term *t)
 {
 	const char *name = argv[0];
 
@@ -68,7 +68,7 @@ int			builtin(int ac, char** argv, t_term *t)
 	return (true);
 }
 
-int			execute_cmd(t_token *data, t_term *t)
+int		execute_cmd(t_token *data, t_term *t)
 {
 	ft_dprintf(2, "[data %p]\n", data);
 	ft_dprintf(2, "exe cmd\n");
@@ -118,7 +118,7 @@ int			execute_cmd(t_token *data, t_term *t)
 	return (true);
 }
 
-int			execute_and(t_op *ad, t_term *t)
+int		execute_and(t_op *ad, t_term *t)
 {
 	if (ad->ch1 == NULL && t->st)
 		return (false);
@@ -134,7 +134,7 @@ int			execute_and(t_op *ad, t_term *t)
 	return (true);
 }
 
-int         execute_or(t_op *ad, t_term *t)
+int		execute_or(t_op *ad, t_term *t)
 {
 	if (ad->ch1 == NULL && !t->st)
 		return (false);
