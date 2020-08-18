@@ -10,7 +10,7 @@
 int		ft_cd(int ac, char **argv, t_term *t);
 int	    ft_echo(int ac, char **argv);
 int	    ft_env(t_map *env);
-int		ft_exit(void);
+int		ft_exit(t_term *t);
 int	    ft_export(int ac, char **av, t_term *t);
 int		ft_pwd(void);
 int	    ft_unset(int ac, char **av, t_term *t);

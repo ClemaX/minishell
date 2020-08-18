@@ -1,7 +1,11 @@
 #include "builtins.h"
 
-int		ft_exit(void)
+int		ft_exit(t_term *t)
 {
-	exit(EXIT_SUCCESS);
+	term_destroy(t);
+	write(1, "exit\n", 5);
+	tputs(t->caps.insert_end, 0, &ft_putchar);
+	ft_dprintf(2, "exiting with status code %d", t->st);
+	exit(t->st);
 	return (0);
 }
