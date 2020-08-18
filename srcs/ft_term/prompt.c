@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/18 19:30:09 by chamada           #+#    #+#             */
-/*   Updated: 2020/08/18 19:30:18 by chamada          ###   ########.fr       */
+/*   Updated: 2020/08/18 21:39:50 by chamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,28 +41,23 @@ int		parse_line(t_term *t, int status)
 	return (status);
 }
 
-// TODO: Refactor and separate line init
 int		term_new_line(t_term *t, int status)
 {
 	term_end_line(t);
 	selection_clear(t);
-	if (t->line && (status = parse_line(t, status)) & TERM_WAITING)
+	if ((status = parse_line(t, status)) & TERM_WAITING)
 		term_write(t, "\n", 1);
-	if (!(status & TERM_WAITING))
+	else
 	{
-		if (t->line)
-		{
-			tputs(t->caps.insert_end, 0, &ft_putchar);
-			write(1, "\n", 1);
-			t->exec(t->line->data, t);
-			tputs(t->caps.insert, 0, &ft_putchar);
-		}
+		tputs(t->caps.insert_end, 0, &ft_putchar);
+		write(1, "\n", 1);
+		t->exec(t->line->data, t);
+		tputs(t->caps.insert, 0, &ft_putchar);
 		if ((!t->hist.next || t->line == t->hist.next)
 		&& !(t->hist.next = line_new(10)))
 			return ((status | TERM_ERROR) & ~TERM_READING);
-		if (t->line)
-			hist_add(&t->hist, t->line);
-		t->hist.next ->prev = t->hist.last;
+		hist_add(&t->hist, t->line);
+		t->hist.next->prev = t->hist.last;
 		*t->hist.next->data = '\0';
 		t->hist.next->length = 0;
 		t->hist.curr = t->hist.next;

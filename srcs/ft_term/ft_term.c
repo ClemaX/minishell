@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/18 19:29:38 by chamada           #+#    #+#             */
-/*   Updated: 2020/08/18 19:29:38 by chamada          ###   ########.fr       */
+/*   Updated: 2020/08/18 21:46:24 by chamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,19 @@ static int	handle_status(t_term *t, int status)
 	return ((status & (~TERM_CONSUME & ~TERM_NEWLINE)));
 }
 
-int			term_prompt(int ac, const char **av, const char **envp, int (*exec)(const char*, t_term*))
+int			term_prompt(int ac, const char **av, const char **envp,
+	int (*exec)(const char*, t_term*))
 {
-	(void)	ac;
 	int		status;
 	t_term	term;
 
+	(void)ac;
 	if (!(term.name = ft_basename(av[0])))
 		return (-1);
 	status = TERM_READING;
-	if (!term_init(&term, envp, exec) || !term_new_line(&term, status))
+	if (!term_init(&term, envp, exec))
 		return (-1);
+	term_write_prompt(&term, status);
 	tputs(term.caps.insert, 0, &ft_putchar);
 	while (status & TERM_READING)
 		status = handle_status(&term, term_input(&term, status));
@@ -58,5 +60,5 @@ int			term_destroy(t_term *t)
 	free(t->name);
 	if (tcsetattr(0, 0, &t->s_ios_bkp) == -1)
 		return (-1);
-	return(0);
+	return (0);
 }

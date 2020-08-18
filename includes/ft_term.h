@@ -126,8 +126,10 @@ typedef	struct	s_term
 int				term_init(t_term *t, const char **envp, int (*exec)(const char*, t_term*));
 int				term_destroy(t_term *t);
 int				term_prompt(int ac, const char **av, const char **envp, int (*exec)(const char*, t_term*));
+
 int				term_input(t_term *t, int status);
-int				input_special(int status, char c);
+int				term_input_control(t_term *t, int status, char c);
+int				term_input_escape(t_term *t, int status);
 
 void			term_up(t_term *t);
 void			term_down(t_term *t);

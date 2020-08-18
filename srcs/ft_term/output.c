@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/18 19:30:06 by chamada           #+#    #+#             */
-/*   Updated: 2020/08/18 19:30:07 by chamada          ###   ########.fr       */
+/*   Updated: 2020/08/18 19:45:08 by chamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		term_prewrite(t_term *t, const char *str, size_t n)
 int		term_write(t_term *t, const char *str, size_t n)
 {
 	if (write(1, str, n) <= 0
-	|| !(line_insert_at(t->line,t->cursor.pos.x, str, n)))
+	|| !(line_insert_at(t->line, t->cursor.pos.x, str, n)))
 		return (0);
 	t->cursor.pos.x += n;
 	return (1);

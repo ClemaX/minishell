@@ -23,7 +23,7 @@ MAIN	= $(SRCDIR)/main.c
 
 SRCS	= $(addprefix $(SRCDIR)/, 												\
 			$(addprefix ft_term/, ft_term.c init.c signals.c line.c line_edit.c	\
-				history.c input.c output.c prompt.c controls.c					\
+				history.c input.c input_special.c output.c prompt.c controls.c	\
 				cursor_line.c cursor_hist.c selection.c clipboard.c)			\
 			$(addprefix lexer/, lexer.c token.c token_types.c token_utils.c)	\
 			$(addprefix abstract_dict/, exe_cmd.c exe_redirection.c				\
