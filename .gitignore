@@ -5,3 +5,4 @@ minishell-test
 minishell-debug
 minishell-debug-test
 err.log
+vgcore.*
