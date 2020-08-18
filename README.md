@@ -1,4 +1,4 @@
-![Minishell CI](https://github.com/ClemaX/minishell/workflows/Minishell%20CI/badge.svg?branch=new&event=check_run)
+![Minishell CI](https://github.com/ClemaX/minishell/workflows/Minishell%20CI/badge.svg?branch=new)
 
 https://www.gnu.org/software/libc/manual/html_node/Input-Modes.html
 
