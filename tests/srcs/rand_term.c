@@ -8,12 +8,13 @@ t_term	*rand_term(unsigned line_length)
 	if (!(t.line = malloc(sizeof(*t.line))))
 		return (NULL);
 	t.line->data = NULL;
-	if (line_length && !(t.line->data = rand_key(line_length)))
+	if (!(t.line->data = rand_key(line_length)))
 	{
 		free(t.line);
 		return(NULL);
 	}
 	t.line->length = line_length;
+	t.line->size = line_length + 1;
 	t.cursor.pos.x = ft_rand(0, line_length);
 	return (&t);
 }
