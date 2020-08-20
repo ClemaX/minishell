@@ -92,7 +92,7 @@ int		execute_cmd(t_token *data, t_term *t)
 			ft_dprintf(2, "path not found! name is [%s]\n", argv[0]);
 			ft_printf("%s: %s: command not found\n", t->name, argv[0]);
 			free((char**)argv);
-			free(envp);
+			strs_unload(envp);
 			t->st = BASH_ERROR_CODE;
 			return (false);
 		}
@@ -110,7 +110,7 @@ int		execute_cmd(t_token *data, t_term *t)
 			t->st = WEXITSTATUS(t->st);
 		ft_dprintf(2, "child exited with status %d\n", t->st);
 		// Free allocated variables
-		free(envp);
+		strs_unload(envp);
 		free(path);
 		t->pid = 0;
 	}
