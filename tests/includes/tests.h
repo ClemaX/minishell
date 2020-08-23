@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/14 06:49:04 by chamada           #+#    #+#             */
-/*   Updated: 2020/08/23 15:45:08 by chamada          ###   ########.fr       */
+/*   Updated: 2020/08/23 16:10:45 by chamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@
 # define BASE_MINUS	"01234-"
 # define BASE_HEX	"0123456789ABCDEF"
 
-int				run_tests(int *fd, char *label, int (*tests[])(), int iterations);
+int				run_tests(int *fd, char *label,
+	int (*tests[])(), int iterations);
 
 unsigned		ft_rand(unsigned min, unsigned max);
 char			*rand_key(unsigned len);

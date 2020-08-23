@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   rand_term.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: chamada <chamada@student.42lyon.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/08/23 15:53:16 by chamada           #+#    #+#             */
+/*   Updated: 2020/08/23 15:53:17 by chamada          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <tests.h>
 
 t_term	*rand_term(unsigned line_length)
@@ -11,7 +23,7 @@ t_term	*rand_term(unsigned line_length)
 	if (!(t.line->data = rand_key(line_length)))
 	{
 		free(t.line);
-		return(NULL);
+		return (NULL);
 	}
 	t.line->length = line_length;
 	t.line->size = line_length + 1;

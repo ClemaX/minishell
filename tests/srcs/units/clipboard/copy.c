@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   copy.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: chamada <chamada@student.42lyon.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/08/23 15:57:46 by chamada           #+#    #+#             */
+/*   Updated: 2020/08/23 15:58:06 by chamada          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <tests.h>
 
 int	unit_clip_copy_no_select(void)
@@ -54,7 +66,7 @@ int	unit_clip_copy_part(void)
 	int						diff;
 
 	t = rand_term(line_len);
-	t->select = (t_selection){.start.x=0U, .end.x=line_len/2};
+	t->select = (t_selection){.start.x=0U, .end.x=line_len / 2};
 	if (!(expected = ft_substr(t->line->data, t->select.start.x,
 		t->select.end.x - t->select.start.x)))
 	{
@@ -71,7 +83,7 @@ int	unit_clip_copy_part(void)
 	return (!diff);
 }
 
-int (*tests_clipboard_copy[])(void) = {
+int (*g_tests_clipboard_copy[])(void) = {
 	&unit_clip_copy_no_select,
 	&unit_clip_copy_empty,
 	&unit_clip_copy_all,

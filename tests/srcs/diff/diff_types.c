@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   diff_types.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chamada <chamada@student.le-101.fr>        +#+  +:+       +#+        */
+/*   By: chamada <chamada@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 17:30:53 by chamada           #+#    #+#             */
-/*   Updated: 2020/08/18 15:43:42 by chamada          ###   ########lyon.fr   */
+/*   Updated: 2020/08/23 15:49:50 by chamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include <tests.h>
 #include <stdio.h>

@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   diff_sizes.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chamada <chamada@student.le-101.fr>        +#+  +:+       +#+        */
+/*   By: chamada <chamada@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/09 17:10:31 by chamada           #+#    #+#             */
-/*   Updated: 2020/06/22 16:07:31 by chamada          ###   ########lyon.fr   */
+/*   Updated: 2020/08/23 15:50:04 by chamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include <tests.h>
 #include <string.h>

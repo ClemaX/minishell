@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   diff.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chamada <chamada@student.le-101.fr>        +#+  +:+       +#+        */
+/*   By: chamada <chamada@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/09 17:53:19 by chamada           #+#    #+#             */
-/*   Updated: 2020/05/21 19:56:52 by chamada          ###   ########lyon.fr   */
+/*   Updated: 2020/08/23 16:09:30 by chamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef DIFF_H
 # define DIFF_H

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cut.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: chamada <chamada@student.42lyon.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/08/23 15:58:13 by chamada           #+#    #+#             */
+/*   Updated: 2020/08/23 15:58:24 by chamada          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <tests.h>
 
 int	unit_clip_cut_no_select(void)
@@ -63,7 +75,7 @@ int	unit_clip_cut_part(void)
 	int						diff;
 
 	t = rand_term(line_len);
-	t->select = (t_selection){.start.x=0, .end.x=line_len/2};
+	t->select = (t_selection){.start.x=0, .end.x=line_len / 2};
 	if (!(expected = ft_substr(t->line->data, t->select.start.x,
 		t->select.end.x - t->select.start.x)))
 	{
@@ -80,7 +92,7 @@ int	unit_clip_cut_part(void)
 	return (!diff);
 }
 
-int (*tests_clipboard_cut[])(void) = {
+int (*g_tests_clipboard_cut[])(void) = {
 	&unit_clip_cut_no_select,
 	&unit_clip_cut_empty,
 	&unit_clip_cut_all,

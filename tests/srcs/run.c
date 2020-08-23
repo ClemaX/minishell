@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/26 16:34:23 by chamada           #+#    #+#             */
-/*   Updated: 2020/08/23 15:41:39 by chamada          ###   ########.fr       */
+/*   Updated: 2020/08/23 15:53:03 by chamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ static int	run_test(int *fd, int (*test)(void), int iterations)
 	return (err);
 }
 
-int			run_tests(int *fd, char *label, int (*tests[])(void), int iterations)
+int			run_tests(int *fd, char *label, int (*tests[])(void),
+	int iterations)
 {
 	int err;
 	int i;

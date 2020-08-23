@@ -8,7 +8,7 @@ RM		=		/bin/rm
 AFLAGS	=		rcus
 CFLAGS	=		-Wall -Wextra -Werror
 IFLAGS	=		-I$(INCDIR)
-HEADRS	=		$(addprefix $(INCDIR)/, diff.h tests.h units.h)
+HEADRS	=		$(addprefix $(INCDIR)/, ft_term.h libft.h diff.h tests.h units.h)
 
 SRCS	=		$(addprefix $(SRCDIR)/,										\
 			$(addprefix diff/diff_, bool.c sizes.c types.c)					\

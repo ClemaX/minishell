@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   paste.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: chamada <chamada@student.42lyon.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/08/23 15:58:33 by chamada           #+#    #+#             */
+/*   Updated: 2020/08/23 15:58:33 by chamada          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <tests.h>
 
-int unit_clip_paste_no_clip(void)
+int	unit_clip_paste_no_clip(void)
 {
 	static const unsigned	line_len = 10;
 	t_term					*t;
@@ -24,7 +36,7 @@ int unit_clip_paste_no_clip(void)
 	return (!diff);
 }
 
-int unit_clip_paste_empty(void)
+int	unit_clip_paste_empty(void)
 {
 	static const unsigned	clip_len = 10;
 	t_term					*t;
@@ -77,7 +89,7 @@ int	unit_clip_paste_insert(void)
 	return (!diff);
 }
 
-int (*tests_clipboard_paste[])(void) = {
+int	(*g_tests_clipboard_paste[])(void) = {
 	&unit_clip_paste_no_clip,
 	&unit_clip_paste_empty,
 	&unit_clip_paste_insert,
