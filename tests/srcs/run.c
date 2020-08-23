@@ -6,7 +6,7 @@
 /*   By: chamada <chamada@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/26 16:34:23 by chamada           #+#    #+#             */
-/*   Updated: 2020/08/23 15:17:51 by chamada          ###   ########.fr       */
+/*   Updated: 2020/08/23 15:41:39 by chamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,14 @@ static int	handle_result(pid_t child_pid)
 	if (WIFEXITED(st))
 	{
 		st = WEXITSTATUS(st);
-		printf(st ? FAIL : PASS);
+		dprintf(1, st ? FAIL : PASS);
 		return (st);
 	}
 	else
 		return (handle_crash(st));
 }
 
-int		run_test(int (*test)(void), int iterations)
+static int	run_test(int *fd, int (*test)(void), int iterations)
 {
 	int		i;
 	pid_t	pid;
@@ -55,7 +55,11 @@ int		run_test(int (*test)(void), int iterations)
 	while (i++ < iterations)
 	{
 		if (!(pid = fork()))
+		{
+			dup2(fd[0], 1);
+			dup2(fd[1], 2);
 			exit(!(*test)());
+		}
 		else if (pid < 0)
 		{
 			perror("Fatal error: Could not fork");
@@ -66,22 +70,22 @@ int		run_test(int (*test)(void), int iterations)
 	return (err);
 }
 
-int		run_tests(char *label, int (*tests[])(void), int iterations)
+int			run_tests(int *fd, char *label, int (*tests[])(void), int iterations)
 {
 	int err;
 	int i;
 
-	printf("\r%s %*s\t",
+	dprintf(1, "%s %*s\t",
 		BULLET, LBL_FW, label);
 	i = 0;
 	err = 0;
 	while (tests[i])
 	{
-		err += run_test(tests[i], iterations);
+		err += run_test(fd, tests[i], iterations);
 		i++;
 		if (tests[i])
-			printf(" ");
+			write(1, " ", 1);
 	}
-	printf("\n");
+	write(1, "\n", 1);
 	return (!err);
 }
