@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_term.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: chamada <chamada@student.42lyon.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/08/23 16:00:47 by chamada           #+#    #+#             */
+/*   Updated: 2020/08/23 16:07:36 by chamada          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FT_TERM_H
 # define FT_TERM_H
 
@@ -7,28 +19,28 @@
 # include <unistd.h>
 # include <libft.h>
 # include <term.h>
-#include "fcntl.h"
-#include "sys/stat.h"
+# include <fcntl.h>
+# include <sys/stat.h>
 
 # define MAX_ENTRY		1024
 # define BASH_ERROR_CODE 127
 
 # define TERM_PS1		"minish> "
 
-# define TERM_READING	0b0000000000000001
-# define TERM_ERROR		0b0000000000000010
-# define TERM_B_SLASH	0b0000000000000100
-# define TERM_S_QUOTE	0b0000000000001000
-# define TERM_D_QUOTE	0b0000000000010000
-# define TERM_NEWLINE	0b0000000000100000
-# define TERM_INT		0b0000000001000000
-# define TERM_ERASE		0b0000000010000000
-# define TERM_EOF		0b0000000100000000
-# define TERM_STOP		0b0000001000000000
-# define TERM_SUSPEND	0b0000010000000000
-# define TERM_CLEAR		0b0000100000000000
-# define TERM_SELECT	0b0001000000000000
-# define TERM_IGNORE	0b0010000000000000
+# define TERM_READING	1
+# define TERM_ERROR		2
+# define TERM_B_SLASH	4
+# define TERM_S_QUOTE	8
+# define TERM_D_QUOTE	16
+# define TERM_NEWLINE	32
+# define TERM_INT		64
+# define TERM_ERASE		128
+# define TERM_EOF		256
+# define TERM_STOP		512
+# define TERM_SUSPEND	1024
+# define TERM_CLEAR		2048
+# define TERM_SELECT	4096
+# define TERM_IGNORE	8192
 
 # define TERM_WAITING	(TERM_B_SLASH | TERM_S_QUOTE | TERM_D_QUOTE)
 # define TERM_CONSUME	(TERM_NEWLINE | TERM_CLEAR | TERM_INT | TERM_EOF | TERM_STOP | TERM_ERASE | TERM_SUSPEND | TERM_IGNORE)
@@ -95,7 +107,7 @@ typedef struct	s_hist
 	// TODO: Remove next
 }				t_hist;
 
-typedef struct  s_pipe
+typedef struct	s_pipe
 {
 	int			fd[2];
 	int			fd_read;
