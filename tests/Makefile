@@ -15,7 +15,7 @@ SRCS	=		$(addprefix $(SRCDIR)/,										\
 			$(addprefix units/,												\
 				$(addprefix clipboard/, copy.c cut.c paste.c)				\
 			)																\
-			main.c rand_term.c rand.c utils.c)
+			main.c rand_term.c rand.c lst.c run.c)
 
 OBJDS	=		$(addprefix $(OBJDIR)/,	diff $(addprefix units/, clipboard))
 

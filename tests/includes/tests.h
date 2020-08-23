@@ -3,16 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   tests.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chamada <chamada@student.le-101.fr>        +#+  +:+       +#+        */
+/*   By: chamada <chamada@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/14 06:49:04 by chamada           #+#    #+#             */
-/*   Updated: 2020/06/22 16:12:36 by chamada          ###   ########lyon.fr   */
+/*   Updated: 2020/08/23 15:08:31 by chamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TESTS_H
 # define TESTS_H
 
+# include <sys/types.h>
+# include <sys/wait.h>
 # include <ft_term.h>
 # include <unistd.h>
 # include <stdlib.h>
@@ -29,9 +31,14 @@
 # define GREEN	"\033[0;32m"
 # define CYAN	"\033[0;36m"
 # define TITLE	"\033[1;34m"
+# define BULLET	CYAN"▶"RESET
 # define PASS	GREEN"✔"RESET
 # define FAIL	RED"✗"RESET
-# define BULLET	CYAN"▶"RESET
+
+# define C_NONE	RED"C"RESET
+# define C_MISC	RED"C"RESET
+# define C_SEGV	RED"S"RESET
+# define C_ABRT	RED"A"RESET
 
 # define BASE_PLUS	"01234+"
 # define BASE_MINUS	"01234-"
