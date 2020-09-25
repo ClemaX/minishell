@@ -5,7 +5,7 @@ int	execute_redirections(t_op *ad, t_term *t)
 	if (t->flags & TAKE_FD)
 	{
 
-		int     fd;
+		int     fd = 0;
 
 		if (ad->type & RG)
 		{

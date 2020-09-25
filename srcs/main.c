@@ -6,11 +6,11 @@
 /*   By: chamada <chamada@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 15:51:38 by chamada           #+#    #+#             */
-/*   Updated: 2020/08/19 15:51:39 by chamada          ###   ########.fr       */
+/*   Updated: 2020/09/25 14:29:23 by chamada          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <ft_term.h>
+#include <term/term.h>
 #include <abstract_dict.h>
 #include <lexer.h>
 

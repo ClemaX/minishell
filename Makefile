@@ -22,9 +22,6 @@ LOG		= err.log
 MAIN	= $(SRCDIR)/main.c
 
 SRCS	= $(addprefix $(SRCDIR)/, 												\
-			$(addprefix ft_term/, ft_term.c init.c signals.c line.c line_edit.c	\
-				history.c input.c input_special.c output.c prompt.c controls.c	\
-				cursor_line.c cursor_hist.c selection.c clipboard.c)			\
 			$(addprefix lexer/, lexer.c token.c token_types.c token_utils.c)	\
 			$(addprefix abstract_dict/, exe_cmd.c exe_redirection.c				\
 				execute_abstract_dict.c free_abstract_dict.c					\
@@ -35,9 +32,9 @@ SRCS	= $(addprefix $(SRCDIR)/, 												\
 		)
 
 OBJS	= $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS) $(MAIN))
-OBJDS	= $(addprefix $(OBJDIR)/, ft_term lexer abstract_dict builtins operators)
+OBJDS	= $(addprefix $(OBJDIR)/, lexer abstract_dict builtins operators)
 
-HDRS	= $(addprefix $(INCDIR)/, ft_term.h lexer.h)
+HDRS	= $(addprefix $(INCDIR)/, lexer.h)
 
 ifeq ($(DIST), debug)
 	CFLAGS += -g -DDIST_DEBUG

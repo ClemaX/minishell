@@ -1,7 +1,7 @@
 #ifndef OPERATORS_H
 # define OPERATORS_H
 
-#include "ft_term.h"
+#include <term/term.h>
 
 #define AND				1
 #define OR				2

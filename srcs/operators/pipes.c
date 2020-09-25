@@ -1,5 +1,5 @@
 #include "abstract_dict.h"
-#include "ft_term.h"
+#include <term/term.h>
 
 static int  fill(int ac, char **argv, t_pipe *p, t_term *t)
 {

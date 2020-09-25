@@ -1,9 +1,9 @@
-#include <ft_term.h>
+#include <term/term.h>
 #include <abstract_dict.h>
 
 static int	open_fd(char *name, short std)
 {
-	int	fd;
+	int	fd = 0;
 
 	if (std & RG)
 	{
