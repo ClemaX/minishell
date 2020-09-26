@@ -93,7 +93,7 @@ int		execute_cmd(t_token *data, t_term *t)
 			ft_printf("%s: %s: command not found\n", t->name, argv[0]);
 			free((char**)argv);
 			strs_unload(envp);
-			t->st = BASH_ERROR_CODE;
+			t->st = 127;
 			return (false);
 		}
 		if (!(t->pid = fork()))

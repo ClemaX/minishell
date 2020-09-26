@@ -23,13 +23,11 @@ MAIN	= $(SRCDIR)/main.c
 
 SRCS	= $(addprefix $(SRCDIR)/, 												\
 			$(addprefix lexer/, lexer.c token.c token_types.c token_utils.c)	\
-			$(addprefix abstract_dict/, exe_cmd.c exe_redirection.c				\
+			$(addprefix abstract_dict/, exe_cmd.c 								\
 				execute_abstract_dict.c free_abstract_dict.c					\
 				gen_abstract_dict.c)											\
 			$(addprefix builtins/, cd.c echo.c env.c exit.c export.c pwd.c		\
-				unset.c)														\
-			$(addprefix operators/, pipes.c redirections.c)						\
-		)
+				unset.c))
 
 OBJS	= $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS) $(MAIN))
 OBJDS	= $(addprefix $(OBJDIR)/, lexer abstract_dict builtins operators)
